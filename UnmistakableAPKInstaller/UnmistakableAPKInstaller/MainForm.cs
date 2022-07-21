@@ -10,6 +10,7 @@ namespace UnmistakableAPKInstaller
         enum MainFormState
         {
             Idle,
+            APKLoading,
             ToolsLoading,
         }
 
@@ -81,6 +82,12 @@ namespace UnmistakableAPKInstaller
                     OutputDownload.Visible = true;
                     ProgressBar.Visible = true;
                     break;
+                case MainFormState.APKLoading:
+                    ChangeVisibility(true);
+                    ButtonDownload.Visible = false;
+                    ButtonDownloadInstall.Visible = false;
+                    ButtonInstall.Visible = false;
+                    break;
             }
         }
 
@@ -98,6 +105,7 @@ namespace UnmistakableAPKInstaller
             OutputDevices.Visible = value;
             ButtonInstall.Visible = value;
             ButtonDevices.Visible = value;
+            ButtonDownloadInstall.Visible = value;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -107,28 +115,9 @@ namespace UnmistakableAPKInstaller
 
         private async void ButtonDownload_Click(object sender, EventArgs e)
         {
-            ButtonDownload.Visible = false;
-            ButtonInstall.Visible = false;
-
-            var url = InputDownload.Text;
-            var data = await gdDownloadHelper.DownloadFile(url,
-                (str) => OutputDownload.Text = str,
-                (progress) => ProgressBar.Value = progress);
-
-            MessageBox.Show(data.status ? "Download is completed!" : "Fail with download...",
-                "File download status", MessageBoxButtons.OK);
-
-            OutputDownload.ResetText();
-            ProgressBar.Value = 0;
-
-            // Update APK path field
-            if (data.status)
-            {
-                InputPath.Text = data.path;
-            }
-
-            ButtonDownload.Visible = true;
-            ButtonInstall.Visible = true;
+            ChangeFormState(MainFormState.APKLoading);
+            await DownloadAPK();
+            ChangeFormState(MainFormState.Idle);
         }
 
         private void ButtonPath_Click(object sender, EventArgs e)
@@ -158,10 +147,53 @@ namespace UnmistakableAPKInstaller
 
         private async void ButtonInstall_Click(object sender, EventArgs e)
         {
+            await InstallAPK();
+        }
+
+        private async void ButtonDevices_Click(object sender, EventArgs e)
+        {
+            OutputDevices.Text = await cmdToolsProvider.GetAndroidDevices();
+        }
+
+        private async void ButtonDownloadInstall_Click(object sender, EventArgs e)
+        {
+            ChangeFormState(MainFormState.APKLoading);
+            await DownloadAPK(false);
+            await InstallAPK();
+            ChangeFormState(MainFormState.Idle);
+        }
+
+        #region Download && Install APK
+        private async Task DownloadAPK(bool showStatus = true)
+        {
+            var url = InputDownload.Text;
+            var data = await gdDownloadHelper.DownloadFile(url,
+                (str) => OutputDownload.Text = str,
+                (progress) => ProgressBar.Value = progress);
+
+            if (showStatus)
+            {
+                MessageBox.Show(data.status ? "Download is completed!" : "Fail with download...",
+                    "File download status", MessageBoxButtons.OK);
+            }
+
+            OutputDownload.ResetText();
+            ProgressBar.Value = 0;
+
+            // Update APK path field
+            if (data.status)
+            {
+                InputPath.Text = data.path;
+            }
+
+        }
+
+        private async Task InstallAPK()
+        {
             ProgressBar.Value = 10;
             OutputDownload.Text = "Uninstall previous version...";
             await cmdToolsProvider.TryUninstallAPKByPath(InputPath.Text, (str) => OutputDownload.Text = str);
-            
+
             ProgressBar.Value = 50;
             OutputDownload.Text = "Install new version...";
             var status = await cmdToolsProvider.TryInstallAPK(InputPath.Text, (str) => OutputDownload.Text = str);
@@ -173,10 +205,6 @@ namespace UnmistakableAPKInstaller
             OutputDownload.ResetText();
             ProgressBar.Value = 0;
         }
-
-        private async void ButtonDevices_Click(object sender, EventArgs e)
-        {
-            OutputDevices.Text = await cmdToolsProvider.GetAndroidDevices();
-        }
+        #endregion
     }
 }

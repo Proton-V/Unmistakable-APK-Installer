@@ -40,13 +40,14 @@
             this.OutputDevices = new System.Windows.Forms.RichTextBox();
             this.ButtonInstall = new System.Windows.Forms.Button();
             this.ButtonDevices = new System.Windows.Forms.Button();
+            this.ButtonDownloadInstall = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ButtonDownload
             // 
             this.ButtonDownload.Location = new System.Drawing.Point(555, 48);
             this.ButtonDownload.Name = "ButtonDownload";
-            this.ButtonDownload.Size = new System.Drawing.Size(124, 23);
+            this.ButtonDownload.Size = new System.Drawing.Size(103, 23);
             this.ButtonDownload.TabIndex = 0;
             this.ButtonDownload.Text = "Download APK";
             this.ButtonDownload.UseVisualStyleBackColor = true;
@@ -104,7 +105,7 @@
             // 
             this.ButtonPath.Location = new System.Drawing.Point(555, 16);
             this.ButtonPath.Name = "ButtonPath";
-            this.ButtonPath.Size = new System.Drawing.Size(124, 23);
+            this.ButtonPath.Size = new System.Drawing.Size(233, 23);
             this.ButtonPath.TabIndex = 5;
             this.ButtonPath.Text = "Select Manually";
             this.ButtonPath.UseVisualStyleBackColor = true;
@@ -148,11 +149,22 @@
             this.ButtonDevices.UseVisualStyleBackColor = true;
             this.ButtonDevices.Click += new System.EventHandler(this.ButtonDevices_Click);
             // 
+            // ButtonDownloadInstall
+            // 
+            this.ButtonDownloadInstall.Location = new System.Drawing.Point(664, 48);
+            this.ButtonDownloadInstall.Name = "ButtonDownloadInstall";
+            this.ButtonDownloadInstall.Size = new System.Drawing.Size(124, 23);
+            this.ButtonDownloadInstall.TabIndex = 12;
+            this.ButtonDownloadInstall.Text = "Download && Install";
+            this.ButtonDownloadInstall.UseVisualStyleBackColor = true;
+            this.ButtonDownloadInstall.Click += new System.EventHandler(this.ButtonDownloadInstall_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ButtonDownloadInstall);
             this.Controls.Add(this.ButtonDevices);
             this.Controls.Add(this.ButtonInstall);
             this.Controls.Add(this.OutputDevices);
@@ -189,5 +201,6 @@
         private RichTextBox OutputDevices;
         private Button ButtonInstall;
         private Button ButtonDevices;
+        private Button ButtonDownloadInstall;
     }
 }
