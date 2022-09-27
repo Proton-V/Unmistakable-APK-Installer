@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace UnmistakableAPKInstaller.Helpers
+﻿namespace UnmistakableAPKInstaller.Helpers
 {
     /// <summary>
     /// Simple logger
@@ -17,6 +15,12 @@ namespace UnmistakableAPKInstaller.Helpers
         public static void Init(string logFileName)
         {
             CustomLogger.logFileName = logFileName;
+            Clear();
+        }
+
+        public static void Clear()
+        {
+            File.WriteAllText(LogPath, string.Empty);
         }
 
         public static void WriteToLog(string formatStr, params string[] args)
