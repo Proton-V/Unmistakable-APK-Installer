@@ -41,6 +41,7 @@
             this.ButtonInstall = new System.Windows.Forms.Button();
             this.ButtonDevices = new System.Windows.Forms.Button();
             this.ButtonDownloadInstall = new System.Windows.Forms.Button();
+            this.ButtonSettings = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ButtonDownload
@@ -159,11 +160,22 @@
             this.ButtonDownloadInstall.UseVisualStyleBackColor = true;
             this.ButtonDownloadInstall.Click += new System.EventHandler(this.ButtonDownloadInstall_Click);
             // 
+            // ButtonSettings
+            // 
+            this.ButtonSettings.Location = new System.Drawing.Point(1, 2);
+            this.ButtonSettings.Name = "ButtonSettings";
+            this.ButtonSettings.Size = new System.Drawing.Size(75, 23);
+            this.ButtonSettings.TabIndex = 13;
+            this.ButtonSettings.Text = "Settings";
+            this.ButtonSettings.UseVisualStyleBackColor = true;
+            this.ButtonSettings.Click += new System.EventHandler(this.ButtonSettings_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ButtonSettings);
             this.Controls.Add(this.ButtonDownloadInstall);
             this.Controls.Add(this.ButtonDevices);
             this.Controls.Add(this.ButtonInstall);
@@ -202,5 +214,6 @@
         private Button ButtonInstall;
         private Button ButtonDevices;
         private Button ButtonDownloadInstall;
+        private Button ButtonSettings;
     }
 }

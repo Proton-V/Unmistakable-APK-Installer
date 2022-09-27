@@ -39,6 +39,7 @@ namespace UnmistakableAPKInstaller
             var aapt2Tool = new Aapt2Tool(aapt2DownloadLink, GetFullPath(aapt2FolderPath));
 
             var gdApiKey = ConfigurationManager.AppSettings["GoogleDriveApiKey"];
+            Debug.WriteLine(gdApiKey);
             gdDownloadHelper = new GoogleDriveDownloadHelper(gdApiKey, DownloadAPKFolder);
 
             cmdToolsProvider = new CmdToolsProvider(
@@ -161,6 +162,13 @@ namespace UnmistakableAPKInstaller
             await DownloadAPK(false);
             await InstallAPK();
             ChangeFormState(MainFormState.Idle);
+        }
+
+        private void ButtonSettings_Click(object sender, EventArgs e)
+        {
+            var settingsForm = new SettingsForm();
+            //settingsForm.ShowDialog();
+            settingsForm.ShowDialog();
         }
 
         #region Download && Install APK

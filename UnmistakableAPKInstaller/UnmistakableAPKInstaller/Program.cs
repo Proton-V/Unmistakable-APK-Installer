@@ -1,5 +1,4 @@
 using System.Configuration;
-using System.Diagnostics;
 using UnmistakableAPKInstaller.Helpers;
 
 namespace UnmistakableAPKInstaller
