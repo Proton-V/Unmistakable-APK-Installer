@@ -1,8 +1,8 @@
 # Unmistakable-APK-Installer
 Simple APK installer 
 
-Download v 1.0.2
-[win-x64 v1.0.2](https://github.com/Proton-V/Unmistakable-APK-Installer/releases/download/v1.0.2/UnmistakableAPKInstaller-v1.0.2-win-x64.rar)
+Download v 1.0.3
+[win-x64 v1.0.3](https://github.com/Proton-V/Unmistakable-APK-Installer/releases/download/v1.0.3/UnmistakableAPKInstaller-v1.0.3-win-x64.rar)
 
 - with easy-load APK by Google Drive public URL
 - with auto-del previous version before installation
