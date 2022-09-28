@@ -1,11 +1,12 @@
 using System.Configuration;
-using System.Diagnostics;
 using UnmistakableAPKInstaller.Helpers;
 
 namespace UnmistakableAPKInstaller
 {
     internal static class Program
     {
+        private static MainForm mainForm;
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -17,8 +18,13 @@ namespace UnmistakableAPKInstaller
 
             ApplicationConfiguration.Initialize();
             
-            var mainForm = new MainForm();
+            mainForm = new MainForm();
             Application.Run(mainForm);
+        }
+
+        public static void ForceUpdateMainForm()
+        {
+            mainForm.ForceUpdate();
         }
     }
 }

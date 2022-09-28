@@ -41,11 +41,13 @@
             this.ButtonInstall = new System.Windows.Forms.Button();
             this.ButtonDevices = new System.Windows.Forms.Button();
             this.ButtonDownloadInstall = new System.Windows.Forms.Button();
+            this.ButtonSettings = new System.Windows.Forms.Button();
+            this.ButtonSaveLogToFile = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ButtonDownload
             // 
-            this.ButtonDownload.Location = new System.Drawing.Point(555, 48);
+            this.ButtonDownload.Location = new System.Drawing.Point(556, 67);
             this.ButtonDownload.Name = "ButtonDownload";
             this.ButtonDownload.Size = new System.Drawing.Size(103, 23);
             this.ButtonDownload.TabIndex = 0;
@@ -55,7 +57,7 @@
             // 
             // InputDownload
             // 
-            this.InputDownload.Location = new System.Drawing.Point(188, 48);
+            this.InputDownload.Location = new System.Drawing.Point(189, 67);
             this.InputDownload.Name = "InputDownload";
             this.InputDownload.Size = new System.Drawing.Size(347, 23);
             this.InputDownload.TabIndex = 1;
@@ -63,7 +65,7 @@
             // LabelDownload
             // 
             this.LabelDownload.AutoSize = true;
-            this.LabelDownload.Location = new System.Drawing.Point(82, 51);
+            this.LabelDownload.Location = new System.Drawing.Point(83, 70);
             this.LabelDownload.Name = "LabelDownload";
             this.LabelDownload.Size = new System.Drawing.Size(100, 15);
             this.LabelDownload.TabIndex = 2;
@@ -71,15 +73,14 @@
             // 
             // OutputDownload
             // 
-            this.OutputDownload.AutoSize = true;
-            this.OutputDownload.Location = new System.Drawing.Point(12, 353);
+            this.OutputDownload.Location = new System.Drawing.Point(12, 394);
             this.OutputDownload.Name = "OutputDownload";
-            this.OutputDownload.Size = new System.Drawing.Size(0, 15);
+            this.OutputDownload.Size = new System.Drawing.Size(776, 47);
             this.OutputDownload.TabIndex = 3;
             // 
             // ProgressBar
             // 
-            this.ProgressBar.Location = new System.Drawing.Point(12, 317);
+            this.ProgressBar.Location = new System.Drawing.Point(12, 368);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(776, 23);
             this.ProgressBar.TabIndex = 4;
@@ -87,7 +88,7 @@
             // LabelPath
             // 
             this.LabelPath.AutoSize = true;
-            this.LabelPath.Location = new System.Drawing.Point(82, 19);
+            this.LabelPath.Location = new System.Drawing.Point(83, 38);
             this.LabelPath.Name = "LabelPath";
             this.LabelPath.Size = new System.Drawing.Size(56, 15);
             this.LabelPath.TabIndex = 7;
@@ -95,7 +96,7 @@
             // 
             // InputPath
             // 
-            this.InputPath.Location = new System.Drawing.Point(188, 16);
+            this.InputPath.Location = new System.Drawing.Point(189, 35);
             this.InputPath.Name = "InputPath";
             this.InputPath.ReadOnly = true;
             this.InputPath.Size = new System.Drawing.Size(347, 23);
@@ -103,7 +104,7 @@
             // 
             // ButtonPath
             // 
-            this.ButtonPath.Location = new System.Drawing.Point(555, 16);
+            this.ButtonPath.Location = new System.Drawing.Point(556, 35);
             this.ButtonPath.Name = "ButtonPath";
             this.ButtonPath.Size = new System.Drawing.Size(233, 23);
             this.ButtonPath.TabIndex = 5;
@@ -114,7 +115,7 @@
             // LabelDevices
             // 
             this.LabelDevices.AutoSize = true;
-            this.LabelDevices.Location = new System.Drawing.Point(82, 108);
+            this.LabelDevices.Location = new System.Drawing.Point(66, 178);
             this.LabelDevices.Name = "LabelDevices";
             this.LabelDevices.Size = new System.Drawing.Size(50, 15);
             this.LabelDevices.TabIndex = 8;
@@ -122,7 +123,7 @@
             // 
             // OutputDevices
             // 
-            this.OutputDevices.Location = new System.Drawing.Point(158, 105);
+            this.OutputDevices.Location = new System.Drawing.Point(142, 175);
             this.OutputDevices.Name = "OutputDevices";
             this.OutputDevices.ReadOnly = true;
             this.OutputDevices.Size = new System.Drawing.Size(521, 125);
@@ -131,9 +132,9 @@
             // 
             // ButtonInstall
             // 
-            this.ButtonInstall.Location = new System.Drawing.Point(388, 258);
+            this.ButtonInstall.Location = new System.Drawing.Point(665, 67);
             this.ButtonInstall.Name = "ButtonInstall";
-            this.ButtonInstall.Size = new System.Drawing.Size(75, 23);
+            this.ButtonInstall.Size = new System.Drawing.Size(124, 23);
             this.ButtonInstall.TabIndex = 10;
             this.ButtonInstall.Text = "Install APK";
             this.ButtonInstall.UseVisualStyleBackColor = true;
@@ -141,17 +142,17 @@
             // 
             // ButtonDevices
             // 
-            this.ButtonDevices.Location = new System.Drawing.Point(701, 128);
+            this.ButtonDevices.Location = new System.Drawing.Point(669, 195);
             this.ButtonDevices.Name = "ButtonDevices";
             this.ButtonDevices.Size = new System.Drawing.Size(75, 78);
             this.ButtonDevices.TabIndex = 11;
-            this.ButtonDevices.Text = "Update devices";
+            this.ButtonDevices.Text = "Update device list";
             this.ButtonDevices.UseVisualStyleBackColor = true;
             this.ButtonDevices.Click += new System.EventHandler(this.ButtonDevices_Click);
             // 
             // ButtonDownloadInstall
             // 
-            this.ButtonDownloadInstall.Location = new System.Drawing.Point(664, 48);
+            this.ButtonDownloadInstall.Location = new System.Drawing.Point(606, 96);
             this.ButtonDownloadInstall.Name = "ButtonDownloadInstall";
             this.ButtonDownloadInstall.Size = new System.Drawing.Size(124, 23);
             this.ButtonDownloadInstall.TabIndex = 12;
@@ -159,11 +160,33 @@
             this.ButtonDownloadInstall.UseVisualStyleBackColor = true;
             this.ButtonDownloadInstall.Click += new System.EventHandler(this.ButtonDownloadInstall_Click);
             // 
+            // ButtonSettings
+            // 
+            this.ButtonSettings.Location = new System.Drawing.Point(1, 2);
+            this.ButtonSettings.Name = "ButtonSettings";
+            this.ButtonSettings.Size = new System.Drawing.Size(75, 32);
+            this.ButtonSettings.TabIndex = 13;
+            this.ButtonSettings.Text = "Settings";
+            this.ButtonSettings.UseVisualStyleBackColor = true;
+            this.ButtonSettings.Click += new System.EventHandler(this.ButtonSettings_Click);
+            // 
+            // ButtonSaveLogToFile
+            // 
+            this.ButtonSaveLogToFile.Location = new System.Drawing.Point(530, 306);
+            this.ButtonSaveLogToFile.Name = "ButtonSaveLogToFile";
+            this.ButtonSaveLogToFile.Size = new System.Drawing.Size(134, 34);
+            this.ButtonSaveLogToFile.TabIndex = 14;
+            this.ButtonSaveLogToFile.Text = "Save Log to File";
+            this.ButtonSaveLogToFile.UseVisualStyleBackColor = true;
+            this.ButtonSaveLogToFile.Click += new System.EventHandler(this.ButtonSaveLogToFile_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.ButtonSaveLogToFile);
+            this.Controls.Add(this.ButtonSettings);
             this.Controls.Add(this.ButtonDownloadInstall);
             this.Controls.Add(this.ButtonDevices);
             this.Controls.Add(this.ButtonInstall);
@@ -202,5 +225,7 @@
         private Button ButtonInstall;
         private Button ButtonDevices;
         private Button ButtonDownloadInstall;
+        private Button ButtonSettings;
+        private Button ButtonSaveLogToFile;
     }
 }

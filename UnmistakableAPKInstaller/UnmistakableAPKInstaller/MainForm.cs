@@ -1,5 +1,4 @@
 using System.Configuration;
-using System.Diagnostics;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools;
 
@@ -20,14 +19,33 @@ namespace UnmistakableAPKInstaller
             Init();
         }
 
+        bool AutoDelPrevApp => Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
+        bool DeviceLogEnabled => Convert.ToBoolean(ConfigurationManager.AppSettings["DeviceLogEnabled"]);
+        int DeviceLogBufferSize => Convert.ToInt32(ConfigurationManager.AppSettings["DeviceLogBufferSize"]);
+
         string AppDomainDirectory => AppDomain.CurrentDomain.BaseDirectory;
         string DownloadAPKFolder => $"{AppDomainDirectory}GoogleDrive";
 
         CmdToolsProvider cmdToolsProvider;
         GoogleDriveDownloadHelper gdDownloadHelper;
 
+        string deviceLogFolderPath;
+
+        public void ForceUpdate()
+        {
+            Init();
+        }
+
         private void Init()
         {
+            deviceLogFolderPath = ConfigurationManager.AppSettings["DeviceLogFolderPath"];
+            if (deviceLogFolderPath == string.Empty)
+            {
+                deviceLogFolderPath = Path.Combine(Environment.CurrentDirectory,
+                    ConfigurationManager.AppSettings["DeviceLogDefaultFolderName"]);
+            }
+            Directory.CreateDirectory(deviceLogFolderPath);
+
             Directory.CreateDirectory(DownloadAPKFolder);
 
             var platformToolsDownloadLink = ConfigurationManager.AppSettings["PlatformToolsDownloadLink"];
@@ -87,12 +105,16 @@ namespace UnmistakableAPKInstaller
                     ButtonDownload.Visible = false;
                     ButtonDownloadInstall.Visible = false;
                     ButtonInstall.Visible = false;
+                    ButtonSettings.Visible = false;
+                    ButtonSaveLogToFile.Visible = false;
                     break;
             }
         }
 
         private void ChangeVisibility(bool value)
         {
+            ButtonSettings.Visible = value;
+            ButtonSaveLogToFile.Visible = value;
             ButtonDownload.Visible = value;
             InputDownload.Visible = value;
             LabelDownload.Visible = value;
@@ -162,6 +184,29 @@ namespace UnmistakableAPKInstaller
             await InstallAPK();
             ChangeFormState(MainFormState.Idle);
         }
+        
+        private void ButtonSettings_Click(object sender, EventArgs e)
+        {
+            var settingsForm = new SettingsForm();
+            settingsForm.ShowDialog();
+        }
+
+        private async void ButtonSaveLogToFile_Click(object sender, EventArgs e)
+        {
+            string folderPath = deviceLogFolderPath;
+            var currentDateTime = DateTime.UtcNow;
+            var fileName = $"{Directory.GetFiles(folderPath, "*.log").Length}_{currentDateTime.ToFileTimeUtc()}.log";
+
+            var path = Path.Combine(folderPath, fileName);
+            var status = await cmdToolsProvider.TrySaveLogToFile(path, null);
+
+            MessageBox.Show(status ? $"Saved to {path}!" : "Save error...",
+                "Save log status", MessageBoxButtons.OK);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
 
         #region Download && Install APK
         private async Task DownloadAPK(bool showStatus = true)
@@ -190,13 +235,22 @@ namespace UnmistakableAPKInstaller
 
         private async Task InstallAPK()
         {
-            ProgressBar.Value = 10;
-            OutputDownload.Text = "Uninstall previous version...";
-            await cmdToolsProvider.TryUninstallAPKByPath(InputPath.Text, (str) => OutputDownload.Text = str);
+            if (AutoDelPrevApp)
+            {
+                ProgressBar.Value = 10;
+                OutputDownload.Text = "Uninstall previous version...";
+                await cmdToolsProvider.TryUninstallAPKByPath(InputPath.Text, (str) => OutputDownload.Text = str);
+            }
 
             ProgressBar.Value = 50;
             OutputDownload.Text = "Install new version...";
             var status = await cmdToolsProvider.TryInstallAPK(InputPath.Text, (str) => OutputDownload.Text = str);
+
+            if (DeviceLogEnabled)
+            {
+                OutputDownload.Text = "Set log buffer size...";
+                await cmdToolsProvider.TrySetLogBufferSize(DeviceLogBufferSize, (str) => OutputDownload.Text = str);
+            }
 
             ProgressBar.Value = 100;
             MessageBox.Show(status ? "Install is completed!" : "Fail with install...",
