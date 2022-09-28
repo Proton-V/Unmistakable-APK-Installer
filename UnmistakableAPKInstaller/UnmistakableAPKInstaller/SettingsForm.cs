@@ -12,6 +12,8 @@ namespace UnmistakableAPKInstaller
 
         private void Init()
         {
+            this.CheckBoxAutoDelPrevApp.Checked = Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
+
             this.CheckBoxSetBufferSizeOnInstallAPK.Checked = Convert.ToBoolean(ConfigurationManager.AppSettings["DeviceLogEnabled"]);
             this.TextBoxBuffSize.Text = ConfigurationManager.AppSettings["DeviceLogBufferSize"];
 
@@ -30,6 +32,7 @@ namespace UnmistakableAPKInstaller
         {
             Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
+            config.AppSettings.Settings["AutoDelPrevApp"].Value = CheckBoxAutoDelPrevApp.Checked.ToString();
             config.AppSettings.Settings["DeviceLogEnabled"].Value = CheckBoxSetBufferSizeOnInstallAPK.Checked.ToString();
             config.AppSettings.Settings["DeviceLogBufferSize"].Value = TextBoxBuffSize.Text;
             config.AppSettings.Settings["DeviceLogFolderPath"].Value = InputDeviceLogFolderPath.Text;

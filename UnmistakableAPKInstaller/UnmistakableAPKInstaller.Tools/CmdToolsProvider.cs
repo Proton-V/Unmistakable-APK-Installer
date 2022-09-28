@@ -45,5 +45,7 @@
         public async Task<string> GetAndroidDevices() => await platformTools.GetAndroidDevices();
         public async Task<bool> TryUninstallAPK(string bundleName, Action<string> outText) => await platformTools.TryUninstallAPK(bundleName, outText);
         public async Task<bool> TryInstallAPK(string path, Action<string> outText) => await platformTools.TryInstallAPK(path, outText);
+        public async Task<bool> TrySetLogBufferSize(int sizeInMb, Action<string> outText) => await platformTools.TrySetLogBufferSize(sizeInMb, outText);
+        public async Task<bool> TrySaveLogToFile(string path, Action<string>? outText) => await platformTools.TrySaveLogToFile(path, outText);
     }
 }

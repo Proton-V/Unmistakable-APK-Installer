@@ -111,5 +111,41 @@ namespace UnmistakableAPKInstaller.Tools
 
             return !string.IsNullOrEmpty(data.data) && data.data.Contains("Success");
         }
+
+        public async Task<bool> TrySetLogBufferSize(int sizeInMb, Action<string> outText)
+        {
+            var args = $"logcat -G {sizeInMb}M";
+            var data = await CmdHelper.StartProcess(AdbPath, args);
+            if (!string.IsNullOrEmpty(data.error))
+            {
+                CustomLogger.WriteToLog("Android platform tools: {0}", data.error);
+                outText(data.error);
+            }
+            else
+            {
+                outText(data.data);
+            }
+
+            return string.IsNullOrEmpty(data.error);
+        }
+
+        public async Task<bool> TrySaveLogToFile(string path, Action<string>? outText)
+        {
+            var args = $"logcat -d";
+            var data = await CmdHelper.StartProcess(AdbPath, args);
+
+            if (!string.IsNullOrEmpty(data.error))
+            {
+                CustomLogger.WriteToLog("Android platform tools: {0}", data.error);
+                outText?.Invoke(data.error);
+            }
+            else
+            {
+                outText?.Invoke(data.data);
+                await File.WriteAllTextAsync(path, data.data);
+            }
+
+            return string.IsNullOrEmpty(data.error);
+        }
     }
 }

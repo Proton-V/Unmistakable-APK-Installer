@@ -1,5 +1,4 @@
 using System.Configuration;
-using System.Diagnostics;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools;
 
@@ -20,6 +19,10 @@ namespace UnmistakableAPKInstaller
             Init();
         }
 
+        bool AutoDelPrevApp => Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
+        bool DeviceLogEnabled => Convert.ToBoolean(ConfigurationManager.AppSettings["DeviceLogEnabled"]);
+        int DeviceLogBufferSize => Convert.ToInt32(ConfigurationManager.AppSettings["DeviceLogBufferSize"]);
+
         string AppDomainDirectory => AppDomain.CurrentDomain.BaseDirectory;
         string DownloadAPKFolder => $"{AppDomainDirectory}GoogleDrive";
 
@@ -39,7 +42,6 @@ namespace UnmistakableAPKInstaller
             var aapt2Tool = new Aapt2Tool(aapt2DownloadLink, GetFullPath(aapt2FolderPath));
 
             var gdApiKey = ConfigurationManager.AppSettings["GoogleDriveApiKey"];
-            Debug.WriteLine(gdApiKey);
             gdDownloadHelper = new GoogleDriveDownloadHelper(gdApiKey, DownloadAPKFolder);
 
             cmdToolsProvider = new CmdToolsProvider(
@@ -163,12 +165,43 @@ namespace UnmistakableAPKInstaller
             await InstallAPK();
             ChangeFormState(MainFormState.Idle);
         }
-
+        
         private void ButtonSettings_Click(object sender, EventArgs e)
         {
             var settingsForm = new SettingsForm();
-            //settingsForm.ShowDialog();
             settingsForm.ShowDialog();
+        }
+
+        private async void ButtonSaveLogToFile_Click(object sender, EventArgs e)
+        {
+            string folderPath;
+            if(OpenDeviceLogPathExplorer(out folderPath))
+            {
+                var currentDateTime = DateTime.UtcNow;
+                var path = Path.Combine(folderPath, $"{currentDateTime.ToFileTimeUtc()}.log");
+                await cmdToolsProvider.TrySaveLogToFile(path, null);
+            }
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+        }
+
+        private bool OpenDeviceLogPathExplorer(out string path)
+        {
+            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
+            {
+                folderBrowserDialog.InitialDirectory = Environment.CurrentDirectory;
+
+                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+                {
+                    path = folderBrowserDialog.SelectedPath;
+                    return true;
+                }
+            }
+
+            path = null;
+            return false;
         }
 
         #region Download && Install APK
@@ -198,13 +231,22 @@ namespace UnmistakableAPKInstaller
 
         private async Task InstallAPK()
         {
-            ProgressBar.Value = 10;
-            OutputDownload.Text = "Uninstall previous version...";
-            await cmdToolsProvider.TryUninstallAPKByPath(InputPath.Text, (str) => OutputDownload.Text = str);
+            if (AutoDelPrevApp)
+            {
+                ProgressBar.Value = 10;
+                OutputDownload.Text = "Uninstall previous version...";
+                await cmdToolsProvider.TryUninstallAPKByPath(InputPath.Text, (str) => OutputDownload.Text = str);
+            }
 
             ProgressBar.Value = 50;
             OutputDownload.Text = "Install new version...";
             var status = await cmdToolsProvider.TryInstallAPK(InputPath.Text, (str) => OutputDownload.Text = str);
+
+            if (DeviceLogEnabled)
+            {
+                OutputDownload.Text = "Set log buffer size...";
+                await cmdToolsProvider.TrySetLogBufferSize(DeviceLogBufferSize, (str) => OutputDownload.Text = str);
+            }
 
             ProgressBar.Value = 100;
             MessageBox.Show(status ? "Install is completed!" : "Fail with install...",
