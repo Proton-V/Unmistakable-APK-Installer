@@ -37,6 +37,11 @@
 
         public async Task<bool> TryUninstallAPKByPath(string path, Action<string> outText)
         {
+            if (!await ContainsAnyDevices())
+            {
+                return false;
+            }
+
             var bundleName = await TryGetAPKBundleName(path);
             return await TryUninstallAPK(bundleName, outText);
         }
