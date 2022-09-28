@@ -23,8 +23,8 @@ namespace UnmistakableAPKInstaller
         bool DeviceLogEnabled => Convert.ToBoolean(ConfigurationManager.AppSettings["DeviceLogEnabled"]);
         int DeviceLogBufferSize => Convert.ToInt32(ConfigurationManager.AppSettings["DeviceLogBufferSize"]);
 
-        string AppDomainDirectory => AppDomain.CurrentDomain.BaseDirectory;
-        string DownloadAPKFolder => $"{AppDomainDirectory}GoogleDrive";
+        string AppDirectory => Environment.CurrentDirectory;
+        string DownloadAPKFolder => $"{AppDirectory}GoogleDrive";
 
         CmdToolsProvider cmdToolsProvider;
         GoogleDriveDownloadHelper gdDownloadHelper;
@@ -69,7 +69,7 @@ namespace UnmistakableAPKInstaller
             }
         }
 
-        private string GetFullPath(string relativePath) => $"{AppDomainDirectory}/{relativePath}";
+        private string GetFullPath(string relativePath) => $"{AppDirectory}/{relativePath}";
 
         private async void DownloadTools()
         {

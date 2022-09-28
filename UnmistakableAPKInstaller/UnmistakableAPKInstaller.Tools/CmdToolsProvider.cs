@@ -37,11 +37,17 @@
 
         public async Task<bool> TryUninstallAPKByPath(string path, Action<string> outText)
         {
+            if (!await ContainsAnyDevices())
+            {
+                return false;
+            }
+
             var bundleName = await TryGetAPKBundleName(path);
             return await TryUninstallAPK(bundleName, outText);
         }
 
         public async Task<string> TryGetAPKBundleName(string path) => await aapt2Tool.TryGetAPKBundleName(path);
+        public async Task<bool> ContainsAnyDevices() => await platformTools.ContainsAnyDevices();
         public async Task<string> GetAndroidDevices() => await platformTools.GetAndroidDevices();
         public async Task<bool> TryUninstallAPK(string bundleName, Action<string> outText) => await platformTools.TryUninstallAPK(bundleName, outText);
         public async Task<bool> TryInstallAPK(string path, Action<string> outText) => await platformTools.TryInstallAPK(path, outText);
