@@ -41,6 +41,8 @@ namespace UnmistakableAPKInstaller
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
 
+            Program.ForceUpdateMainForm();
+
             Close();
         }
 

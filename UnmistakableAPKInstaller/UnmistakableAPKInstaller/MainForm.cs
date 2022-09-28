@@ -29,6 +29,11 @@ namespace UnmistakableAPKInstaller
         CmdToolsProvider cmdToolsProvider;
         GoogleDriveDownloadHelper gdDownloadHelper;
 
+        public void ForceUpdate()
+        {
+            Init();
+        }
+
         private void Init()
         {
             Directory.CreateDirectory(DownloadAPKFolder);
