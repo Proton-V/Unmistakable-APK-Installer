@@ -62,6 +62,18 @@ namespace UnmistakableAPKInstaller.Tools
             }
         }
 
+        public async Task<bool> ContainsAnyDevices()
+        {
+            var str = await GetAndroidDevices();
+            var hasDevice = str.Replace("devices", "").Contains("device");
+            if (!hasDevice)
+            {
+                CustomLogger.WriteToLog("Device list is empty!");
+            }
+
+            return hasDevice;
+        }
+
         public async Task<string> GetAndroidDevices()
         {
             var args = "devices";
@@ -79,6 +91,11 @@ namespace UnmistakableAPKInstaller.Tools
 
         public async Task<bool> TryUninstallAPK(string bundleName, Action<string> outText)
         {
+            if (!await ContainsAnyDevices())
+            {
+                return false;
+            }
+
             var args = $"uninstall {bundleName}";
             var data = await CmdHelper.StartProcess(AdbPath, args);
             outText(data.data ?? data.error);
@@ -97,6 +114,11 @@ namespace UnmistakableAPKInstaller.Tools
 
         public async Task<bool> TryInstallAPK(string path, Action<string> outText)
         {
+            if (!await ContainsAnyDevices())
+            {
+                return false;
+            }
+
             var args = $"install {path}";
             var data = await CmdHelper.StartProcess(AdbPath, args);
             if (!string.IsNullOrEmpty(data.error))
@@ -114,6 +136,11 @@ namespace UnmistakableAPKInstaller.Tools
 
         public async Task<bool> TrySetLogBufferSize(int sizeInMb, Action<string> outText)
         {
+            if (!await ContainsAnyDevices())
+            {
+                return false;
+            }
+
             var args = $"logcat -G {sizeInMb}M";
             var data = await CmdHelper.StartProcess(AdbPath, args);
             if (!string.IsNullOrEmpty(data.error))
@@ -131,6 +158,11 @@ namespace UnmistakableAPKInstaller.Tools
 
         public async Task<bool> TrySaveLogToFile(string path, Action<string>? outText)
         {
+            if (!await ContainsAnyDevices())
+            {
+                return false;
+            }
+
             var args = $"logcat -d";
             var data = await CmdHelper.StartProcess(AdbPath, args);
 
