@@ -29,6 +29,8 @@ namespace UnmistakableAPKInstaller
         CmdToolsProvider cmdToolsProvider;
         GoogleDriveDownloadHelper gdDownloadHelper;
 
+        string deviceLogFolderPath;
+
         public void ForceUpdate()
         {
             Init();
@@ -36,6 +38,14 @@ namespace UnmistakableAPKInstaller
 
         private void Init()
         {
+            deviceLogFolderPath = ConfigurationManager.AppSettings["DeviceLogFolderPath"];
+            if (deviceLogFolderPath == string.Empty)
+            {
+                deviceLogFolderPath = Path.Combine(Environment.CurrentDirectory,
+                    ConfigurationManager.AppSettings["DeviceLogDefaultFolderName"]);
+            }
+            Directory.CreateDirectory(deviceLogFolderPath);
+
             Directory.CreateDirectory(DownloadAPKFolder);
 
             var platformToolsDownloadLink = ConfigurationManager.AppSettings["PlatformToolsDownloadLink"];
@@ -95,12 +105,16 @@ namespace UnmistakableAPKInstaller
                     ButtonDownload.Visible = false;
                     ButtonDownloadInstall.Visible = false;
                     ButtonInstall.Visible = false;
+                    ButtonSettings.Visible = false;
+                    ButtonSaveLogToFile.Visible = false;
                     break;
             }
         }
 
         private void ChangeVisibility(bool value)
         {
+            ButtonSettings.Visible = value;
+            ButtonSaveLogToFile.Visible = value;
             ButtonDownload.Visible = value;
             InputDownload.Visible = value;
             LabelDownload.Visible = value;
@@ -179,34 +193,19 @@ namespace UnmistakableAPKInstaller
 
         private async void ButtonSaveLogToFile_Click(object sender, EventArgs e)
         {
-            string folderPath;
-            if(OpenDeviceLogPathExplorer(out folderPath))
-            {
-                var currentDateTime = DateTime.UtcNow;
-                var path = Path.Combine(folderPath, $"{currentDateTime.ToFileTimeUtc()}.log");
-                await cmdToolsProvider.TrySaveLogToFile(path, null);
-            }
+            string folderPath = deviceLogFolderPath;
+            var currentDateTime = DateTime.UtcNow;
+            var fileName = $"{Directory.GetFiles(folderPath, "*.log").Length}_{currentDateTime.ToFileTimeUtc()}.log";
+
+            var path = Path.Combine(folderPath, fileName);
+            var status = await cmdToolsProvider.TrySaveLogToFile(path, null);
+
+            MessageBox.Show(status ? $"Saved to {path}!" : "Save error...",
+                "Save log status", MessageBoxButtons.OK);
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
-        }
-
-        private bool OpenDeviceLogPathExplorer(out string path)
-        {
-            using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
-            {
-                folderBrowserDialog.InitialDirectory = Environment.CurrentDirectory;
-
-                if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-                {
-                    path = folderBrowserDialog.SelectedPath;
-                    return true;
-                }
-            }
-
-            path = null;
-            return false;
         }
 
         #region Download && Install APK
