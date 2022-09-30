@@ -23,13 +23,14 @@
             File.WriteAllText(LogPath, string.Empty);
         }
 
-        public static void WriteToLog(string formatStr, params string[] args)
+        public static void Log(string formatStr, params string[] formatArgs)
         {
-            var str = string.Format(formatStr, args);
-            WriteToLog(str);
+            var str = string.Format(formatStr, formatArgs);
+            Log(str);
         }
 
-        public static void WriteToLog(string msg)
+        // TODO: add log type
+        public static void Log(string msg)
         {
             lock (logLock)
             {

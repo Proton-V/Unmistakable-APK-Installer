@@ -56,7 +56,7 @@ namespace UnmistakableAPKInstaller.Tools
                 catch (Exception e)
                 {
                     outText(e.Message);
-                    CustomLogger.WriteToLog("Android platform tools: {0}", e.ToString());
+                    CustomLogger.Log("Android platform tools: {0}", e.ToString());
                     return false;
                 }
             }
@@ -68,7 +68,7 @@ namespace UnmistakableAPKInstaller.Tools
             var hasDevice = str.Replace("devices", "").Contains("device");
             if (!hasDevice)
             {
-                CustomLogger.WriteToLog("Device list is empty!");
+                CustomLogger.Log("Device list is empty!");
             }
 
             return hasDevice;
@@ -80,7 +80,7 @@ namespace UnmistakableAPKInstaller.Tools
             var data = await CmdHelper.StartProcess(AdbPath, args);
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.WriteToLog("Android platform tools: {0}", data.error);
+                CustomLogger.Log("Android platform tools: {0}", data.error);
                 return data.error;
             }
             else
@@ -101,7 +101,7 @@ namespace UnmistakableAPKInstaller.Tools
             outText(data.data ?? data.error);
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.WriteToLog("Android platform tools: {0}", data.error);
+                CustomLogger.Log("Android platform tools: {0}", data.error);
                 outText(data.error);
             }
             else
@@ -123,7 +123,7 @@ namespace UnmistakableAPKInstaller.Tools
             var data = await CmdHelper.StartProcess(AdbPath, args);
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.WriteToLog("Android platform tools: {0}", data.error);
+                CustomLogger.Log("Android platform tools: {0}", data.error);
                 outText(data.error);
             }
             else
@@ -145,7 +145,7 @@ namespace UnmistakableAPKInstaller.Tools
             var data = await CmdHelper.StartProcess(AdbPath, args);
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.WriteToLog("Android platform tools: {0}", data.error);
+                CustomLogger.Log("Android platform tools: {0}", data.error);
                 outText(data.error);
             }
             else
@@ -168,7 +168,7 @@ namespace UnmistakableAPKInstaller.Tools
 
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.WriteToLog("Android platform tools: {0}", data.error);
+                CustomLogger.Log("Android platform tools: {0}", data.error);
                 outText?.Invoke(data.error);
             }
             else

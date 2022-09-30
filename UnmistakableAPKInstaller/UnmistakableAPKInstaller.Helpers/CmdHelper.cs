@@ -37,7 +37,7 @@ namespace UnmistakableAPKInstaller.Helpers
 
                     if (!string.IsNullOrEmpty(errorStr))
                     {
-                        CustomLogger.WriteToLog("CmdHelper: {0}", errorStr);
+                        CustomLogger.Log("CmdHelper: {0}", errorStr);
                     }
 
                     return (outStr, errorStr);
@@ -45,7 +45,7 @@ namespace UnmistakableAPKInstaller.Helpers
             }
             catch(Exception e)
             {
-                CustomLogger.WriteToLog("GD Download Helper: {0}", e.ToString());
+                CustomLogger.Log("GD Download Helper: {0}", e.ToString());
                 return (null, e.Message);
             }
         }

@@ -56,7 +56,7 @@ namespace UnmistakableAPKInstaller.Helpers
                 catch (Exception e)
                 {
                     outText(e.Message);
-                    CustomLogger.WriteToLog("GD Download Helper: {0}", e.ToString());
+                    CustomLogger.Log("GD Download Helper: {0}", e.ToString());
                     return (false, string.Empty);
                 }
             }
@@ -72,7 +72,7 @@ namespace UnmistakableAPKInstaller.Helpers
             }
             catch (Exception e)
             {
-                CustomLogger.WriteToLog("GD Download Helper: {0}", e.ToString());
+                CustomLogger.Log("GD Download Helper: {0}", e.ToString());
                 return string.Empty;
             }
         }
@@ -93,7 +93,7 @@ namespace UnmistakableAPKInstaller.Helpers
                 }
                 catch (Exception e)
                 {
-                    CustomLogger.WriteToLog("GD Download Helper: {0}", e.ToString());
+                    CustomLogger.Log("GD Download Helper: {0}", e.ToString());
                     return null;
                 }
             }

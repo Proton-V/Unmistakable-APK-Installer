@@ -49,7 +49,7 @@ namespace UnmistakableAPKInstaller.Tools
                 catch (Exception e)
                 {
                     outText(e.Message);
-                    CustomLogger.WriteToLog("Aapt2: {0}", e.ToString());
+                    CustomLogger.Log("Aapt2: {0}", e.ToString());
                     return false;
                 }
             }
@@ -72,7 +72,7 @@ namespace UnmistakableAPKInstaller.Tools
             }
             catch (Exception e)
             {
-                CustomLogger.WriteToLog("Aapt2: {0}", e.ToString());
+                CustomLogger.Log("Aapt2: {0}", e.ToString());
                 return e.Message;
             }
         }
