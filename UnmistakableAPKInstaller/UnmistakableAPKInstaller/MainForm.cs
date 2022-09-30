@@ -59,9 +59,9 @@ namespace UnmistakableAPKInstaller
             var gdApiKey = ConfigurationManager.AppSettings["GoogleDriveApiKey"];
             gdDownloadHelper = new GoogleDriveDownloadHelper(gdApiKey, DownloadAPKFolder);
 
-            cmdToolsProvider = new CmdToolsProvider(
-                platformTools,
-                aapt2Tool);
+            cmdToolsProvider = new CmdToolsProvider()
+                .AddTool(platformTools)
+                .AddTool(aapt2Tool);
 
             if (!cmdToolsProvider.CheckExistsTools())
             {

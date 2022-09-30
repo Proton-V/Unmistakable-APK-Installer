@@ -2,29 +2,30 @@
 {
     public class CmdToolsProvider
     {
-        public CmdToolsProvider(AndroidPlatformTools platformTools, Aapt2Tool aapt2Tool)
+        public CmdToolsProvider(params BaseCmdTool[] defaultTools)
         {
-            this.platformTools = platformTools;
-            this.aapt2Tool = aapt2Tool;
+            tools = new Dictionary<Type, BaseCmdTool>();
+            foreach (var tool in defaultTools)
+            {
+                tools.Add(tool.GetType(), tool);
+            }
         }
 
-        AndroidPlatformTools platformTools;
-        Aapt2Tool aapt2Tool;
+        internal Dictionary<Type, BaseCmdTool> tools;
 
-        BaseCmdTool[] Tools => new BaseCmdTool[]
+        private T GetTool<T>() where T : BaseCmdTool
         {
-            platformTools,
-            aapt2Tool
-        };
+            return (T)tools.Values.FirstOrDefault(x => x.GetType() == typeof(T));
+        }
 
         public bool CheckExistsTools()
         {
-            return Tools.All(x => x.Exists());
+            return tools.All(x => x.Value.Exists());
         }
 
         public async Task<bool> TryDownloadTools(Action<string> outText, Action<int> outProgress)
         {
-            var requiredTools = Tools.Where(x => !x.Exists());
+            var requiredTools = tools.Values.Where(x => !x.Exists());
             var isSuccessful = true;
 
             foreach(var tool in requiredTools)
@@ -46,12 +47,19 @@
             return await TryUninstallAPK(bundleName, outText);
         }
 
-        public async Task<string> TryGetAPKBundleName(string path) => await aapt2Tool.TryGetAPKBundleName(path);
-        public async Task<bool> ContainsAnyDevices() => await platformTools.ContainsAnyDevices();
-        public async Task<string> GetAndroidDevices() => await platformTools.GetAndroidDevices();
-        public async Task<bool> TryUninstallAPK(string bundleName, Action<string> outText) => await platformTools.TryUninstallAPK(bundleName, outText);
-        public async Task<bool> TryInstallAPK(string path, Action<string> outText) => await platformTools.TryInstallAPK(path, outText);
-        public async Task<bool> TrySetLogBufferSize(int sizeInMb, Action<string> outText) => await platformTools.TrySetLogBufferSize(sizeInMb, outText);
-        public async Task<bool> TrySaveLogToFile(string path, Action<string>? outText) => await platformTools.TrySaveLogToFile(path, outText);
+        public async Task<string> TryGetAPKBundleName(string path) => 
+            await GetTool<Aapt2Tool>().TryGetAPKBundleName(path);
+        public async Task<bool> ContainsAnyDevices() => 
+            await GetTool<AndroidPlatformTools>().ContainsAnyDevices();
+        public async Task<string> GetAndroidDevices() => 
+            await GetTool<AndroidPlatformTools>().GetAndroidDevices();
+        public async Task<bool> TryUninstallAPK(string bundleName, Action<string> outText) => 
+            await GetTool<AndroidPlatformTools>().TryUninstallAPK(bundleName, outText);
+        public async Task<bool> TryInstallAPK(string path, Action<string> outText) => 
+            await GetTool<AndroidPlatformTools>().TryInstallAPK(path, outText);
+        public async Task<bool> TrySetLogBufferSize(int sizeInMb, Action<string> outText) => 
+            await GetTool<AndroidPlatformTools>().TrySetLogBufferSize(sizeInMb, outText);
+        public async Task<bool> TrySaveLogToFile(string path, Action<string>? outText) => 
+            await GetTool<AndroidPlatformTools>().TrySaveLogToFile(path, outText);
     }
 }
