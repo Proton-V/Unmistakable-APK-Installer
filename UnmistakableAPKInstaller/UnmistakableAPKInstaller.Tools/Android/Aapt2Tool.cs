@@ -2,7 +2,7 @@
 using System.Net;
 using UnmistakableAPKInstaller.Helpers;
 
-namespace UnmistakableAPKInstaller.Tools
+namespace UnmistakableAPKInstaller.Tools.Android
 {
     public class Aapt2Tool : BaseCmdTool
     {
@@ -31,7 +31,7 @@ namespace UnmistakableAPKInstaller.Tools
 
             using (WebClient wc = new WebClient())
             {
-                wc.DownloadProgressChanged += (sender, args) => 
+                wc.DownloadProgressChanged += (sender, args) =>
                 {
                     outProgress(args.ProgressPercentage);
                 };

@@ -8,7 +8,7 @@ namespace UnmistakableAPKInstaller.Tools
         {
             var toolType = typeof(T);
 
-            if (cmdToolsProvider.tools.Any(x => x.GetType() == toolType))
+            if (!cmdToolsProvider.tools.Any(x => x.GetType() == toolType))
             {
                 cmdToolsProvider.tools.Add(toolType, toolInstance);
             }

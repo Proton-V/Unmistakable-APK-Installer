@@ -1,4 +1,7 @@
-﻿namespace UnmistakableAPKInstaller.Tools
+﻿using UnmistakableAPKInstaller.Tools.Android;
+using UnmistakableAPKInstaller.Tools.Android.Data;
+
+namespace UnmistakableAPKInstaller.Tools
 {
     public class CmdToolsProvider
     {
@@ -48,18 +51,18 @@
         }
 
         public async Task<string> TryGetAPKBundleName(string path) => 
-            await GetTool<Aapt2Tool>().TryGetAPKBundleName(path);
+            await GetTool<Aapt2Tool>()?.TryGetAPKBundleName(path);
         public async Task<bool> ContainsAnyDevices() => 
-            await GetTool<AndroidPlatformTools>().ContainsAnyDevices();
-        public async Task<string> GetAndroidDevices() => 
-            await GetTool<AndroidPlatformTools>().GetAndroidDevices();
+            await GetTool<AndroidPlatformTools>()?.ContainsAnyDevices();
+        public async Task<DeviceData[]> GetAndroidDevices() => 
+            await GetTool<AndroidPlatformTools>()?.GetAndroidDevices();
         public async Task<bool> TryUninstallAPK(string bundleName, Action<string> outText) => 
-            await GetTool<AndroidPlatformTools>().TryUninstallAPK(bundleName, outText);
+            await GetTool<AndroidPlatformTools>()?.TryUninstallAPK(bundleName, outText);
         public async Task<bool> TryInstallAPK(string path, Action<string> outText) => 
-            await GetTool<AndroidPlatformTools>().TryInstallAPK(path, outText);
+            await GetTool<AndroidPlatformTools>()?.TryInstallAPK(path, outText);
         public async Task<bool> TrySetLogBufferSize(int sizeInMb, Action<string> outText) => 
-            await GetTool<AndroidPlatformTools>().TrySetLogBufferSize(sizeInMb, outText);
+            await GetTool<AndroidPlatformTools>()?.TrySetLogBufferSize(sizeInMb, outText);
         public async Task<bool> TrySaveLogToFile(string path, Action<string>? outText) => 
-            await GetTool<AndroidPlatformTools>().TrySaveLogToFile(path, outText);
+            await GetTool<AndroidPlatformTools>()?.TrySaveLogToFile(path, outText);
     }
 }

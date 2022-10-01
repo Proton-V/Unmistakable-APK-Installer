@@ -1,8 +1,9 @@
 ﻿using System.IO.Compression;
 using System.Net;
 using UnmistakableAPKInstaller.Helpers;
+using UnmistakableAPKInstaller.Tools.Android.Data;
 
-namespace UnmistakableAPKInstaller.Tools
+namespace UnmistakableAPKInstaller.Tools.Android
 {
     public class AndroidPlatformTools : BaseCmdTool
     {
@@ -64,7 +65,7 @@ namespace UnmistakableAPKInstaller.Tools
 
         public async Task<bool> ContainsAnyDevices()
         {
-            var str = await GetAndroidDevices();
+            var str = await GetAndroidDevicesStr();
             var hasDevice = str.Replace("devices", "").Contains("device");
             if (!hasDevice)
             {
@@ -74,18 +75,39 @@ namespace UnmistakableAPKInstaller.Tools
             return hasDevice;
         }
 
-        public async Task<string> GetAndroidDevices()
+        public async Task<DeviceData[]> GetAndroidDevices()
         {
-            var args = "devices";
-            var data = await CmdHelper.StartProcess(AdbPath, args);
-            if (!string.IsNullOrEmpty(data.error))
+            var result = new List<DeviceData>();
+
+            var deviceListData = await GetAndroidDevicesStr();
+
+            if (!string.IsNullOrEmpty(deviceListData))
             {
-                CustomLogger.Log("Android platform tools: {0}", data.error);
-                return data.error;
+                var datas = deviceListData
+                    .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 1; i < datas.Length; i++)
+                {
+                    var deviceData = new DeviceData(datas[i]);
+                    result.Add(deviceData);
+                }
+            }
+
+            return result.ToArray();
+        }
+
+        private async Task<string> GetAndroidDevicesStr()
+        {
+            var args = "devices -l";
+            var processData = await CmdHelper.StartProcess(AdbPath, args);
+
+            if (!string.IsNullOrEmpty(processData.error))
+            {
+                CustomLogger.Log("Android platform tools: {0}", processData.error);
+                return string.Empty;
             }
             else
             {
-                return data.data;
+                return processData.data;
             }
         }
 

@@ -1,6 +1,7 @@
 using System.Configuration;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools;
+using UnmistakableAPKInstaller.Tools.Android;
 
 namespace UnmistakableAPKInstaller
 {
@@ -67,6 +68,13 @@ namespace UnmistakableAPKInstaller
             {
                 DownloadTools();
             }
+
+            InitInternalComponents();
+        }
+
+        private void InitInternalComponents()
+        {
+            InitDevicesDropDownListAsync();
         }
 
         private string GetFullPath(string relativePath) => $"{AppDirectory}/{relativePath}";
@@ -126,7 +134,6 @@ namespace UnmistakableAPKInstaller
             LabelDevices.Visible = value;
             OutputDevices.Visible = value;
             ButtonInstall.Visible = value;
-            ButtonDevices.Visible = value;
             ButtonDownloadInstall.Visible = value;
         }
 
@@ -170,11 +177,6 @@ namespace UnmistakableAPKInstaller
         private async void ButtonInstall_Click(object sender, EventArgs e)
         {
             await InstallAPK();
-        }
-
-        private async void ButtonDevices_Click(object sender, EventArgs e)
-        {
-            OutputDevices.Text = await cmdToolsProvider.GetAndroidDevices();
         }
 
         private async void ButtonDownloadInstall_Click(object sender, EventArgs e)
@@ -258,6 +260,26 @@ namespace UnmistakableAPKInstaller
 
             OutputDownload.ResetText();
             ProgressBar.Value = 0;
+        }
+        #endregion
+
+        #region Devices DropDownList
+        private async void InitDevicesDropDownListAsync()
+        {
+            DropdownListDevices.Items.Clear();
+            DropdownListDevices.Items.Add("Null");
+
+            await UpdateListAsync();
+
+            DropdownListDevices.SelectedIndex = DropdownListDevices.Items.Count - 1;
+        }
+
+        private async Task UpdateListAsync()
+        {
+            foreach (var deviceData in await cmdToolsProvider.GetAndroidDevices())
+            {
+                DropdownListDevices.Items.Add(deviceData.serialNumber);
+            }
         }
         #endregion
     }

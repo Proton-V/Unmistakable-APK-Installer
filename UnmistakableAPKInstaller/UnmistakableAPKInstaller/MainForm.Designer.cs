@@ -39,10 +39,10 @@
             this.LabelDevices = new System.Windows.Forms.Label();
             this.OutputDevices = new System.Windows.Forms.RichTextBox();
             this.ButtonInstall = new System.Windows.Forms.Button();
-            this.ButtonDevices = new System.Windows.Forms.Button();
             this.ButtonDownloadInstall = new System.Windows.Forms.Button();
             this.ButtonSettings = new System.Windows.Forms.Button();
             this.ButtonSaveLogToFile = new System.Windows.Forms.Button();
+            this.DropdownListDevices = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // ButtonDownload
@@ -115,7 +115,7 @@
             // LabelDevices
             // 
             this.LabelDevices.AutoSize = true;
-            this.LabelDevices.Location = new System.Drawing.Point(66, 178);
+            this.LabelDevices.Location = new System.Drawing.Point(83, 154);
             this.LabelDevices.Name = "LabelDevices";
             this.LabelDevices.Size = new System.Drawing.Size(50, 15);
             this.LabelDevices.TabIndex = 8;
@@ -139,16 +139,6 @@
             this.ButtonInstall.Text = "Install APK";
             this.ButtonInstall.UseVisualStyleBackColor = true;
             this.ButtonInstall.Click += new System.EventHandler(this.ButtonInstall_Click);
-            // 
-            // ButtonDevices
-            // 
-            this.ButtonDevices.Location = new System.Drawing.Point(669, 195);
-            this.ButtonDevices.Name = "ButtonDevices";
-            this.ButtonDevices.Size = new System.Drawing.Size(75, 78);
-            this.ButtonDevices.TabIndex = 11;
-            this.ButtonDevices.Text = "Update device list";
-            this.ButtonDevices.UseVisualStyleBackColor = true;
-            this.ButtonDevices.Click += new System.EventHandler(this.ButtonDevices_Click);
             // 
             // ButtonDownloadInstall
             // 
@@ -180,15 +170,24 @@
             this.ButtonSaveLogToFile.UseVisualStyleBackColor = true;
             this.ButtonSaveLogToFile.Click += new System.EventHandler(this.ButtonSaveLogToFile_Click);
             // 
+            // DropdownListDevices
+            // 
+            this.DropdownListDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.DropdownListDevices.FormattingEnabled = true;
+            this.DropdownListDevices.Location = new System.Drawing.Point(142, 151);
+            this.DropdownListDevices.Name = "DropdownListDevices";
+            this.DropdownListDevices.Size = new System.Drawing.Size(192, 23);
+            this.DropdownListDevices.TabIndex = 15;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.DropdownListDevices);
             this.Controls.Add(this.ButtonSaveLogToFile);
             this.Controls.Add(this.ButtonSettings);
             this.Controls.Add(this.ButtonDownloadInstall);
-            this.Controls.Add(this.ButtonDevices);
             this.Controls.Add(this.ButtonInstall);
             this.Controls.Add(this.OutputDevices);
             this.Controls.Add(this.LabelDevices);
@@ -223,9 +222,9 @@
         private Label LabelDevices;
         private RichTextBox OutputDevices;
         private Button ButtonInstall;
-        private Button ButtonDevices;
         private Button ButtonDownloadInstall;
         private Button ButtonSettings;
         private Button ButtonSaveLogToFile;
+        private ComboBox DropdownListDevices;
     }
 }
