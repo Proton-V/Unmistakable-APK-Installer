@@ -1,5 +1,7 @@
 ﻿namespace UnmistakableAPKInstaller.Helpers
 {
+    // TODO: add log type
+
     /// <summary>
     /// Simple logger
     /// </summary>
@@ -29,7 +31,6 @@
             Log(str);
         }
 
-        // TODO: add log type
         public static void Log(string msg)
         {
             lock (logLock)

@@ -66,7 +66,7 @@ namespace UnmistakableAPKInstaller
 
             if (!cmdToolsProvider.CheckExistsTools())
             {
-                DownloadTools();
+                DownloadToolsAsync();
             }
 
             InitInternalComponents();
@@ -79,11 +79,11 @@ namespace UnmistakableAPKInstaller
 
         private string GetFullPath(string relativePath) => $"{AppDirectory}/{relativePath}";
 
-        private async void DownloadTools()
+        private async void DownloadToolsAsync()
         {
             ChangeFormState(MainFormState.ToolsLoading);
 
-            var status = await cmdToolsProvider.TryDownloadTools(
+            var status = await cmdToolsProvider.TryDownloadToolsAsync(
                 (str) => OutputDownload.Text = str,
                 (progress) => ProgressBar.Value = progress);
 
@@ -142,10 +142,15 @@ namespace UnmistakableAPKInstaller
 
         }
 
-        private async void ButtonDownload_Click(object sender, EventArgs e)
+        private void ButtonDownload_Click(object sender, EventArgs e)
+        {
+            ButtonDownload_ClickActionAsync();
+        }
+
+        private async void ButtonDownload_ClickActionAsync()
         {
             ChangeFormState(MainFormState.APKLoading);
-            await DownloadAPK();
+            await DownloadAPKAsync();
             ChangeFormState(MainFormState.Idle);
         }
 
@@ -174,33 +179,48 @@ namespace UnmistakableAPKInstaller
             InputPath.Text = filePath;
         }
 
-        private async void ButtonInstall_Click(object sender, EventArgs e)
+        private void ButtonInstall_Click(object sender, EventArgs e)
         {
-            await InstallAPK();
+            ButtonInstall_ClickActionAsync();
         }
 
-        private async void ButtonDownloadInstall_Click(object sender, EventArgs e)
+        private async void ButtonInstall_ClickActionAsync()
+        {
+            await InstallAPKAsync();
+        }
+
+        private void ButtonDownloadInstall_Click(object sender, EventArgs e)
+        {
+            ButtonDownloadInstall_ClickActionAsync();
+        }
+
+        private async void ButtonDownloadInstall_ClickActionAsync()
         {
             ChangeFormState(MainFormState.APKLoading);
-            await DownloadAPK(false);
-            await InstallAPK();
+            await DownloadAPKAsync(false);
+            await InstallAPKAsync();
             ChangeFormState(MainFormState.Idle);
         }
-        
+
         private void ButtonSettings_Click(object sender, EventArgs e)
         {
             var settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
         }
 
-        private async void ButtonSaveLogToFile_Click(object sender, EventArgs e)
+        private void ButtonSaveLogToFile_Click(object sender, EventArgs e)
+        {
+            ButtonSaveLogToFile_ClickActionAsync();
+        }
+
+        private async void ButtonSaveLogToFile_ClickActionAsync()
         {
             string folderPath = deviceLogFolderPath;
             var currentDateTime = DateTime.UtcNow;
             var fileName = $"{Directory.GetFiles(folderPath, "*.log").Length}_{currentDateTime.ToFileTimeUtc()}.log";
 
             var path = Path.Combine(folderPath, fileName);
-            var status = await cmdToolsProvider.TrySaveLogToFile(path, null);
+            var status = await cmdToolsProvider.TrySaveLogToFileAsync(path, null);
 
             MessageBox.Show(status ? $"Saved to {path}!" : "Save error...",
                 "Save log status", MessageBoxButtons.OK);
@@ -211,10 +231,10 @@ namespace UnmistakableAPKInstaller
         }
 
         #region Download && Install APK
-        private async Task DownloadAPK(bool showStatus = true)
+        private async Task DownloadAPKAsync(bool showStatus = true)
         {
             var url = InputDownload.Text;
-            var data = await gdDownloadHelper.DownloadFile(url,
+            var data = await gdDownloadHelper.DownloadFileAsync(url,
                 (str) => OutputDownload.Text = str,
                 (progress) => ProgressBar.Value = progress);
 
@@ -235,23 +255,23 @@ namespace UnmistakableAPKInstaller
 
         }
 
-        private async Task InstallAPK()
+        private async Task InstallAPKAsync()
         {
             if (AutoDelPrevApp)
             {
                 ProgressBar.Value = 10;
                 OutputDownload.Text = "Uninstall previous version...";
-                await cmdToolsProvider.TryUninstallAPKByPath(InputPath.Text, (str) => OutputDownload.Text = str);
+                await cmdToolsProvider.TryUninstallAPKByPathAsync(InputPath.Text, (str) => OutputDownload.Text = str);
             }
 
             ProgressBar.Value = 50;
             OutputDownload.Text = "Install new version...";
-            var status = await cmdToolsProvider.TryInstallAPK(InputPath.Text, (str) => OutputDownload.Text = str);
+            var status = await cmdToolsProvider.TryInstallAPKAsync(InputPath.Text, (str) => OutputDownload.Text = str);
 
             if (DeviceLogEnabled)
             {
                 OutputDownload.Text = "Set log buffer size...";
-                await cmdToolsProvider.TrySetLogBufferSize(DeviceLogBufferSize, (str) => OutputDownload.Text = str);
+                await cmdToolsProvider.TrySetLogBufferSizeAsync(DeviceLogBufferSize, (str) => OutputDownload.Text = str);
             }
 
             ProgressBar.Value = 100;
@@ -276,7 +296,7 @@ namespace UnmistakableAPKInstaller
 
         private async Task UpdateListAsync()
         {
-            foreach (var deviceData in await cmdToolsProvider.GetAndroidDevices())
+            foreach (var deviceData in await cmdToolsProvider.GetAndroidDevicesAsync())
             {
                 DropdownListDevices.Items.Add(deviceData.serialNumber);
             }

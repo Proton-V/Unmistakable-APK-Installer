@@ -18,7 +18,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return File.Exists(Aapt2Path);
         }
 
-        public override async Task<bool> TryDownload(Action<string> outText, Action<int> outProgress)
+        public override async Task<bool> TryDownloadAsync(Action<string> outText, Action<int> outProgress)
         {
             if (Exists())
             {
@@ -55,12 +55,12 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
         }
 
-        public async Task<string> TryGetAPKBundleName(string path)
+        public async Task<string> TryGetAPKBundleNameAsync(string path)
         {
             try
             {
                 var args = $"dump {path} | findstr -n \"package: name = \"";
-                var data = await CmdHelper.StartProcess(Aapt2Path, args);
+                var data = await CmdHelper.StartProcessAsync(Aapt2Path, args);
                 if (!string.IsNullOrEmpty(data.data))
                 {
                     return data.data;

@@ -1,7 +1,7 @@
 ﻿using System.IO.Compression;
 using System.Net;
 using UnmistakableAPKInstaller.Helpers;
-using UnmistakableAPKInstaller.Tools.Android.Data;
+using UnmistakableAPKInstaller.Tools.Android.Models;
 
 namespace UnmistakableAPKInstaller.Tools.Android
 {
@@ -19,7 +19,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return File.Exists(AdbPath);
         }
 
-        public override async Task<bool> TryDownload(Action<string> outText, Action<int> outProgress)
+        public override async Task<bool> TryDownloadAsync(Action<string> outText, Action<int> outProgress)
         {
             if (Exists())
             {
@@ -63,9 +63,9 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
         }
 
-        public async Task<bool> ContainsAnyDevices()
+        public async Task<bool> ContainsAnyDevicesAsync()
         {
-            var str = await GetAndroidDevicesStr();
+            var str = await GetAndroidDevicesStrAsync();
             var hasDevice = str.Replace("devices", "").Contains("device");
             if (!hasDevice)
             {
@@ -75,11 +75,11 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return hasDevice;
         }
 
-        public async Task<DeviceData[]> GetAndroidDevices()
+        public async Task<DeviceData[]> GetAndroidDevicesAsync()
         {
             var result = new List<DeviceData>();
 
-            var deviceListData = await GetAndroidDevicesStr();
+            var deviceListData = await GetAndroidDevicesStrAsync();
 
             if (!string.IsNullOrEmpty(deviceListData))
             {
@@ -95,10 +95,10 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return result.ToArray();
         }
 
-        private async Task<string> GetAndroidDevicesStr()
+        private async Task<string> GetAndroidDevicesStrAsync()
         {
             var args = "devices -l";
-            var processData = await CmdHelper.StartProcess(AdbPath, args);
+            var processData = await CmdHelper.StartProcessAsync(AdbPath, args);
 
             if (!string.IsNullOrEmpty(processData.error))
             {
@@ -111,15 +111,15 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
         }
 
-        public async Task<bool> TryUninstallAPK(string bundleName, Action<string> outText)
+        public async Task<bool> TryUninstallAPKAsync(string bundleName, Action<string> outText)
         {
-            if (!await ContainsAnyDevices())
+            if (!await ContainsAnyDevicesAsync())
             {
                 return false;
             }
 
             var args = $"uninstall {bundleName}";
-            var data = await CmdHelper.StartProcess(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
             outText(data.data ?? data.error);
             if (!string.IsNullOrEmpty(data.error))
             {
@@ -134,15 +134,15 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return data.data != null;
         }
 
-        public async Task<bool> TryInstallAPK(string path, Action<string> outText)
+        public async Task<bool> TryInstallAPKAsync(string path, Action<string> outText)
         {
-            if (!await ContainsAnyDevices())
+            if (!await ContainsAnyDevicesAsync())
             {
                 return false;
             }
 
             var args = $"install {path}";
-            var data = await CmdHelper.StartProcess(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
             if (!string.IsNullOrEmpty(data.error))
             {
                 CustomLogger.Log("Android platform tools: {0}", data.error);
@@ -156,15 +156,15 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return !string.IsNullOrEmpty(data.data) && data.data.Contains("Success");
         }
 
-        public async Task<bool> TrySetLogBufferSize(int sizeInMb, Action<string> outText)
+        public async Task<bool> TrySetLogBufferSizeAsync(int sizeInMb, Action<string> outText)
         {
-            if (!await ContainsAnyDevices())
+            if (!await ContainsAnyDevicesAsync())
             {
                 return false;
             }
 
             var args = $"logcat -G {sizeInMb}M";
-            var data = await CmdHelper.StartProcess(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
             if (!string.IsNullOrEmpty(data.error))
             {
                 CustomLogger.Log("Android platform tools: {0}", data.error);
@@ -178,15 +178,15 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return string.IsNullOrEmpty(data.error);
         }
 
-        public async Task<bool> TrySaveLogToFile(string path, Action<string>? outText)
+        public async Task<bool> TrySaveLogToFileAsync(string path, Action<string>? outText)
         {
-            if (!await ContainsAnyDevices())
+            if (!await ContainsAnyDevicesAsync())
             {
                 return false;
             }
 
             var args = $"logcat -d";
-            var data = await CmdHelper.StartProcess(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
             if (!string.IsNullOrEmpty(data.error))
             {

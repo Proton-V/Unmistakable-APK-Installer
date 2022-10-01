@@ -1,6 +1,6 @@
 ﻿using UnmistakableAPKInstaller.Helpers;
 
-namespace UnmistakableAPKInstaller.Tools.Android.Data
+namespace UnmistakableAPKInstaller.Tools.Android.Models
 {
     public class DeviceData
     {
