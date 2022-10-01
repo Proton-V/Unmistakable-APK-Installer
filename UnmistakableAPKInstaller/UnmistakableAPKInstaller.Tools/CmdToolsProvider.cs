@@ -51,18 +51,24 @@ namespace UnmistakableAPKInstaller.Tools
         }
 
         public async Task<string> TryGetAPKBundleNameAsync(string path) => 
-            await GetTool<Aapt2Tool>()?.TryGetAPKBundleNameAsync(path);
+            await Aapt2Tool?.TryGetAPKBundleNameAsync(path);
+
+        public Task UpdateDefaultDevice(string serialNumber) =>
+            AndroidPlatformTools?.UpdateDefaultDevice(serialNumber);
         public async Task<bool> ContainsAnyDevicesAsync() => 
-            await GetTool<AndroidPlatformTools>()?.ContainsAnyDevicesAsync();
+            await AndroidPlatformTools?.ContainsAnyDevicesAsync();
         public async Task<DeviceData[]> GetAndroidDevicesAsync() => 
-            await GetTool<AndroidPlatformTools>()?.GetAndroidDevicesAsync();
+            await AndroidPlatformTools?.GetAndroidDevicesAsync();
         public async Task<bool> TryUninstallAPKAsync(string bundleName, Action<string> outText) => 
-            await GetTool<AndroidPlatformTools>()?.TryUninstallAPKAsync(bundleName, outText);
+            await AndroidPlatformTools?.TryUninstallAPKAsync(bundleName, outText);
         public async Task<bool> TryInstallAPKAsync(string path, Action<string> outText) => 
-            await GetTool<AndroidPlatformTools>()?.TryInstallAPKAsync(path, outText);
+            await AndroidPlatformTools?.TryInstallAPKAsync(path, outText);
         public async Task<bool> TrySetLogBufferSizeAsync(int sizeInMb, Action<string> outText) => 
-            await GetTool<AndroidPlatformTools>()?.TrySetLogBufferSizeAsync(sizeInMb, outText);
+            await AndroidPlatformTools?.TrySetLogBufferSizeAsync(sizeInMb, outText);
         public async Task<bool> TrySaveLogToFileAsync(string path, Action<string>? outText) => 
-            await GetTool<AndroidPlatformTools>()?.TrySaveLogToFileAsync(path, outText);
+            await AndroidPlatformTools?.TrySaveLogToFileAsync(path, outText);
+
+        Aapt2Tool Aapt2Tool => GetTool<Aapt2Tool>();
+        AndroidPlatformTools AndroidPlatformTools => GetTool<AndroidPlatformTools>();
     }
 }
