@@ -14,6 +14,27 @@ namespace UnmistakableAPKInstaller.Tools.Android
         public string AdbPath => $"{toolFolderPath}/adb.exe";
         string ZipPath => $"{toolFolderPath}/PlatformTools.zip";
 
+        string AdbDefaultDevicePath => $"{toolFolderPath}/adb.exe {DefaultSerialNumberArg}";
+        string DefaultSerialNumberArg 
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(defaultSerialNumber))
+                {
+                    return string.Empty;
+                }
+
+                return $"-s {defaultSerialNumber}";
+            }
+        }
+        string defaultSerialNumber;
+
+        public Task UpdateDefaultDevice(string serialNumber)
+        {
+            defaultSerialNumber = serialNumber;
+            return Task.CompletedTask;
+        }
+
         public override bool Exists()
         {
             return File.Exists(AdbPath);
@@ -88,6 +109,13 @@ namespace UnmistakableAPKInstaller.Tools.Android
                 for (int i = 1; i < datas.Length; i++)
                 {
                     var deviceData = new DeviceData(datas[i]);
+
+                    //if (IPEndPoint.TryParse(deviceData.serialNumber, out IPEndPoint endpoint)
+                    //    /* && result.contains data with this ip */)
+                    //{
+                    //    continue;
+                    //}
+
                     result.Add(deviceData);
                 }
             }
@@ -119,7 +147,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             var args = $"uninstall {bundleName}";
-            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbDefaultDevicePath, args);
             outText(data.data ?? data.error);
             if (!string.IsNullOrEmpty(data.error))
             {
@@ -142,7 +170,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             var args = $"install {path}";
-            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbDefaultDevicePath, args);
             if (!string.IsNullOrEmpty(data.error))
             {
                 CustomLogger.Log("Android platform tools: {0}", data.error);
@@ -164,7 +192,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             var args = $"logcat -G {sizeInMb}M";
-            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbDefaultDevicePath, args);
             if (!string.IsNullOrEmpty(data.error))
             {
                 CustomLogger.Log("Android platform tools: {0}", data.error);
@@ -186,7 +214,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             var args = $"logcat -d";
-            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbDefaultDevicePath, args);
 
             if (!string.IsNullOrEmpty(data.error))
             {

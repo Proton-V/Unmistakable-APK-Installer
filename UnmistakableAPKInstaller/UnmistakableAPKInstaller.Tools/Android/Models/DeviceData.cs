@@ -4,10 +4,28 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
 {
     public class DeviceData
     {
-        public DeviceData(string input)
+        public const string NULL_VALUE = "Null";
+
+        private DeviceData() 
         {
             info = new Dictionary<string, string>();
+        }
+
+        public DeviceData(string input) : this()
+        {
             Update(input);
+        }
+
+        public static DeviceData Default
+        {
+            get
+            {
+                return new DeviceData()
+                {
+                    serialNumber = NULL_VALUE,
+                    status = NULL_VALUE
+                };
+            }
         }
 
         public bool IsActive => status.Contains("device");
