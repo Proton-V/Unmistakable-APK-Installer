@@ -2,6 +2,7 @@ using System.Configuration;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools;
 using UnmistakableAPKInstaller.Tools.Android;
+using UnmistakableAPKInstaller.Tools.Android.Models;
 
 namespace UnmistakableAPKInstaller
 {
@@ -132,7 +133,6 @@ namespace UnmistakableAPKInstaller
             InputPath.Visible = value;
             ButtonPath.Visible = value;
             LabelDevices.Visible = value;
-            OutputDevices.Visible = value;
             ButtonInstall.Visible = value;
             ButtonDownloadInstall.Visible = value;
         }
@@ -287,20 +287,43 @@ namespace UnmistakableAPKInstaller
         private async void InitDevicesDropDownListAsync()
         {
             DropdownListDevices.Items.Clear();
-            DropdownListDevices.Items.Add("Null");
 
-            await UpdateListAsync();
+            var datas = await GetDeviceListAsync();
+
+            foreach(var data in datas)
+            {
+                DropdownListDevices.Items.Add(data.serialNumber);
+            }
 
             DropdownListDevices.SelectedIndex = DropdownListDevices.Items.Count - 1;
         }
 
-        private async Task UpdateListAsync()
+        private async Task<DeviceData[]> GetDeviceListAsync()
         {
-            foreach (var deviceData in await cmdToolsProvider.GetAndroidDevicesAsync())
+            var deviceDatas = await cmdToolsProvider.GetAndroidDevicesAsync();
+
+            if(deviceDatas.Length == 0)
             {
-                DropdownListDevices.Items.Add(deviceData.serialNumber);
+                deviceDatas = 
+                    new[] { DeviceData.Default };
             }
+
+            return deviceDatas;
         }
         #endregion
+
+        private void DropdownListDevices_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedText = $"{DropdownListDevices.SelectedItem}";
+            if (!string.IsNullOrWhiteSpace(selectedText)
+                && selectedText != DeviceData.NULL_VALUE)
+            {
+                cmdToolsProvider.UpdateDefaultDevice(selectedText);
+            }
+            else
+            {
+                cmdToolsProvider.UpdateDefaultDevice(null);
+            }
+        }
     }
 }

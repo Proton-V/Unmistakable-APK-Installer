@@ -37,12 +37,14 @@
             this.InputPath = new System.Windows.Forms.TextBox();
             this.ButtonPath = new System.Windows.Forms.Button();
             this.LabelDevices = new System.Windows.Forms.Label();
-            this.OutputDevices = new System.Windows.Forms.RichTextBox();
             this.ButtonInstall = new System.Windows.Forms.Button();
             this.ButtonDownloadInstall = new System.Windows.Forms.Button();
             this.ButtonSettings = new System.Windows.Forms.Button();
             this.ButtonSaveLogToFile = new System.Windows.Forms.Button();
             this.DropdownListDevices = new System.Windows.Forms.ComboBox();
+            this.LabelWifiMode = new System.Windows.Forms.Label();
+            this.LabelUsbMode = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ButtonDownload
@@ -115,20 +117,11 @@
             // LabelDevices
             // 
             this.LabelDevices.AutoSize = true;
-            this.LabelDevices.Location = new System.Drawing.Point(83, 154);
+            this.LabelDevices.Location = new System.Drawing.Point(83, 280);
             this.LabelDevices.Name = "LabelDevices";
             this.LabelDevices.Size = new System.Drawing.Size(50, 15);
             this.LabelDevices.TabIndex = 8;
             this.LabelDevices.Text = "Devices:";
-            // 
-            // OutputDevices
-            // 
-            this.OutputDevices.Location = new System.Drawing.Point(142, 175);
-            this.OutputDevices.Name = "OutputDevices";
-            this.OutputDevices.ReadOnly = true;
-            this.OutputDevices.Size = new System.Drawing.Size(521, 125);
-            this.OutputDevices.TabIndex = 9;
-            this.OutputDevices.Text = "";
             // 
             // ButtonInstall
             // 
@@ -174,22 +167,54 @@
             // 
             this.DropdownListDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DropdownListDevices.FormattingEnabled = true;
-            this.DropdownListDevices.Location = new System.Drawing.Point(142, 151);
+            this.DropdownListDevices.Location = new System.Drawing.Point(142, 277);
             this.DropdownListDevices.Name = "DropdownListDevices";
             this.DropdownListDevices.Size = new System.Drawing.Size(192, 23);
             this.DropdownListDevices.TabIndex = 15;
+            this.DropdownListDevices.SelectedIndexChanged += new System.EventHandler(this.DropdownListDevices_SelectedIndexChanged);
+            // 
+            // LabelWifiMode
+            // 
+            this.LabelWifiMode.AutoSize = true;
+            this.LabelWifiMode.Location = new System.Drawing.Point(269, 316);
+            this.LabelWifiMode.Name = "LabelWifiMode";
+            this.LabelWifiMode.Size = new System.Drawing.Size(30, 15);
+            this.LabelWifiMode.TabIndex = 17;
+            this.LabelWifiMode.Text = "WIFI";
+            // 
+            // LabelUsbMode
+            // 
+            this.LabelUsbMode.AutoSize = true;
+            this.LabelUsbMode.Location = new System.Drawing.Point(207, 316);
+            this.LabelUsbMode.Name = "LabelUsbMode";
+            this.LabelUsbMode.Size = new System.Drawing.Size(28, 15);
+            this.LabelUsbMode.TabIndex = 16;
+            this.LabelUsbMode.Text = "USB";
+            this.LabelUsbMode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(83, 316);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 15);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "{Status}";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LabelWifiMode);
+            this.Controls.Add(this.LabelUsbMode);
             this.Controls.Add(this.DropdownListDevices);
             this.Controls.Add(this.ButtonSaveLogToFile);
             this.Controls.Add(this.ButtonSettings);
             this.Controls.Add(this.ButtonDownloadInstall);
             this.Controls.Add(this.ButtonInstall);
-            this.Controls.Add(this.OutputDevices);
             this.Controls.Add(this.LabelDevices);
             this.Controls.Add(this.LabelPath);
             this.Controls.Add(this.InputPath);
@@ -220,11 +245,13 @@
         private TextBox InputPath;
         private Button ButtonPath;
         private Label LabelDevices;
-        private RichTextBox OutputDevices;
         private Button ButtonInstall;
         private Button ButtonDownloadInstall;
         private Button ButtonSettings;
         private Button ButtonSaveLogToFile;
         private ComboBox DropdownListDevices;
+        private Label LabelWifiMode;
+        private Label LabelUsbMode;
+        private Label label1;
     }
 }
