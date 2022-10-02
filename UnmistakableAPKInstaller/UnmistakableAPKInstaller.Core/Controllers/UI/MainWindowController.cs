@@ -24,7 +24,7 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
                 await cmdToolsProvider.CreateOrUpdateWifiDeviceByUsb(CurrentDevice);
             }
 
-            OnCompleteAction();
+            OnCompleteAction?.Invoke();
         }
 
         public async void DropdownListDevices_SelectedIndexChangedActionAsync(string serialNumber,
@@ -32,29 +32,37 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
         {
             var deviceDatas = await cmdToolsProvider.GetAndroidDevicesAsync();
             CurrentDevice = deviceDatas.FirstOrDefault(x => x.SerialNumber == serialNumber);
-            OnCompleteAction();
+            OnCompleteAction?.Invoke();
         }
 
-        public async void ButtonDownload_ClickActionAsync(Func<bool, Task> DownloadAPKTask)
+        public async void ButtonDownload_ClickActionAsync(Func<bool, Task> DownloadAPKTask, Action OnCompleteAction = null)
         {
             await DownloadAPKTask(true);
+            OnCompleteAction?.Invoke();
         }
 
-        public async void ButtonInstall_ClickActionAsync(Func<Task> installAPKTask)
+        public async void ButtonInstall_ClickActionAsync(Func<Task> installAPKTask, Action OnCompleteAction = null)
         {
             await installAPKTask();
+            OnCompleteAction?.Invoke();
         }
 
         public async void ButtonDownloadInstall_ClickActionAsync(Func<bool, Task> DownloadAPKTask, Func<Task> installAPKTask,
-            Action OnCompleteAction)
+            Action OnCompleteAction = null)
         {
             await DownloadAPKTask(false);
             await installAPKTask();
-            OnCompleteAction();
+            OnCompleteAction?.Invoke();
         }
 
-        public async void ButtonSaveLogToFile_ClickActionAsync(Action<string, string> ShowMsg)
+        public async void ButtonSaveLogToFile_ClickActionAsync(Action<string, string> ShowMsg, Action OnCompleteAction = null)
         {
+            if(CurrentDevice == null)
+            {
+                OnCompleteAction?.Invoke();
+                return;
+            }
+
             string folderPath = deviceLogFolderPath;
             var currentDateTime = DateTime.UtcNow;
             var fileName = $"{CurrentDevice.Model} {Directory.GetFiles(folderPath, "*.log").Length}_{currentDateTime.ToFileTimeUtc()}.log";
@@ -68,6 +76,8 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
             GC.Collect();
             GC.WaitForPendingFinalizers();
             GC.Collect();
+
+            OnCompleteAction?.Invoke();
         }
         #endregion
 

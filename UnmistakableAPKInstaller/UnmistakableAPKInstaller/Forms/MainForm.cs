@@ -41,7 +41,7 @@ namespace UnmistakableAPKInstaller
 
         void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
         {
-            this.Invoke(InitDevicesDropDownListAsync, CurrentDevice?.SerialNumber);
+            this.Invoke(InitDevicesDropDownListAsync, CurrentDevice?.SerialNumber, null);
         }
 
         private void InitHandlers()
@@ -95,7 +95,6 @@ namespace UnmistakableAPKInstaller
             ButtonSettings.Visible = value;
             ButtonSaveLogToFile.Visible = value;
             DropdownListDevices.Visible = value;
-            ButtonWifiModeUpdate.Visible = value;
             ButtonDeviceListUpdate.Visible = value;
         }
 
@@ -124,7 +123,7 @@ namespace UnmistakableAPKInstaller
 
         private void EnableThisForm(bool value)
         {
-            this.Enabled = value;
+            GroupBoxFormRoot.Enabled = value;
         }
         #endregion
 
@@ -135,9 +134,14 @@ namespace UnmistakableAPKInstaller
 
         private void ButtonDownload_Click(object sender, EventArgs e)
         {
+            EnableThisForm(false);
             ChangeFormState(MainFormState.APKLoading);
-            controller.ButtonDownload_ClickActionAsync(DownloadAPKAsync);
-            ChangeFormState(MainFormState.Idle);
+            controller.ButtonDownload_ClickActionAsync(DownloadAPKAsync,
+                OnCompleteAction: () => 
+                {
+                    ChangeFormState(MainFormState.Idle);
+                    EnableThisForm(true);
+                });
         }
 
         private void ButtonPath_Click(object sender, EventArgs e)
@@ -147,14 +151,21 @@ namespace UnmistakableAPKInstaller
 
         private void ButtonInstall_Click(object sender, EventArgs e)
         {
-            controller.ButtonInstall_ClickActionAsync(InstallAPKAsync);
+            EnableThisForm(false);
+            controller.ButtonInstall_ClickActionAsync(InstallAPKAsync,
+                OnCompleteAction: () => EnableThisForm(true));
         }
 
         private void ButtonDownloadInstall_Click(object sender, EventArgs e)
         {
+            EnableThisForm(false);
             ChangeFormState(MainFormState.APKLoading);
             controller.ButtonDownloadInstall_ClickActionAsync(DownloadAPKAsync, InstallAPKAsync, 
-                OnCompleteAction: () => ChangeFormState(MainFormState.Idle));
+                OnCompleteAction: () =>
+                {
+                    ChangeFormState(MainFormState.Idle);
+                    EnableThisForm(true);
+                });
         }
 
         private void ButtonSettings_Click(object sender, EventArgs e)
@@ -165,29 +176,43 @@ namespace UnmistakableAPKInstaller
 
         private void ButtonSaveLogToFile_Click(object sender, EventArgs e)
         {
+            EnableThisForm(false);
             controller.ButtonSaveLogToFile_ClickActionAsync(
-                (text, caption) => MessageBox.Show(text, caption, MessageBoxButtons.OK));
+                (text, caption) => MessageBox.Show(text, caption, MessageBoxButtons.OK),
+                OnCompleteAction: () => EnableThisForm(true));
         }
 
         private void DropdownListDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
+            EnableThisForm(false);
             var serialNumber = $"{DropdownListDevices.SelectedItem}";
-            controller.DropdownListDevices_SelectedIndexChangedActionAsync(serialNumber, UpdateCurrentDeviceLayout);
+            controller.DropdownListDevices_SelectedIndexChangedActionAsync(serialNumber, () =>
+            {
+                UpdateCurrentDeviceLayout();
+                EnableThisForm(true);
+            });
         }
 
         private void ButtonDeviceListUpdate_Click(object sender, EventArgs e)
         {
-            InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber);
+            EnableThisForm(false);
+            InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber, 
+                OnCompleteAction: () => EnableThisForm(true));
         }
 
         private void ButtonWifiModeUpdate_Click(object sender, EventArgs e)
         {
-            controller.ButtonWifiModeUpdate_ClickActionAsync(UpdateCurrentDeviceLayout);
+            EnableThisForm(false);
+            controller.ButtonWifiModeUpdate_ClickActionAsync(() =>
+            {
+                UpdateCurrentDeviceLayout();
+                EnableThisForm(true);
+            });
         }
         #endregion
 
         #region Additional UI controller methods
-        private async void InitDevicesDropDownListAsync(string selectedSerialNumber = default)
+        private async void InitDevicesDropDownListAsync(string selectedSerialNumber = default, Action OnCompleteAction = null)
         {
             var datas = await controller.GetDeviceListAsync();
             var newDropDownDatas = datas.Select(x => x.SerialNumber).ToList();
@@ -195,6 +220,7 @@ namespace UnmistakableAPKInstaller
             if (DropdownListDevices.Items.Count == newDropDownDatas.Count()
                 && newDropDownDatas.All(x => DropdownListDevices.Items.Contains(x)))
             {
+                OnCompleteAction?.Invoke();
                 return;
             }
 
@@ -214,6 +240,8 @@ namespace UnmistakableAPKInstaller
             {
                 DropdownListDevices.SelectedItem = selectedSerialNumber;
             }
+
+            OnCompleteAction?.Invoke();
         }
 
         private void OpenFileExplorer()
