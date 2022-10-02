@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32516.85
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnmistakableAPKInstaller", "UnmistakableAPKInstaller\UnmistakableAPKInstaller.csproj", "{6F788483-0AB0-4170-871C-7E04D2B199F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnmistakableAPKInstaller", "UnmistakableAPKInstaller\UnmistakableAPKInstaller.csproj", "{6F788483-0AB0-4170-871C-7E04D2B199F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnmistakableAPKInstaller.Tools", "UnmistakableAPKInstaller.Tools\UnmistakableAPKInstaller.Tools.csproj", "{0E0502CC-70D8-4C3D-A725-A8DDB0E7FC9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnmistakableAPKInstaller.Tools", "UnmistakableAPKInstaller.Tools\UnmistakableAPKInstaller.Tools.csproj", "{0E0502CC-70D8-4C3D-A725-A8DDB0E7FC9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnmistakableAPKInstaller.Helpers", "UnmistakableAPKInstaller.Helpers\UnmistakableAPKInstaller.Helpers.csproj", "{DF47BCEE-5AA4-400E-9107-9E3BC613D52E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnmistakableAPKInstaller.Helpers", "UnmistakableAPKInstaller.Helpers\UnmistakableAPKInstaller.Helpers.csproj", "{DF47BCEE-5AA4-400E-9107-9E3BC613D52E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnmistakableAPKInstaller.Core", "UnmistakableAPKInstaller.Core\UnmistakableAPKInstaller.Core.csproj", "{995BC866-34E9-4FF9-A13C-CFEAFE25B719}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{DF47BCEE-5AA4-400E-9107-9E3BC613D52E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF47BCEE-5AA4-400E-9107-9E3BC613D52E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF47BCEE-5AA4-400E-9107-9E3BC613D52E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{995BC866-34E9-4FF9-A13C-CFEAFE25B719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{995BC866-34E9-4FF9-A13C-CFEAFE25B719}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{995BC866-34E9-4FF9-A13C-CFEAFE25B719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{995BC866-34E9-4FF9-A13C-CFEAFE25B719}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

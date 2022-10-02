@@ -1,10 +1,6 @@
-using System.Configuration;
 using System.Timers;
-using UnmistakableAPKInstaller.Helpers;
-using UnmistakableAPKInstaller.Tools;
-using UnmistakableAPKInstaller.Tools.Android;
+using UnmistakableAPKInstaller.Core.Controllers;
 using UnmistakableAPKInstaller.Tools.Android.Models;
-using Timer = System.Timers.Timer;
 
 namespace UnmistakableAPKInstaller
 {
@@ -19,138 +15,47 @@ namespace UnmistakableAPKInstaller
 
         public MainForm()
         {
+            controller = new MainWindowController();
             InitializeComponent();
-            Init();
-            InitTimers();
+            InitInternalComponents();
             InitHandlers();
         }
 
-        bool AutoDelPrevApp => Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
-        bool DeviceLogEnabled => Convert.ToBoolean(ConfigurationManager.AppSettings["DeviceLogEnabled"]);
-        int DeviceLogBufferSize => Convert.ToInt32(ConfigurationManager.AppSettings["DeviceLogBufferSize"]);
+        DeviceData CurrentDevice => controller.currentDevice;
 
-        string AppDirectory => Environment.CurrentDirectory;
-        string DownloadedAPKFolderPath => $"{Path.Combine(AppDirectory, "GoogleDrive")}";
-
-        CmdToolsProvider cmdToolsProvider;
-        GoogleDriveDownloadHelper gdDownloadHelper;
-
-        string deviceLogFolderPath;
-
-        // TODO: move to DeviceManager class
-        private DeviceData currentDevice;
-        private string CurrentDeviceSerialNumber
-        {
-            get
-            {
-                if (currentDevice == null)
-                {
-                    return null;
-                }
-
-                return currentDevice.WifiDeviceData?.SerialNumber ?? currentDevice.SerialNumber;
-            }
-        }
+        MainWindowController controller;
 
         public void ForceUpdate()
         {
-            Init();
+            controller.Init(DownloadToolsAsync);
         }
-
-        private void Init()
-        {
-            deviceLogFolderPath = ConfigurationManager.AppSettings["DeviceLogFolderPath"];
-            if (deviceLogFolderPath == string.Empty)
-            {
-                deviceLogFolderPath = Path.Combine(Environment.CurrentDirectory,
-                    ConfigurationManager.AppSettings["DeviceLogDefaultFolderName"]);
-            }
-            Directory.CreateDirectory(deviceLogFolderPath);
-
-            Directory.CreateDirectory(DownloadedAPKFolderPath);
-
-            var platformToolsDownloadLink = ConfigurationManager.AppSettings["PlatformToolsDownloadLink"];
-            var platformToolsFolderPath = ConfigurationManager.AppSettings["AndroidPlatformToolsFolderPath"];
-            var platformTools = new AndroidPlatformTools(platformToolsDownloadLink, GetFullPath(platformToolsFolderPath));
-
-            var aapt2DownloadLink = ConfigurationManager.AppSettings["Aapt2DownloadLink"];
-            var aapt2FolderPath = ConfigurationManager.AppSettings["Aapt2FolderPath"];
-            var aapt2Tool = new Aapt2Tool(aapt2DownloadLink, GetFullPath(aapt2FolderPath));
-
-            var gdApiKey = ConfigurationManager.AppSettings["GoogleDriveApiKey"];
-            gdDownloadHelper = new GoogleDriveDownloadHelper(gdApiKey, DownloadedAPKFolderPath);
-
-            cmdToolsProvider = new CmdToolsProvider()
-                .AddTool(platformTools)
-                .AddTool(aapt2Tool);
-
-            if (!cmdToolsProvider.CheckExistsTools())
-            {
-                DownloadToolsAsync();
-            }
-
-            InitInternalComponents();
-        }
-
-        #region Form Handlers
-        private void InitHandlers()
-        {
-            this.FormClosed += FormClosedHandler;
-        }
-
-        protected void FormClosedHandler(object sender, EventArgs e)
-        {
-            foreach(var activeTimer in activeTimers)
-            {
-                activeTimer.Stop();
-            }
-        }
-        #endregion
-
-        // TODO: move to DeviceManager class
-        #region Timers
-        private List<Timer> activeTimers = new List<Timer>();
-
-        private void InitTimers()
-        {
-            Timer timer = new Timer();
-            timer.Elapsed += new ElapsedEventHandler(TimerUpdateDeviceListAction);
-            timer.Interval = 5000;
-            timer.Start();
-
-            activeTimers.Add(timer);
-        }
-
-        private void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
-        {
-            this.Invoke(InitDevicesDropDownListAsync, currentDevice?.SerialNumber);
-        }
-        #endregion
-
+        #region Init
         private void InitInternalComponents()
         {
+            controller.Init(DownloadToolsAsync);
             InitDevicesDropDownListAsync();
+            controller.InitTimers(
+                UpdateDeviceListAction: TimerUpdateDeviceListAction);
+            InitHandlers();
         }
 
-        private string GetFullPath(string relativePath) => $"{AppDirectory}/{relativePath}";
-
-        private async void DownloadToolsAsync()
+        void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
         {
-            ChangeFormState(MainFormState.ToolsLoading);
-
-            var status = await cmdToolsProvider.TryDownloadToolsAsync(
-                (str) => OutputDownload.Text = str,
-                (progress) => ProgressBar.Value = progress);
-
-            MessageBox.Show(status ? "Download is completed!" : "Fail with download...",
-                "Download status", MessageBoxButtons.OK);
-
-            OutputDownload.ResetText();
-            ProgressBar.Value = 0;
-
-            ChangeFormState(MainFormState.Idle);
+            this.Invoke(InitDevicesDropDownListAsync, CurrentDevice?.SerialNumber);
         }
 
+        private void InitHandlers()
+        {
+            this.FormClosed += Form_OnClose;
+        }
+        #endregion
+
+        void Form_OnClose(object sender, EventArgs e)
+        {
+            controller.StopAllTimers();
+        }
+
+        #region Form state methods
         private void ChangeFormState(MainFormState state)
         {
             switch (state)
@@ -194,20 +99,44 @@ namespace UnmistakableAPKInstaller
             ButtonDeviceListUpdate.Visible = value;
         }
 
+        private void UpdateCurrentDeviceLayout()
+        {
+            if (CurrentDevice != null)
+            {
+                this.LabelStatusDevice.Text =
+                    $"{CurrentDevice.Model} {CurrentDevice.Status}";
+
+                var isUsbDevice = !CurrentDevice.IsWifiDevice;
+
+                this.LabelUsbMode.Visible = isUsbDevice;
+                this.PictureBoxUsbMode.Visible = isUsbDevice;
+                this.LabelWifiMode.Visible = isUsbDevice;
+                this.PictureBoxWifiMode.Visible = isUsbDevice;
+                this.ButtonWifiModeUpdate.Visible = isUsbDevice;
+
+                this.PictureBoxUsbMode.BackColor = CurrentDevice.IsActive ? Color.Green : Color.Red;
+                this.PictureBoxWifiMode.BackColor = CurrentDevice.IsActiveWifi ? Color.Green : Color.Red;
+
+                var wifiModeButtonStateStr = CurrentDevice.IsActiveWifi ? "Off" : "On";
+                this.ButtonWifiModeUpdate.Text = $"{wifiModeButtonStateStr} Wifi Mode";
+            }
+        }
+
+        private void EnableThisForm(bool value)
+        {
+            this.Enabled = value;
+        }
+        #endregion
+
+        #region Form events
         private void MainForm_Load(object sender, EventArgs e)
         {
-
         }
 
         private void ButtonDownload_Click(object sender, EventArgs e)
         {
-            ButtonDownload_ClickActionAsync();
-        }
-
-        private async void ButtonDownload_ClickActionAsync()
-        {
             ChangeFormState(MainFormState.APKLoading);
-            await DownloadAPKAsync();
+            controller.ButtonDownload_ClickActionAsync(DownloadAPKAsync);
             ChangeFormState(MainFormState.Idle);
         }
 
@@ -216,47 +145,16 @@ namespace UnmistakableAPKInstaller
             OpenFileExplorer();
         }
 
-        private void OpenFileExplorer()
-        {
-            var filePath = string.Empty;
-
-            using (OpenFileDialog openFileDialog = new OpenFileDialog())
-            {
-                openFileDialog.InitialDirectory = DownloadedAPKFolderPath;
-                openFileDialog.Filter = "APK Files (*.apk)|*.apk";
-                openFileDialog.FilterIndex = 2;
-                openFileDialog.RestoreDirectory = true;
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    filePath = openFileDialog.FileName;
-                }
-            }
-
-            InputPath.Text = filePath;
-        }
-
         private void ButtonInstall_Click(object sender, EventArgs e)
         {
-            ButtonInstall_ClickActionAsync();
-        }
-
-        private async void ButtonInstall_ClickActionAsync()
-        {
-            await InstallAPKAsync();
+            controller.ButtonInstall_ClickActionAsync(InstallAPKAsync);
         }
 
         private void ButtonDownloadInstall_Click(object sender, EventArgs e)
         {
-            ButtonDownloadInstall_ClickActionAsync();
-        }
-
-        private async void ButtonDownloadInstall_ClickActionAsync()
-        {
             ChangeFormState(MainFormState.APKLoading);
-            await DownloadAPKAsync(false);
-            await InstallAPKAsync();
-            ChangeFormState(MainFormState.Idle);
+            controller.ButtonDownloadInstall_ClickActionAsync(DownloadAPKAsync, InstallAPKAsync, 
+                OnCompleteAction: () => ChangeFormState(MainFormState.Idle));
         }
 
         private void ButtonSettings_Click(object sender, EventArgs e)
@@ -267,83 +165,31 @@ namespace UnmistakableAPKInstaller
 
         private void ButtonSaveLogToFile_Click(object sender, EventArgs e)
         {
-            ButtonSaveLogToFile_ClickActionAsync();
+            controller.ButtonSaveLogToFile_ClickActionAsync(
+                (text, caption) => MessageBox.Show(text, caption, MessageBoxButtons.OK));
         }
 
-        private async void ButtonSaveLogToFile_ClickActionAsync()
+        private void DropdownListDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string folderPath = deviceLogFolderPath;
-            var currentDateTime = DateTime.UtcNow;
-            var fileName = $"{currentDevice.Model} {Directory.GetFiles(folderPath, "*.log").Length}_{currentDateTime.ToFileTimeUtc()}.log";
-
-            var path = Path.Combine(folderPath, fileName);
-            var status = await cmdToolsProvider.TrySaveLogToFileAsync(CurrentDeviceSerialNumber, path, null);
-
-            MessageBox.Show(status ? $"Saved to {path}!" : "Save error...",
-                "Save log status", MessageBoxButtons.OK);
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            GC.Collect();
+            var serialNumber = $"{DropdownListDevices.SelectedItem}";
+            controller.DropdownListDevices_SelectedIndexChangedActionAsync(serialNumber, UpdateCurrentDeviceLayout);
         }
 
-        #region Download && Install APK
-        private async Task DownloadAPKAsync(bool showStatus = true)
+        private void ButtonDeviceListUpdate_Click(object sender, EventArgs e)
         {
-            var url = InputDownload.Text;
-            var data = await gdDownloadHelper.DownloadFileAsync(url,
-                (str) => OutputDownload.Text = str,
-                (progress) => ProgressBar.Value = progress);
-
-            if (showStatus)
-            {
-                MessageBox.Show(data.status ? "Download is completed!" : "Fail with download...",
-                    "File download status", MessageBoxButtons.OK);
-            }
-
-            OutputDownload.ResetText();
-            ProgressBar.Value = 0;
-
-            // Update APK path field
-            if (data.status)
-            {
-                InputPath.Text = data.path;
-            }
-
+            InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber);
         }
 
-        private async Task InstallAPKAsync()
+        private void ButtonWifiModeUpdate_Click(object sender, EventArgs e)
         {
-            if (AutoDelPrevApp)
-            {
-                ProgressBar.Value = 10;
-                OutputDownload.Text = "Uninstall previous version...";
-                await cmdToolsProvider.TryUninstallAPKByPathAsync(CurrentDeviceSerialNumber, InputPath.Text, (str) => OutputDownload.Text = str);
-            }
-
-            ProgressBar.Value = 50;
-            OutputDownload.Text = "Install new version...";
-            var status = await cmdToolsProvider.TryInstallAPKAsync(CurrentDeviceSerialNumber, InputPath.Text, (str) => OutputDownload.Text = str);
-
-            if (DeviceLogEnabled)
-            {
-                OutputDownload.Text = "Set log buffer size...";
-                await cmdToolsProvider.TrySetLogBufferSizeAsync(CurrentDeviceSerialNumber, DeviceLogBufferSize, (str) => OutputDownload.Text = str);
-            }
-
-            ProgressBar.Value = 100;
-            MessageBox.Show(status ? "Install is completed!" : "Fail with install...",
-                "Install status", MessageBoxButtons.OK);
-
-            OutputDownload.ResetText();
-            ProgressBar.Value = 0;
+            controller.ButtonWifiModeUpdate_ClickActionAsync(UpdateCurrentDeviceLayout);
         }
         #endregion
 
-        #region Devices DropDownList
+        #region Additional UI controller methods
         private async void InitDevicesDropDownListAsync(string selectedSerialNumber = default)
         {
-            var datas = await GetDeviceListAsync();
+            var datas = await controller.GetDeviceListAsync();
             var newDropDownDatas = datas.Select(x => x.SerialNumber).ToList();
 
             if (DropdownListDevices.Items.Count == newDropDownDatas.Count()
@@ -370,75 +216,92 @@ namespace UnmistakableAPKInstaller
             }
         }
 
-        private async Task<DeviceData[]> GetDeviceListAsync()
+        private void OpenFileExplorer()
         {
-            var deviceDatas = await cmdToolsProvider.GetAndroidDevicesAsync();
+            var filePath = string.Empty;
 
-            if(deviceDatas.Length == 0)
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                deviceDatas = 
-                    new[] { DeviceData.Default };
+                openFileDialog.InitialDirectory = controller.DownloadedAPKFolderPath;
+                openFileDialog.Filter = "APK Files (*.apk)|*.apk";
+                openFileDialog.FilterIndex = 2;
+                openFileDialog.RestoreDirectory = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    filePath = openFileDialog.FileName;
+                }
             }
 
-            return deviceDatas;
-        }
-        #endregion
-
-        private void DropdownListDevices_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            DropdownListDevices_SelectedIndexChangedActionAsync();
+            InputPath.Text = filePath;
         }
 
-        private async void DropdownListDevices_SelectedIndexChangedActionAsync()
+        private async void DownloadToolsAsync()
         {
-            var serialNumber = $"{DropdownListDevices.SelectedItem}";
-            var deviceDatas = await cmdToolsProvider.GetAndroidDevicesAsync();
-            currentDevice = deviceDatas.FirstOrDefault(x => x.SerialNumber == serialNumber);
+            ChangeFormState(MainFormState.ToolsLoading);
 
-            UpdateCurrentDeviceLayout();
+            var status = await controller.TryDownloadToolsAsync(
+                (str) => OutputDownload.Text = str,
+                (progress) => ProgressBar.Value = progress);
+
+            MessageBox.Show(status ? "Download is completed!" : "Fail with download...",
+                "Download status", MessageBoxButtons.OK);
+
+            OutputDownload.ResetText();
+            ProgressBar.Value = 0;
+
+            ChangeFormState(MainFormState.Idle);
         }
 
-        private void UpdateCurrentDeviceLayout()
+        public async Task InstallAPKAsync()
         {
-            if (currentDevice != null)
+            if (controller.AutoDelPrevApp)
             {
-                this.LabelStatusDevice.Text = 
-                    $"{currentDevice.Model} {currentDevice.Status}";
+                ProgressBar.Value = 10;
+                OutputDownload.Text = "Uninstall previous version...";
+                await controller.TryUninstallAPKByPathAsync(InputPath.Text, (str) => OutputDownload.Text = str);
+            }
 
-                var isUsbDevice = !currentDevice.IsWifiDevice;
+            ProgressBar.Value = 50;
+            OutputDownload.Text = "Install new version...";
+            var status = await controller.TryInstallAPKAsync(InputPath.Text, (str) => OutputDownload.Text = str);
 
-                this.LabelUsbMode.Visible = isUsbDevice;
-                this.PictureBoxUsbMode.Visible = isUsbDevice;
-                this.LabelWifiMode.Visible = isUsbDevice;
-                this.PictureBoxWifiMode.Visible = isUsbDevice;
-                this.ButtonWifiModeUpdate.Visible = isUsbDevice;
+            if (controller.DeviceLogEnabled)
+            {
+                OutputDownload.Text = "Set log buffer size...";
+                await controller.TrySetLogBufferSizeAsync((str) => OutputDownload.Text = str);
+            }
 
-                this.PictureBoxUsbMode.BackColor = currentDevice.IsActive ? Color.Green : Color.Red;
-                this.PictureBoxWifiMode.BackColor = currentDevice.IsActiveWifi ? Color.Green : Color.Red;
+            ProgressBar.Value = 100;
+            MessageBox.Show(status ? "Install is completed!" : "Fail with install...",
+                "Install status", MessageBoxButtons.OK);
 
-                var wifiModeButtonStateStr = currentDevice.IsActiveWifi ? "Off" : "On";
-                this.ButtonWifiModeUpdate.Text = $"{wifiModeButtonStateStr} Wifi Mode";
+            OutputDownload.ResetText();
+            ProgressBar.Value = 0;
+        }
+
+        public async Task DownloadAPKAsync(bool showStatus = true)
+        {
+            var url = InputDownload.Text;
+            var data = await controller.DownloadFileAsync(url,
+                (str) => OutputDownload.Text = str,
+                (progress) => ProgressBar.Value = progress);
+
+            if (showStatus)
+            {
+                MessageBox.Show(data.status ? "Download is completed!" : "Fail with download...",
+                    "File download status", MessageBoxButtons.OK);
+            }
+
+            OutputDownload.ResetText();
+            ProgressBar.Value = 0;
+
+            // Update APK path field
+            if (data.status)
+            {
+                InputPath.Text = data.path;
             }
         }
-
-        private async void ButtonWifiModeUpdate_ClickActionAsync()
-        {
-            var currentStatus = currentDevice?.IsActiveWifi;
-            if (currentStatus != null)
-            {
-                await cmdToolsProvider.CreateOrUpdateWifiDeviceByUsb(currentDevice);
-                UpdateCurrentDeviceLayout();
-            }
-        }
-
-        private void ButtonDeviceListUpdate_Click(object sender, EventArgs e)
-        {
-            InitDevicesDropDownListAsync(currentDevice?.SerialNumber);
-        }
-
-        private void ButtonWifiModeUpdate_Click(object sender, EventArgs e)
-        {
-            ButtonWifiModeUpdate_ClickActionAsync();
-        }
+        #endregion;
     }
 }
