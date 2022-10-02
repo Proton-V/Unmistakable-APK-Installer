@@ -44,7 +44,13 @@
             this.DropdownListDevices = new System.Windows.Forms.ComboBox();
             this.LabelWifiMode = new System.Windows.Forms.Label();
             this.LabelUsbMode = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.LabelStatusDevice = new System.Windows.Forms.Label();
+            this.PictureBoxWifiMode = new System.Windows.Forms.PictureBox();
+            this.PictureBoxUsbMode = new System.Windows.Forms.PictureBox();
+            this.ButtonWifiModeUpdate = new System.Windows.Forms.Button();
+            this.ButtonDeviceListUpdate = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxWifiMode)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxUsbMode)).BeginInit();
             this.SuspendLayout();
             // 
             // ButtonDownload
@@ -192,22 +198,64 @@
             this.LabelUsbMode.Text = "USB";
             this.LabelUsbMode.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label1
+            // LabelStatusDevice
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(83, 316);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 15);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "{Status}";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.LabelStatusDevice.AutoSize = true;
+            this.LabelStatusDevice.Location = new System.Drawing.Point(83, 316);
+            this.LabelStatusDevice.Name = "LabelStatusDevice";
+            this.LabelStatusDevice.Size = new System.Drawing.Size(47, 15);
+            this.LabelStatusDevice.TabIndex = 18;
+            this.LabelStatusDevice.Text = "{Status}";
+            this.LabelStatusDevice.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // PictureBoxWifiMode
+            // 
+            this.PictureBoxWifiMode.BackColor = System.Drawing.Color.Red;
+            this.PictureBoxWifiMode.Location = new System.Drawing.Point(305, 316);
+            this.PictureBoxWifiMode.Name = "PictureBoxWifiMode";
+            this.PictureBoxWifiMode.Size = new System.Drawing.Size(14, 15);
+            this.PictureBoxWifiMode.TabIndex = 19;
+            this.PictureBoxWifiMode.TabStop = false;
+            // 
+            // PictureBoxUsbMode
+            // 
+            this.PictureBoxUsbMode.BackColor = System.Drawing.Color.Red;
+            this.PictureBoxUsbMode.Location = new System.Drawing.Point(241, 316);
+            this.PictureBoxUsbMode.Name = "PictureBoxUsbMode";
+            this.PictureBoxUsbMode.Size = new System.Drawing.Size(14, 15);
+            this.PictureBoxUsbMode.TabIndex = 20;
+            this.PictureBoxUsbMode.TabStop = false;
+            // 
+            // ButtonWifiModeUpdate
+            // 
+            this.ButtonWifiModeUpdate.Location = new System.Drawing.Point(335, 312);
+            this.ButtonWifiModeUpdate.Name = "ButtonWifiModeUpdate";
+            this.ButtonWifiModeUpdate.Size = new System.Drawing.Size(115, 23);
+            this.ButtonWifiModeUpdate.TabIndex = 21;
+            this.ButtonWifiModeUpdate.Text = "Update Wifi Mode";
+            this.ButtonWifiModeUpdate.UseVisualStyleBackColor = true;
+            this.ButtonWifiModeUpdate.Click += new System.EventHandler(this.ButtonWifiModeUpdate_Click);
+            // 
+            // ButtonDeviceListUpdate
+            // 
+            this.ButtonDeviceListUpdate.Location = new System.Drawing.Point(354, 277);
+            this.ButtonDeviceListUpdate.Name = "ButtonDeviceListUpdate";
+            this.ButtonDeviceListUpdate.Size = new System.Drawing.Size(115, 23);
+            this.ButtonDeviceListUpdate.TabIndex = 22;
+            this.ButtonDeviceListUpdate.Text = "Update Device List";
+            this.ButtonDeviceListUpdate.UseVisualStyleBackColor = true;
+            this.ButtonDeviceListUpdate.Click += new System.EventHandler(this.ButtonDeviceListUpdate_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.ButtonDeviceListUpdate);
+            this.Controls.Add(this.ButtonWifiModeUpdate);
+            this.Controls.Add(this.PictureBoxUsbMode);
+            this.Controls.Add(this.PictureBoxWifiMode);
+            this.Controls.Add(this.LabelStatusDevice);
             this.Controls.Add(this.LabelWifiMode);
             this.Controls.Add(this.LabelUsbMode);
             this.Controls.Add(this.DropdownListDevices);
@@ -229,6 +277,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Unmistakable APK Installer";
             this.Load += new System.EventHandler(this.MainForm_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxWifiMode)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PictureBoxUsbMode)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -252,6 +302,10 @@
         private ComboBox DropdownListDevices;
         private Label LabelWifiMode;
         private Label LabelUsbMode;
-        private Label label1;
+        private Label LabelStatusDevice;
+        private PictureBox PictureBoxWifiMode;
+        private PictureBox PictureBoxUsbMode;
+        private Button ButtonWifiModeUpdate;
+        private Button ButtonDeviceListUpdate;
     }
 }

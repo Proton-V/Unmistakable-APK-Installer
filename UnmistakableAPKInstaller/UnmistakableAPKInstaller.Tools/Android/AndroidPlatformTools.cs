@@ -14,25 +14,14 @@ namespace UnmistakableAPKInstaller.Tools.Android
         public string AdbPath => $"{toolFolderPath}/adb.exe";
         string ZipPath => $"{toolFolderPath}/PlatformTools.zip";
 
-        string AdbDefaultDevicePath => $"{toolFolderPath}/adb.exe {DefaultSerialNumberArg}";
-        string DefaultSerialNumberArg 
+        string GetSpecialAdbSerialNumberArg(string serialNumber)
         {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(defaultSerialNumber))
+                if (string.IsNullOrWhiteSpace(serialNumber))
                 {
                     return string.Empty;
                 }
 
-                return $"-s {defaultSerialNumber}";
-            }
-        }
-        string defaultSerialNumber;
-
-        public Task UpdateDefaultDevice(string serialNumber)
-        {
-            defaultSerialNumber = serialNumber;
-            return Task.CompletedTask;
+                return $"-s {serialNumber}";
         }
 
         public override bool Exists()
@@ -40,7 +29,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return File.Exists(AdbPath);
         }
 
-        public override async Task<bool> TryDownloadAsync(Action<string> outText, Action<int> outProgress)
+        public override async Task<bool> TryDownloadToolAsync(Action<string> outText, Action<int> outProgress)
         {
             if (Exists())
             {
@@ -84,6 +73,10 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
         }
 
+        /// <summary>
+        /// Quick check for active devices
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> ContainsAnyDevicesAsync()
         {
             var str = await GetAndroidDevicesStrAsync();
@@ -98,30 +91,68 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
         public async Task<DeviceData[]> GetAndroidDevicesAsync()
         {
-            var result = new List<DeviceData>();
+            var results = new DeviceData[] {};
 
-            var deviceListData = await GetAndroidDevicesStrAsync();
+            var deviceListDataStr = await GetAndroidDevicesStrAsync();
 
-            if (!string.IsNullOrEmpty(deviceListData))
+            if (!string.IsNullOrEmpty(deviceListDataStr))
             {
-                var datas = deviceListData
-                    .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
-                for (int i = 1; i < datas.Length; i++)
-                {
-                    var deviceData = new DeviceData(datas[i]);
-
-                    //if (IPEndPoint.TryParse(deviceData.serialNumber, out IPEndPoint endpoint)
-                    //    /* && result.contains data with this ip */)
-                    //{
-                    //    continue;
-                    //}
-
-                    result.Add(deviceData);
-                }
+                results = await NormalizeDeviceList(deviceListDataStr);
             }
 
-            return result.ToArray();
+            return results;
         }
+
+        private async Task<DeviceData[]> NormalizeDeviceList(string deviceListDataStr)
+        {
+            List<DeviceData> results = new List<DeviceData>();
+
+            var datas = deviceListDataStr
+                .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                .Skip(1)
+                .Select(x => new DeviceData(x))
+                .ToArray();
+
+            var usbDeviceDatas =
+                datas
+                // Skip devices with ip serial number
+                .Where(x => !IPEndPoint.TryParse(x.SerialNumber, out IPEndPoint endpoint))
+                .ToList();
+
+            var wifiDeviceDatas = datas.ToList();
+            wifiDeviceDatas.RemoveAll(x => usbDeviceDatas.Contains(x));
+
+            for (int i = 0; i < usbDeviceDatas.Count; i++)
+            {
+                var deviceData = datas[i];
+                var deviceIpAddress = await GetDeviceIpAddressAsync(deviceData);
+
+                var wifiData = wifiDeviceDatas
+                    .FirstOrDefault(x => 
+                    {
+                        if (IPEndPoint.TryParse(x.SerialNumber, out IPEndPoint endpoint))
+                        {
+                            return endpoint.Address.ToString() == deviceIpAddress;
+                        };
+                        return false;
+                    });
+
+                if (wifiData != null)
+                {
+                    deviceData.SetWifiDeviceData(wifiData);
+                    wifiDeviceDatas.Remove(wifiData);
+                }
+
+                results.Add(deviceData);
+            }
+
+            // Add all self-hosted wifi devices
+            results.AddRange(wifiDeviceDatas);
+
+            return results
+                .Where(x => x != null)
+                .ToArray();
+        } 
 
         private async Task<string> GetAndroidDevicesStrAsync()
         {
@@ -139,15 +170,35 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
         }
 
-        public async Task<bool> TryUninstallAPKAsync(string bundleName, Action<string> outText)
+        /// <summary>
+        /// Get basic data for special device by serial number
+        /// without wifi device data
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        /// <returns></returns>
+        public async Task<DeviceData> GetAndroidDeviceDataAsync(string serialNumber)
+        {
+            var devicesStr = await GetAndroidDevicesStrAsync();
+            var deviceStr = devicesStr
+                .Split(Environment.NewLine.ToCharArray())
+                .FirstOrDefault(x => x.StartsWith(serialNumber));
+
+            if (!string.IsNullOrEmpty(deviceStr))
+            {
+                return new DeviceData(deviceStr);
+            }
+            return null;
+        }
+
+        public async Task<bool> TryUninstallAPKAsync(string serialNumber, string bundleName, Action<string> outText)
         {
             if (!await ContainsAnyDevicesAsync())
             {
                 return false;
             }
 
-            var args = $"uninstall {bundleName}";
-            var data = await CmdHelper.StartProcessAsync(AdbDefaultDevicePath, args);
+            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} uninstall {bundleName}";
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
             outText(data.data ?? data.error);
             if (!string.IsNullOrEmpty(data.error))
             {
@@ -162,15 +213,15 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return data.data != null;
         }
 
-        public async Task<bool> TryInstallAPKAsync(string path, Action<string> outText)
+        public async Task<bool> TryInstallAPKAsync(string serialNumber, string path, Action<string> outText)
         {
             if (!await ContainsAnyDevicesAsync())
             {
                 return false;
             }
 
-            var args = $"install {path}";
-            var data = await CmdHelper.StartProcessAsync(AdbDefaultDevicePath, args);
+            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} install {path}";
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
             if (!string.IsNullOrEmpty(data.error))
             {
                 CustomLogger.Log("Android platform tools: {0}", data.error);
@@ -184,15 +235,15 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return !string.IsNullOrEmpty(data.data) && data.data.Contains("Success");
         }
 
-        public async Task<bool> TrySetLogBufferSizeAsync(int sizeInMb, Action<string> outText)
+        public async Task<bool> TrySetLogBufferSizeAsync(string serialNumber, int sizeInMb, Action<string> outText)
         {
             if (!await ContainsAnyDevicesAsync())
             {
                 return false;
             }
 
-            var args = $"logcat -G {sizeInMb}M";
-            var data = await CmdHelper.StartProcessAsync(AdbDefaultDevicePath, args);
+            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} logcat -G {sizeInMb}M";
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
             if (!string.IsNullOrEmpty(data.error))
             {
                 CustomLogger.Log("Android platform tools: {0}", data.error);
@@ -206,15 +257,15 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return string.IsNullOrEmpty(data.error);
         }
 
-        public async Task<bool> TrySaveLogToFileAsync(string path, Action<string>? outText)
+        public async Task<bool> TrySaveLogToFileAsync(string serialNumber, string path, Action<string>? outText)
         {
             if (!await ContainsAnyDevicesAsync())
             {
                 return false;
             }
 
-            var args = $"logcat -d";
-            var data = await CmdHelper.StartProcessAsync(AdbDefaultDevicePath, args);
+            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} logcat -d";
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
             if (!string.IsNullOrEmpty(data.error))
             {
@@ -225,6 +276,63 @@ namespace UnmistakableAPKInstaller.Tools.Android
             {
                 outText?.Invoke(data.data);
                 await File.WriteAllTextAsync(path, data.data);
+            }
+
+            return string.IsNullOrEmpty(data.error);
+        }
+
+        public async Task<string> GetDeviceIpAddressAsync(DeviceData deviceData)
+        {
+            var args = $"{GetSpecialAdbSerialNumberArg(deviceData.SerialNumber)} shell ip route";
+            var processData = await CmdHelper.StartProcessAsync(AdbPath, args);
+
+            if (!string.IsNullOrEmpty(processData.error))
+            {
+                CustomLogger.Log("Android platform tools: {0}", processData.error);
+                return string.Empty;
+            }
+            else
+            {
+                var ipAddressStr = processData.data
+                    .Split(null)
+                    .Where(x => !string.IsNullOrEmpty(x))
+                    .Last();
+                return ipAddressStr;
+            }
+        }
+
+        public async Task<bool> TryOpenPortAsync(string serialNumber, int port = 5555)
+        {
+            if (!await ContainsAnyDevicesAsync())
+            {
+                return false;
+            }
+
+            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} tcpip {port}";
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+
+            if (!string.IsNullOrEmpty(data.error))
+            {
+                CustomLogger.Log("Android platform tools: {0}", data.error);
+            }
+
+            return string.IsNullOrEmpty(data.error);
+        }
+
+        public async Task<bool> TryUpdateConnectToDeviceAsync(bool value, string ipAddress, int port = 5555)
+        {
+            if (!await ContainsAnyDevicesAsync())
+            {
+                return false;
+            }
+
+            var connectStr = value ? "connect" : "disconnect";
+            var args = $" {connectStr} {ipAddress}:{port}";
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+
+            if (!string.IsNullOrEmpty(data.error))
+            {
+                CustomLogger.Log("Android platform tools: {0}", data.error);
             }
 
             return string.IsNullOrEmpty(data.error);

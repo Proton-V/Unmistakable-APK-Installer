@@ -1,4 +1,5 @@
-﻿using UnmistakableAPKInstaller.Helpers;
+﻿using System.Net;
+using UnmistakableAPKInstaller.Helpers;
 
 namespace UnmistakableAPKInstaller.Tools.Android.Models
 {
@@ -11,9 +12,10 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
             info = new Dictionary<string, string>();
         }
 
-        public DeviceData(string input) : this()
+        public DeviceData(string input, DeviceData wifiDeviceData = default) : this()
         {
             Update(input);
+            WifiDeviceData = wifiDeviceData;
         }
 
         public static DeviceData Default
@@ -22,25 +24,37 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
             {
                 return new DeviceData()
                 {
-                    serialNumber = NULL_VALUE,
-                    status = NULL_VALUE
+                    SerialNumber = NULL_VALUE,
+                    Status = NULL_VALUE
                 };
             }
         }
 
-        public bool IsActive => status.Contains("device");
+        public bool IsActive => Status.Contains("device");
+        public bool IsActiveWifi => WifiDeviceData?.IsActive ?? false;
 
-        public string serialNumber;
-        public string status;
+        public DeviceData WifiDeviceData { get; private set; }
+
+        public string SerialNumber { get; private set; }
+        public string Status { get; private set; }
+
         public Dictionary<string, string> info;
+
+        public void SetWifiDeviceData(DeviceData wifiDeviceData)
+        {
+            WifiDeviceData = wifiDeviceData;
+        }
 
         private void Update(string input)
         {
             try
             {
-                var inputArray = input.Split(null);
-                serialNumber = inputArray[0];
-                status = inputArray[1];
+                var inputArray = input
+                    .Split(null)
+                    .Where(x => !string.IsNullOrEmpty(x))
+                    .ToArray();
+                SerialNumber = inputArray[0];
+                Status = inputArray[1];
 
                 for (int i = 2; i < inputArray.Length; i++)
                 {

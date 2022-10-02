@@ -18,7 +18,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return File.Exists(Aapt2Path);
         }
 
-        public override async Task<bool> TryDownloadAsync(Action<string> outText, Action<int> outProgress)
+        public override async Task<bool> TryDownloadToolAsync(Action<string> outText, Action<int> outProgress)
         {
             if (Exists())
             {

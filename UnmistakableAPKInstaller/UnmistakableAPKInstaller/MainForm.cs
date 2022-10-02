@@ -33,6 +33,21 @@ namespace UnmistakableAPKInstaller
 
         string deviceLogFolderPath;
 
+        // TODO: move to DeviceManager class
+        private DeviceData currentDevice;
+        private string CurrentDeviceSerialNumber
+        {
+            get
+            {
+                if (currentDevice == null)
+                {
+                    return null;
+                }
+
+                return currentDevice.WifiDeviceData?.SerialNumber ?? currentDevice.SerialNumber;
+            }
+        }
+
         public void ForceUpdate()
         {
             Init();
@@ -220,7 +235,7 @@ namespace UnmistakableAPKInstaller
             var fileName = $"{Directory.GetFiles(folderPath, "*.log").Length}_{currentDateTime.ToFileTimeUtc()}.log";
 
             var path = Path.Combine(folderPath, fileName);
-            var status = await cmdToolsProvider.TrySaveLogToFileAsync(path, null);
+            var status = await cmdToolsProvider.TrySaveLogToFileAsync(CurrentDeviceSerialNumber, path, null);
 
             MessageBox.Show(status ? $"Saved to {path}!" : "Save error...",
                 "Save log status", MessageBoxButtons.OK);
@@ -261,17 +276,17 @@ namespace UnmistakableAPKInstaller
             {
                 ProgressBar.Value = 10;
                 OutputDownload.Text = "Uninstall previous version...";
-                await cmdToolsProvider.TryUninstallAPKByPathAsync(InputPath.Text, (str) => OutputDownload.Text = str);
+                await cmdToolsProvider.TryUninstallAPKByPathAsync(CurrentDeviceSerialNumber, InputPath.Text, (str) => OutputDownload.Text = str);
             }
 
             ProgressBar.Value = 50;
             OutputDownload.Text = "Install new version...";
-            var status = await cmdToolsProvider.TryInstallAPKAsync(InputPath.Text, (str) => OutputDownload.Text = str);
+            var status = await cmdToolsProvider.TryInstallAPKAsync(CurrentDeviceSerialNumber, InputPath.Text, (str) => OutputDownload.Text = str);
 
             if (DeviceLogEnabled)
             {
                 OutputDownload.Text = "Set log buffer size...";
-                await cmdToolsProvider.TrySetLogBufferSizeAsync(DeviceLogBufferSize, (str) => OutputDownload.Text = str);
+                await cmdToolsProvider.TrySetLogBufferSizeAsync(CurrentDeviceSerialNumber, DeviceLogBufferSize, (str) => OutputDownload.Text = str);
             }
 
             ProgressBar.Value = 100;
@@ -284,7 +299,7 @@ namespace UnmistakableAPKInstaller
         #endregion
 
         #region Devices DropDownList
-        private async void InitDevicesDropDownListAsync()
+        private async void InitDevicesDropDownListAsync(string selectedSerialNumber = default)
         {
             DropdownListDevices.Items.Clear();
 
@@ -292,10 +307,17 @@ namespace UnmistakableAPKInstaller
 
             foreach(var data in datas)
             {
-                DropdownListDevices.Items.Add(data.serialNumber);
+                DropdownListDevices.Items.Add(data.SerialNumber);
             }
 
-            DropdownListDevices.SelectedIndex = DropdownListDevices.Items.Count - 1;
+            if (string.IsNullOrEmpty(selectedSerialNumber))
+            {
+                DropdownListDevices.SelectedIndex = DropdownListDevices.Items.Count - 1;
+            }
+            else
+            {
+                DropdownListDevices.SelectedItem = selectedSerialNumber;
+            }
         }
 
         private async Task<DeviceData[]> GetDeviceListAsync()
@@ -314,16 +336,50 @@ namespace UnmistakableAPKInstaller
 
         private void DropdownListDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var selectedText = $"{DropdownListDevices.SelectedItem}";
-            if (!string.IsNullOrWhiteSpace(selectedText)
-                && selectedText != DeviceData.NULL_VALUE)
+            DropdownListDevices_SelectedIndexChangedActionAsync();
+        }
+
+        private async void DropdownListDevices_SelectedIndexChangedActionAsync()
+        {
+            var serialNumber = $"{DropdownListDevices.SelectedItem}";
+            var deviceDatas = await cmdToolsProvider.GetAndroidDevicesAsync();
+            currentDevice = deviceDatas.FirstOrDefault(x => x.SerialNumber == serialNumber);
+
+            UpdateCurrentDeviceLayout();
+        }
+
+        private void UpdateCurrentDeviceLayout()
+        {
+            if (currentDevice != null)
             {
-                cmdToolsProvider.UpdateDefaultDevice(selectedText);
+                this.LabelStatusDevice.Text = 
+                    $"{currentDevice.info.GetValueOrDefault("model")} {currentDevice.Status}";
+                this.PictureBoxUsbMode.BackColor = currentDevice.IsActive? Color.Green : Color.Red;
+                this.PictureBoxWifiMode.BackColor = currentDevice.IsActiveWifi? Color.Green : Color.Red;
+
+                var wifiModeButtonStateStr = currentDevice.IsActiveWifi ? "Off" : "On";
+                this.ButtonWifiModeUpdate.Text = $"{wifiModeButtonStateStr} Wifi Mode";
             }
-            else
+        }
+
+        private async void ButtonWifiModeUpdate_ClickActionAsync()
+        {
+            var currentStatus = currentDevice?.IsActiveWifi;
+            if (currentStatus != null)
             {
-                cmdToolsProvider.UpdateDefaultDevice(null);
+                await cmdToolsProvider.CreateOrUpdateWifiDeviceByUsb(currentDevice);
+                UpdateCurrentDeviceLayout();
             }
+        }
+
+        private void ButtonDeviceListUpdate_Click(object sender, EventArgs e)
+        {
+            InitDevicesDropDownListAsync(currentDevice?.SerialNumber);
+        }
+
+        private void ButtonWifiModeUpdate_Click(object sender, EventArgs e)
+        {
+            ButtonWifiModeUpdate_ClickActionAsync();
         }
     }
 }
