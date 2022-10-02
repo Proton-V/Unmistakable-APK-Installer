@@ -12,9 +12,10 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
     {
         public DeviceData CurrentDevice
         {
-            get => deviceManager.currentDevice;
-            private set => deviceManager.currentDevice = value;
+            get => deviceManager.CurrentDevice;
+            private set => deviceManager.UpdateCurrentDevice(value);
         }
+
         string CurrentDeviceSerialNumber
             => deviceManager.CurrentDeviceSerialNumber;
 

@@ -4,18 +4,23 @@ namespace UnmistakableAPKInstaller.Core.Managers
 {
     public class DeviceManager
     {
-        public DeviceData currentDevice;
+        public DeviceData CurrentDevice { get; private set; }
         public string CurrentDeviceSerialNumber
         {
             get
             {
-                if (currentDevice == null)
+                if (CurrentDevice == null)
                 {
                     return null;
                 }
 
-                return currentDevice.WifiDeviceData?.SerialNumber ?? currentDevice.SerialNumber;
+                return CurrentDevice.WifiDeviceData?.SerialNumber ?? CurrentDevice.SerialNumber;
             }
+        }
+
+        public void UpdateCurrentDevice(DeviceData deviceData)
+        {
+            CurrentDevice = deviceData;
         }
     }
 }
