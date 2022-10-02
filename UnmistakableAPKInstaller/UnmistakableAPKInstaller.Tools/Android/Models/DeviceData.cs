@@ -32,13 +32,16 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
 
         public bool IsActive => Status.Contains("device");
         public bool IsActiveWifi => WifiDeviceData?.IsActive ?? false;
+        public bool IsWifiDevice => IPAddress.TryParse(SerialNumber.Split(':')[0], out IPAddress iPAddress);
 
         public DeviceData WifiDeviceData { get; private set; }
 
         public string SerialNumber { get; private set; }
         public string Status { get; private set; }
 
-        public Dictionary<string, string> info;
+        public string Model => info.GetValueOrDefault("model");
+
+        public Dictionary<string, string> info { get; private set; }
 
         public void SetWifiDeviceData(DeviceData wifiDeviceData)
         {

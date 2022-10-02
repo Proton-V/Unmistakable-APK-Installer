@@ -255,7 +255,7 @@ namespace UnmistakableAPKInstaller
         {
             string folderPath = deviceLogFolderPath;
             var currentDateTime = DateTime.UtcNow;
-            var fileName = $"{Directory.GetFiles(folderPath, "*.log").Length}_{currentDateTime.ToFileTimeUtc()}.log";
+            var fileName = $"{currentDevice.Model} {Directory.GetFiles(folderPath, "*.log").Length}_{currentDateTime.ToFileTimeUtc()}.log";
 
             var path = Path.Combine(folderPath, fileName);
             var status = await cmdToolsProvider.TrySaveLogToFileAsync(CurrentDeviceSerialNumber, path, null);
@@ -384,9 +384,18 @@ namespace UnmistakableAPKInstaller
             if (currentDevice != null)
             {
                 this.LabelStatusDevice.Text = 
-                    $"{currentDevice.info.GetValueOrDefault("model")} {currentDevice.Status}";
-                this.PictureBoxUsbMode.BackColor = currentDevice.IsActive? Color.Green : Color.Red;
-                this.PictureBoxWifiMode.BackColor = currentDevice.IsActiveWifi? Color.Green : Color.Red;
+                    $"{currentDevice.Model} {currentDevice.Status}";
+
+                var isUsbDevice = !currentDevice.IsWifiDevice;
+
+                this.LabelUsbMode.Visible = isUsbDevice;
+                this.PictureBoxUsbMode.Visible = isUsbDevice;
+                this.LabelWifiMode.Visible = isUsbDevice;
+                this.PictureBoxWifiMode.Visible = isUsbDevice;
+                this.ButtonWifiModeUpdate.Visible = isUsbDevice;
+
+                this.PictureBoxUsbMode.BackColor = currentDevice.IsActive ? Color.Green : Color.Red;
+                this.PictureBoxWifiMode.BackColor = currentDevice.IsActiveWifi ? Color.Green : Color.Red;
 
                 var wifiModeButtonStateStr = currentDevice.IsActiveWifi ? "Off" : "On";
                 this.ButtonWifiModeUpdate.Text = $"{wifiModeButtonStateStr} Wifi Mode";
@@ -412,7 +421,5 @@ namespace UnmistakableAPKInstaller
         {
             ButtonWifiModeUpdate_ClickActionAsync();
         }
-
-
     }
 }
