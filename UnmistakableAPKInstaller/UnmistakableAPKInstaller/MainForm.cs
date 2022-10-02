@@ -26,7 +26,7 @@ namespace UnmistakableAPKInstaller
         int DeviceLogBufferSize => Convert.ToInt32(ConfigurationManager.AppSettings["DeviceLogBufferSize"]);
 
         string AppDirectory => Environment.CurrentDirectory;
-        string DownloadAPKFolder => $"{AppDirectory}GoogleDrive";
+        string DownloadedAPKFolderPath => $"{Path.Combine(AppDirectory, "GoogleDrive")}";
 
         CmdToolsProvider cmdToolsProvider;
         GoogleDriveDownloadHelper gdDownloadHelper;
@@ -63,7 +63,7 @@ namespace UnmistakableAPKInstaller
             }
             Directory.CreateDirectory(deviceLogFolderPath);
 
-            Directory.CreateDirectory(DownloadAPKFolder);
+            Directory.CreateDirectory(DownloadedAPKFolderPath);
 
             var platformToolsDownloadLink = ConfigurationManager.AppSettings["PlatformToolsDownloadLink"];
             var platformToolsFolderPath = ConfigurationManager.AppSettings["AndroidPlatformToolsFolderPath"];
@@ -74,7 +74,7 @@ namespace UnmistakableAPKInstaller
             var aapt2Tool = new Aapt2Tool(aapt2DownloadLink, GetFullPath(aapt2FolderPath));
 
             var gdApiKey = ConfigurationManager.AppSettings["GoogleDriveApiKey"];
-            gdDownloadHelper = new GoogleDriveDownloadHelper(gdApiKey, DownloadAPKFolder);
+            gdDownloadHelper = new GoogleDriveDownloadHelper(gdApiKey, DownloadedAPKFolderPath);
 
             cmdToolsProvider = new CmdToolsProvider()
                 .AddTool(platformTools)
@@ -180,7 +180,7 @@ namespace UnmistakableAPKInstaller
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.InitialDirectory = DownloadAPKFolder;
+                openFileDialog.InitialDirectory = DownloadedAPKFolderPath;
                 openFileDialog.Filter = "APK Files (*.apk)|*.apk";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
@@ -305,12 +305,13 @@ namespace UnmistakableAPKInstaller
 
             var datas = await GetDeviceListAsync();
 
-            foreach(var data in datas)
+            foreach (var data in datas)
             {
                 DropdownListDevices.Items.Add(data.SerialNumber);
             }
 
-            if (string.IsNullOrEmpty(selectedSerialNumber))
+            if (string.IsNullOrEmpty(selectedSerialNumber)
+                || !DropdownListDevices.Items.Contains(selectedSerialNumber))
             {
                 DropdownListDevices.SelectedIndex = DropdownListDevices.Items.Count - 1;
             }
