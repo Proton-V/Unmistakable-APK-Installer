@@ -81,14 +81,15 @@
             // 
             // OutputDownload
             // 
-            this.OutputDownload.Location = new System.Drawing.Point(12, 394);
+            this.OutputDownload.BackColor = System.Drawing.Color.Silver;
+            this.OutputDownload.Location = new System.Drawing.Point(12, 375);
             this.OutputDownload.Name = "OutputDownload";
-            this.OutputDownload.Size = new System.Drawing.Size(776, 47);
+            this.OutputDownload.Size = new System.Drawing.Size(776, 66);
             this.OutputDownload.TabIndex = 3;
             // 
             // ProgressBar
             // 
-            this.ProgressBar.Location = new System.Drawing.Point(12, 368);
+            this.ProgressBar.Location = new System.Drawing.Point(12, 338);
             this.ProgressBar.Name = "ProgressBar";
             this.ProgressBar.Size = new System.Drawing.Size(776, 23);
             this.ProgressBar.TabIndex = 4;
@@ -123,7 +124,7 @@
             // LabelDevices
             // 
             this.LabelDevices.AutoSize = true;
-            this.LabelDevices.Location = new System.Drawing.Point(83, 280);
+            this.LabelDevices.Location = new System.Drawing.Point(189, 169);
             this.LabelDevices.Name = "LabelDevices";
             this.LabelDevices.Size = new System.Drawing.Size(50, 15);
             this.LabelDevices.TabIndex = 8;
@@ -161,7 +162,7 @@
             // 
             // ButtonSaveLogToFile
             // 
-            this.ButtonSaveLogToFile.Location = new System.Drawing.Point(530, 306);
+            this.ButtonSaveLogToFile.Location = new System.Drawing.Point(291, 262);
             this.ButtonSaveLogToFile.Name = "ButtonSaveLogToFile";
             this.ButtonSaveLogToFile.Size = new System.Drawing.Size(134, 34);
             this.ButtonSaveLogToFile.TabIndex = 14;
@@ -173,7 +174,7 @@
             // 
             this.DropdownListDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.DropdownListDevices.FormattingEnabled = true;
-            this.DropdownListDevices.Location = new System.Drawing.Point(142, 277);
+            this.DropdownListDevices.Location = new System.Drawing.Point(248, 166);
             this.DropdownListDevices.Name = "DropdownListDevices";
             this.DropdownListDevices.Size = new System.Drawing.Size(192, 23);
             this.DropdownListDevices.TabIndex = 15;
@@ -182,7 +183,7 @@
             // LabelWifiMode
             // 
             this.LabelWifiMode.AutoSize = true;
-            this.LabelWifiMode.Location = new System.Drawing.Point(269, 316);
+            this.LabelWifiMode.Location = new System.Drawing.Point(375, 205);
             this.LabelWifiMode.Name = "LabelWifiMode";
             this.LabelWifiMode.Size = new System.Drawing.Size(30, 15);
             this.LabelWifiMode.TabIndex = 17;
@@ -191,7 +192,7 @@
             // LabelUsbMode
             // 
             this.LabelUsbMode.AutoSize = true;
-            this.LabelUsbMode.Location = new System.Drawing.Point(207, 316);
+            this.LabelUsbMode.Location = new System.Drawing.Point(313, 205);
             this.LabelUsbMode.Name = "LabelUsbMode";
             this.LabelUsbMode.Size = new System.Drawing.Size(28, 15);
             this.LabelUsbMode.TabIndex = 16;
@@ -201,7 +202,7 @@
             // LabelStatusDevice
             // 
             this.LabelStatusDevice.AutoSize = true;
-            this.LabelStatusDevice.Location = new System.Drawing.Point(83, 316);
+            this.LabelStatusDevice.Location = new System.Drawing.Point(189, 205);
             this.LabelStatusDevice.Name = "LabelStatusDevice";
             this.LabelStatusDevice.Size = new System.Drawing.Size(47, 15);
             this.LabelStatusDevice.TabIndex = 18;
@@ -211,7 +212,7 @@
             // PictureBoxWifiMode
             // 
             this.PictureBoxWifiMode.BackColor = System.Drawing.Color.Red;
-            this.PictureBoxWifiMode.Location = new System.Drawing.Point(305, 316);
+            this.PictureBoxWifiMode.Location = new System.Drawing.Point(411, 205);
             this.PictureBoxWifiMode.Name = "PictureBoxWifiMode";
             this.PictureBoxWifiMode.Size = new System.Drawing.Size(14, 15);
             this.PictureBoxWifiMode.TabIndex = 19;
@@ -220,7 +221,7 @@
             // PictureBoxUsbMode
             // 
             this.PictureBoxUsbMode.BackColor = System.Drawing.Color.Red;
-            this.PictureBoxUsbMode.Location = new System.Drawing.Point(241, 316);
+            this.PictureBoxUsbMode.Location = new System.Drawing.Point(347, 205);
             this.PictureBoxUsbMode.Name = "PictureBoxUsbMode";
             this.PictureBoxUsbMode.Size = new System.Drawing.Size(14, 15);
             this.PictureBoxUsbMode.TabIndex = 20;
@@ -228,7 +229,7 @@
             // 
             // ButtonWifiModeUpdate
             // 
-            this.ButtonWifiModeUpdate.Location = new System.Drawing.Point(335, 312);
+            this.ButtonWifiModeUpdate.Location = new System.Drawing.Point(441, 201);
             this.ButtonWifiModeUpdate.Name = "ButtonWifiModeUpdate";
             this.ButtonWifiModeUpdate.Size = new System.Drawing.Size(115, 23);
             this.ButtonWifiModeUpdate.TabIndex = 21;
@@ -238,7 +239,7 @@
             // 
             // ButtonDeviceListUpdate
             // 
-            this.ButtonDeviceListUpdate.Location = new System.Drawing.Point(354, 277);
+            this.ButtonDeviceListUpdate.Location = new System.Drawing.Point(460, 166);
             this.ButtonDeviceListUpdate.Name = "ButtonDeviceListUpdate";
             this.ButtonDeviceListUpdate.Size = new System.Drawing.Size(115, 23);
             this.ButtonDeviceListUpdate.TabIndex = 22;
