@@ -1,5 +1,5 @@
 using System.Timers;
-using UnmistakableAPKInstaller.Core.Controllers;
+using UnmistakableAPKInstaller.Core.Controllers.UI;
 using UnmistakableAPKInstaller.Tools.Android.Models;
 
 namespace UnmistakableAPKInstaller
@@ -21,7 +21,7 @@ namespace UnmistakableAPKInstaller
             InitHandlers();
         }
 
-        DeviceData CurrentDevice => controller.currentDevice;
+        DeviceData CurrentDevice => controller.CurrentDevice;
 
         MainWindowController controller;
 

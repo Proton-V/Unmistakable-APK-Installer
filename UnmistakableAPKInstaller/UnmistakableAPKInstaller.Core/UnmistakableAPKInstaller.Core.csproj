@@ -14,4 +14,8 @@
     <ProjectReference Include="..\UnmistakableAPKInstaller.Tools\UnmistakableAPKInstaller.Tools.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Managers\UI\" />
+  </ItemGroup>
+
 </Project>
