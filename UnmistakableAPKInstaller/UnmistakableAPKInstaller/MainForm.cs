@@ -176,8 +176,6 @@ namespace UnmistakableAPKInstaller
 
         private void ChangeVisibility(bool value)
         {
-            ButtonSettings.Visible = value;
-            ButtonSaveLogToFile.Visible = value;
             ButtonDownload.Visible = value;
             InputDownload.Visible = value;
             LabelDownload.Visible = value;
@@ -189,6 +187,11 @@ namespace UnmistakableAPKInstaller
             LabelDevices.Visible = value;
             ButtonInstall.Visible = value;
             ButtonDownloadInstall.Visible = value;
+            ButtonSettings.Visible = value;
+            ButtonSaveLogToFile.Visible = value;
+            DropdownListDevices.Visible = value;
+            ButtonWifiModeUpdate.Visible = value;
+            ButtonDeviceListUpdate.Visible = value;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
