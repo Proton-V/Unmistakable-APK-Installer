@@ -1,8 +1,10 @@
 using System.Configuration;
+using System.Timers;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools;
 using UnmistakableAPKInstaller.Tools.Android;
 using UnmistakableAPKInstaller.Tools.Android.Models;
+using Timer = System.Timers.Timer;
 
 namespace UnmistakableAPKInstaller
 {
@@ -19,6 +21,7 @@ namespace UnmistakableAPKInstaller
         {
             InitializeComponent();
             Init();
+            InitTimers();
         }
 
         bool AutoDelPrevApp => Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
@@ -87,6 +90,26 @@ namespace UnmistakableAPKInstaller
 
             InitInternalComponents();
         }
+
+        // TODO: move to DeviceManager class
+        #region Timers
+        private List<Timer> activeTimers = new List<Timer>();
+
+        private void InitTimers()
+        {
+            Timer timer = new Timer();
+            timer.Elapsed += new ElapsedEventHandler(TimerUpdateDeviceListAction);
+            timer.Interval = 5000;
+            timer.Start();
+
+            activeTimers.Add(timer);
+        }
+
+        private void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
+        {
+            this.Invoke(InitDevicesDropDownListAsync, currentDevice?.SerialNumber);
+        }
+        #endregion
 
         private void InitInternalComponents()
         {
@@ -301,13 +324,20 @@ namespace UnmistakableAPKInstaller
         #region Devices DropDownList
         private async void InitDevicesDropDownListAsync(string selectedSerialNumber = default)
         {
+            var datas = await GetDeviceListAsync();
+            var newDropDownDatas = datas.Select(x => x.SerialNumber).ToList();
+
+            if (DropdownListDevices.Items.Count == newDropDownDatas.Count()
+                && newDropDownDatas.All(x => DropdownListDevices.Items.Contains(x)))
+            {
+                return;
+            }
+
             DropdownListDevices.Items.Clear();
 
-            var datas = await GetDeviceListAsync();
-
-            foreach (var data in datas)
+            foreach (var data in newDropDownDatas)
             {
-                DropdownListDevices.Items.Add(data.SerialNumber);
+                DropdownListDevices.Items.Add(data);
             }
 
             if (string.IsNullOrEmpty(selectedSerialNumber)
@@ -382,5 +412,7 @@ namespace UnmistakableAPKInstaller
         {
             ButtonWifiModeUpdate_ClickActionAsync();
         }
+
+
     }
 }
