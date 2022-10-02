@@ -61,6 +61,10 @@ namespace UnmistakableAPKInstaller.Tools
                 DeviceData newWifiDeviceData = null;
                 if (nextVal && result)
                 {
+                    await SetTempPropAsync(deviceData.SerialNumber,
+                        AndroidPlatformTools.DEFAULT_TCP_PORT_PROP_NAME,
+                        AndroidPlatformTools.DEFAULT_TCP_PORT.ToString());
+
                     newWifiDeviceData = await GetAndroidDeviceDataAsync(ipAddress);
                 }
                 deviceData.SetWifiDeviceData(newWifiDeviceData);
@@ -90,6 +94,8 @@ namespace UnmistakableAPKInstaller.Tools
             await AndroidPlatformTools?.GetDeviceIpAddressAsync(deviceData);
         public async Task<bool> TryOpenPortAsync(string serialNumber, int port = 5555) =>
             await AndroidPlatformTools?.TryOpenPortAsync(serialNumber, port);
+        public async Task<bool> SetTempPropAsync(string serialNumber, string propName, string propValue) =>
+            await AndroidPlatformTools?.SetTempPropAsync(serialNumber, propName, propValue);
         public async Task<bool> TryUpdateConnectToDeviceAsync(bool value, string ipAddress, int port = 5555) =>
             await AndroidPlatformTools?.TryUpdateConnectToDeviceAsync(value, ipAddress, port);
         public async Task<DeviceData> GetAndroidDeviceDataAsync(string serialNumber) =>

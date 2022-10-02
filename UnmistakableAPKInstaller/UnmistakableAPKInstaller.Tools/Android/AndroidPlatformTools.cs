@@ -7,6 +7,9 @@ namespace UnmistakableAPKInstaller.Tools.Android
 {
     public class AndroidPlatformTools : BaseCmdTool
     {
+        public const int DEFAULT_TCP_PORT = 5555;
+        public const string DEFAULT_TCP_PORT_PROP_NAME = "service.adb.tcp.port";
+
         public AndroidPlatformTools(string downloadLink, string toolFolderPath) : base(downloadLink, toolFolderPath)
         {
         }
@@ -309,6 +312,24 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} tcpip {port}";
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+
+            if (!string.IsNullOrEmpty(data.error))
+            {
+                CustomLogger.Log("Android platform tools: {0}", data.error);
+            }
+
+            return string.IsNullOrEmpty(data.error);
+        }
+
+        public async Task<bool> SetTempPropAsync(string serialNumber, string propName, string propValue)
+        {
+            if (!await ContainsAnyDevicesAsync())
+            {
+                return false;
+            }
+
+            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} shell setprop {propName} {propValue}";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
             if (!string.IsNullOrEmpty(data.error))
