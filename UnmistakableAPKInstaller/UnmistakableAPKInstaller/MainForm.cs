@@ -22,6 +22,7 @@ namespace UnmistakableAPKInstaller
             InitializeComponent();
             Init();
             InitTimers();
+            InitHandlers();
         }
 
         bool AutoDelPrevApp => Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
@@ -90,6 +91,21 @@ namespace UnmistakableAPKInstaller
 
             InitInternalComponents();
         }
+
+        #region Form Handlers
+        private void InitHandlers()
+        {
+            this.FormClosed += FormClosedHandler;
+        }
+
+        protected void FormClosedHandler(object sender, EventArgs e)
+        {
+            foreach(var activeTimer in activeTimers)
+            {
+                activeTimer.Stop();
+            }
+        }
+        #endregion
 
         // TODO: move to DeviceManager class
         #region Timers
