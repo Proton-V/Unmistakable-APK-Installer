@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UnmistakableAPKInstaller.Tools\UnmistakableAPKInstaller.Tools.csproj" />
+    <ProjectReference Include="..\UnmistakableAPKInstaller.Core\UnmistakableAPKInstaller.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

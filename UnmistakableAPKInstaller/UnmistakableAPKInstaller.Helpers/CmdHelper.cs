@@ -5,7 +5,7 @@ namespace UnmistakableAPKInstaller.Helpers
 {
     public class CmdHelper
     {
-        public static async Task<(string data, string error)> StartProcess(string path, string arguments)
+        public static async Task<(string data, string error)> StartProcessAsync(string path, string arguments)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace UnmistakableAPKInstaller.Helpers
 
                     if (!string.IsNullOrEmpty(errorStr))
                     {
-                        CustomLogger.WriteToLog("CmdHelper: {0}", errorStr);
+                        CustomLogger.Log("CmdHelper: {0}", errorStr);
                     }
 
                     return (outStr, errorStr);
@@ -45,7 +45,7 @@ namespace UnmistakableAPKInstaller.Helpers
             }
             catch(Exception e)
             {
-                CustomLogger.WriteToLog("GD Download Helper: {0}", e.ToString());
+                CustomLogger.Log("GD Download Helper: {0}", e.ToString());
                 return (null, e.Message);
             }
         }

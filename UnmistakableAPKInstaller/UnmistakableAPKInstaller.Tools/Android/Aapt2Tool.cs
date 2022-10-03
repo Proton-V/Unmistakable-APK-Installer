@@ -2,7 +2,7 @@
 using System.Net;
 using UnmistakableAPKInstaller.Helpers;
 
-namespace UnmistakableAPKInstaller.Tools
+namespace UnmistakableAPKInstaller.Tools.Android
 {
     public class Aapt2Tool : BaseCmdTool
     {
@@ -18,7 +18,7 @@ namespace UnmistakableAPKInstaller.Tools
             return File.Exists(Aapt2Path);
         }
 
-        public override async Task<bool> TryDownload(Action<string> outText, Action<int> outProgress)
+        public override async Task<bool> TryDownloadToolAsync(Action<string> outText, Action<int> outProgress)
         {
             if (Exists())
             {
@@ -31,7 +31,7 @@ namespace UnmistakableAPKInstaller.Tools
 
             using (WebClient wc = new WebClient())
             {
-                wc.DownloadProgressChanged += (sender, args) => 
+                wc.DownloadProgressChanged += (sender, args) =>
                 {
                     outProgress(args.ProgressPercentage);
                 };
@@ -49,18 +49,18 @@ namespace UnmistakableAPKInstaller.Tools
                 catch (Exception e)
                 {
                     outText(e.Message);
-                    CustomLogger.WriteToLog("Aapt2: {0}", e.ToString());
+                    CustomLogger.Log("Aapt2: {0}", e.ToString());
                     return false;
                 }
             }
         }
 
-        public async Task<string> TryGetAPKBundleName(string path)
+        public async Task<string> TryGetAPKBundleNameAsync(string path)
         {
             try
             {
                 var args = $"dump {path} | findstr -n \"package: name = \"";
-                var data = await CmdHelper.StartProcess(Aapt2Path, args);
+                var data = await CmdHelper.StartProcessAsync(Aapt2Path, args);
                 if (!string.IsNullOrEmpty(data.data))
                 {
                     return data.data;
@@ -72,7 +72,7 @@ namespace UnmistakableAPKInstaller.Tools
             }
             catch (Exception e)
             {
-                CustomLogger.WriteToLog("Aapt2: {0}", e.ToString());
+                CustomLogger.Log("Aapt2: {0}", e.ToString());
                 return e.Message;
             }
         }

@@ -21,7 +21,7 @@ namespace UnmistakableAPKInstaller.Helpers
             return url.StartsWith("https://drive.google.com/file/d/") && url.Contains("/view");
         }
 
-        public async Task<(bool status, string path)> DownloadFile(string url,
+        public async Task<(bool status, string path)> DownloadFileAsync(string url,
             Action<string> outText, Action<int> outProgress)
         {
             if (!ValidateUrl(url))
@@ -43,7 +43,7 @@ namespace UnmistakableAPKInstaller.Helpers
                 {
                     var getFileId = GetFileId(url);
                     var fileDataUrl = GetDownloadFileDataUrl(getFileId);
-                    var fileName = await GetFilename(fileDataUrl);
+                    var fileName = await GetFilenameAsync(fileDataUrl);
 
                     var gdUrl = $"{fileDataUrl}&alt=media";
 
@@ -56,7 +56,7 @@ namespace UnmistakableAPKInstaller.Helpers
                 catch (Exception e)
                 {
                     outText(e.Message);
-                    CustomLogger.WriteToLog("GD Download Helper: {0}", e.ToString());
+                    CustomLogger.Log("GD Download Helper: {0}", e.ToString());
                     return (false, string.Empty);
                 }
             }
@@ -72,7 +72,7 @@ namespace UnmistakableAPKInstaller.Helpers
             }
             catch (Exception e)
             {
-                CustomLogger.WriteToLog("GD Download Helper: {0}", e.ToString());
+                CustomLogger.Log("GD Download Helper: {0}", e.ToString());
                 return string.Empty;
             }
         }
@@ -82,7 +82,7 @@ namespace UnmistakableAPKInstaller.Helpers
             return $"https://www.googleapis.com/drive/v3/files/{fileId}?key={apiKey}";
         }
 
-        private async Task<string> GetFilename(string fileDataUrl)
+        private async Task<string> GetFilenameAsync(string fileDataUrl)
         {
             using (WebClient wc = new WebClient())
             {
@@ -93,7 +93,7 @@ namespace UnmistakableAPKInstaller.Helpers
                 }
                 catch (Exception e)
                 {
-                    CustomLogger.WriteToLog("GD Download Helper: {0}", e.ToString());
+                    CustomLogger.Log("GD Download Helper: {0}", e.ToString());
                     return null;
                 }
             }

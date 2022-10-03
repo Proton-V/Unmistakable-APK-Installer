@@ -1,5 +1,7 @@
 ﻿namespace UnmistakableAPKInstaller.Helpers
 {
+    // TODO: add log type
+
     /// <summary>
     /// Simple logger
     /// </summary>
@@ -23,13 +25,13 @@
             File.WriteAllText(LogPath, string.Empty);
         }
 
-        public static void WriteToLog(string formatStr, params string[] args)
+        public static void Log(string formatStr, params string[] formatArgs)
         {
-            var str = string.Format(formatStr, args);
-            WriteToLog(str);
+            var str = string.Format(formatStr, formatArgs);
+            Log(str);
         }
 
-        public static void WriteToLog(string msg)
+        public static void Log(string msg)
         {
             lock (logLock)
             {
