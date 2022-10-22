@@ -10,6 +10,11 @@ using System.Collections.Generic;
 using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.Enums;
 using Avalonia.Threading;
+using MessageBox.Avalonia.DTO;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
+using Avalonia;
+using UnmistakableAPKInstaller.Helpers;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
 {
@@ -382,8 +387,26 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
 
         private IMsBoxWindow<ButtonResult> GetDefaultMessageBox(string text, string title = default)
         {
+            var standardParams = new MessageBoxStandardParams();
+            standardParams.ContentTitle = title;
+            standardParams.ContentMessage = text;
+            standardParams.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+
+            var assetLoader = AvaloniaLocator.Current.GetService<IAssetLoader>();
+            var iconPath = "avares://UnmistakableAPKInstaller/Assets/logo-min.ico";
+
+            try
+            {
+                var bitmap = new Bitmap(assetLoader.Open(new Uri(iconPath)));
+                standardParams.WindowIcon = new WindowIcon(bitmap);
+            }
+            catch (Exception e)
+            {
+                CustomLogger.Log($"Fail with open icon path: {iconPath} - {e}");
+            }
+
             return MessageBox.Avalonia.MessageBoxManager
-                .GetMessageBoxStandardWindow(title, text);
+                .GetMessageBoxStandardWindow(standardParams);
         }
         #endregion;
     }
