@@ -14,13 +14,15 @@
 		
 		<StackPanel DockPanel.Dock="Top">
 			<Button Name="ButtonSettings"
+					Background="#d77185" Foreground="White"
 					Margin="10" Width="90" HorizontalContentAlignment="Center">Settings</Button>
 		</StackPanel>
 		
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="40,10,0,0">
 			<Label Name="LabelPath">APK Path</Label>
 			<TextBlock Name="InputPath"
-						Padding="5" TextAlignment="Center" Background="Gray"
+						Background="#a493c9" Foreground="White"
+						Padding="5" TextAlignment="Center"
 						Margin="60,0,0,0" Width="200" Height="30"/>
 			<Button Name="ButtonPath"
 					Margin="30,0,0,0" Width="240" HorizontalContentAlignment="Center">Select Manually</Button>
@@ -35,6 +37,7 @@
 			<Button Name="ButtonDownload"
 					Margin="30,0,0,0" Width="120" HorizontalContentAlignment="Center">Download APK</Button>
 			<Button Name="ButtonDownloadInstall"
+					Background="#8766ac" Foreground="White"
 					Margin="30,0,0,0" Width="240" HorizontalContentAlignment="Center">Download And Install</Button>
 		</StackPanel>
 
@@ -57,18 +60,22 @@
 			<TextBlock Name="PictureBoxWifiMode" Background="Red"
 					   Margin="10,0" Width="20" Height="20"></TextBlock>
 			<Button Name="ButtonWifiModeUpdate"
+			    Background="#d16e87" Foreground="White"
 				Margin="30,0,0,0" Width="180" HorizontalContentAlignment="Center">Update Wifi Mode</Button>
 		</StackPanel>
 		<StackPanel DockPanel.Dock="Top" Margin="0,20">
 			<Button Name="ButtonSaveLogToFile" HorizontalAlignment="Center"
+					Background="#8766ac" Foreground="White"
 						Width="180" HorizontalContentAlignment="Center">Save Log to File</Button>
 		</StackPanel>
 
 		<StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
 			<ProgressBar Name="ProgressBar"
+						Background="#f6bf75" Foreground="#8766ac"
 						IsIndeterminate="False" Minimum="0" Maximum="100" Height="30" Margin="10"/>
 			<TextBlock Name="OutStrOpText"
-					   TextAlignment="Center" Margin="10" Background="Gray" Height="60"/>
+					   Background="#d77185" Foreground="White"
+					   TextAlignment="Center" Margin="10" Height="60"/>
 		</StackPanel>
 		
 	</DockPanel>
