@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using UnmistakableAPKInstaller.Helpers;
+using UnmistakableAPKInstaller.Helpers.Models.DiskCache;
 
 namespace UnmistakableAPKInstaller.Tools.Android.Models
 {
@@ -9,7 +10,8 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
 
         private DeviceData() 
         {
-            info = new Dictionary<string, string>();
+            Info = new Dictionary<string, string>();
+            CachedData = new DeviceCacheData();
         }
 
         public DeviceData(string input, DeviceData wifiDeviceData = default) : this()
@@ -22,16 +24,24 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
         {
             get
             {
-                return new DeviceData()
+                var newData = new DeviceData()
                 {
                     SerialNumber = NULL_VALUE,
                     Status = NULL_VALUE
                 };
+
+                newData.SetCachedData(new DeviceCacheData()
+                {
+                    CustomName = NULL_VALUE,
+                    SerialNumber = NULL_VALUE,
+                    IPAddressWPort = NULL_VALUE,
+                });
+                return newData;
             }
         }
 
         public bool IsActive => Status.Contains("device");
-        public bool IsActiveWifi => WifiDeviceData?.IsActive ?? false;
+        public bool IsActiveWifi => (IsWifiDevice && IsActive) || (WifiDeviceData?.IsActive ?? false);
         public bool IsWifiDevice => IPAddress.TryParse(SerialNumber.Split(':')[0], out IPAddress iPAddress);
 
         public DeviceData WifiDeviceData { get; private set; }
@@ -39,13 +49,20 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
         public string SerialNumber { get; private set; }
         public string Status { get; private set; }
 
-        public string Model => info.GetValueOrDefault("model");
+        public string Model => Info.GetValueOrDefault("model");
 
-        public Dictionary<string, string> info { get; private set; }
+        public Dictionary<string, string> Info { get; private set; }
+
+        public DeviceCacheData CachedData { get; private set; }
 
         public void SetWifiDeviceData(DeviceData wifiDeviceData)
         {
             WifiDeviceData = wifiDeviceData;
+        }
+
+        public void SetCachedData(DeviceCacheData cacheData)
+        {
+            CachedData = cacheData;
         }
 
         private void Update(string input)
@@ -64,7 +81,7 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
                     var infoKeyValue = inputArray[i].Split(':');
                     if (infoKeyValue.Length == 2)
                     {
-                        info.Add(infoKeyValue[0], infoKeyValue[1]);
+                        Info.Add(infoKeyValue[0], infoKeyValue[1]);
                     }
                     else
                     {
