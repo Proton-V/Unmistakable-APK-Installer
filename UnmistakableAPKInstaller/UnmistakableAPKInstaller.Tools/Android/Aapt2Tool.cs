@@ -60,7 +60,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             try
             {
                 var args = $"dump {path} | findstr -n \"package: name = \"";
-                var data = await CmdHelper.StartProcessAsync(Aapt2Path, args);
+                var data = await CmdHelper.StartProcessAsync(Aapt2Path, args, timeoutInSec: -1);
                 if (!string.IsNullOrEmpty(data.data))
                 {
                     return data.data;
