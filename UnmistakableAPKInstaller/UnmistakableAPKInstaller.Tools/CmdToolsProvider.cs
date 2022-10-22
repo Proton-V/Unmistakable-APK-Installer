@@ -80,6 +80,8 @@ namespace UnmistakableAPKInstaller.Tools
 
         public async Task<bool> ContainsAnyDevicesAsync() => 
             await AndroidPlatformTools?.ContainsAnyDevicesAsync();
+        public async Task<string> GetAndroidDevicesStrAsync() =>
+            await AndroidPlatformTools?.GetAndroidDevicesStrAsync();
         public async Task<DeviceData[]> GetAndroidDevicesAsync() => 
             await AndroidPlatformTools?.GetAndroidDevicesAsync();
         public async Task<bool> TryUninstallAPKAsync(string serialNumber, string bundleName, Action<string> outText) => 

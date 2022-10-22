@@ -1,9 +1,14 @@
-﻿using UnmistakableAPKInstaller.Tools.Android.Models;
+﻿using System.Drawing.Drawing2D;
+using UnmistakableAPKInstaller.Helpers;
+using UnmistakableAPKInstaller.Helpers.Models.DiskCache;
+using UnmistakableAPKInstaller.Tools.Android.Models;
 
 namespace UnmistakableAPKInstaller.Core.Controllers.UI
 {
     public partial class MainWindowController
     {
+        string prevDeviceStr;
+
         #region Init
         public void Init()
         {
@@ -15,19 +20,31 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
         public async void ButtonWifiModeUpdate_ClickActionAsync(Action OnCompleteAction)
         {
             var currentStatus = CurrentDevice?.IsActiveWifi;
+
             if (currentStatus != null)
             {
                 await cmdToolsProvider.CreateOrUpdateWifiDeviceByUsb(CurrentDevice);
+
+                // Add or Update Cache value if Wifi mode turn on
+                if (!(bool)currentStatus)
+                {
+                    DiskCache.AddOrUpdateValue(new DeviceCacheData()
+                    {
+                        CustomName = null,
+                        SerialNumber = CurrentDevice.SerialNumber,
+                        IPAddressWPort = CurrentDevice.WifiDeviceData.SerialNumber
+                    });
+                }
             }
 
             OnCompleteAction?.Invoke();
         }
 
-        public async void DropdownListDevices_SelectedIndexChangedActionAsync(string serialNumber,
+        public async void DropdownListDevices_SelectedIndexChangedActionAsync(string customName,
             Action OnCompleteAction)
         {
-            var deviceDatas = await cmdToolsProvider.GetAndroidDevicesAsync();
-            CurrentDevice = deviceDatas.FirstOrDefault(x => x.SerialNumber == serialNumber);
+            var deviceDatas = await GetDeviceListAsync();
+            CurrentDevice = deviceDatas.FirstOrDefault(x => x.CachedData.CustomName == customName);
             OnCompleteAction?.Invoke();
         }
 
@@ -81,6 +98,25 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
         {
             var deviceDatas = await cmdToolsProvider.GetAndroidDevicesAsync();
 
+            foreach (var data in deviceDatas)
+            {
+                var newCacheData = new DeviceCacheData()
+                {
+                    CustomName = null,
+                    SerialNumber = data.IsWifiDevice ? null : data.SerialNumber,
+                    IPAddressWPort = data.IsWifiDevice ? data.SerialNumber : data.WifiDeviceData?.SerialNumber ?? string.Empty,
+                };
+
+                // Add or Update Cache value for each element
+                var cacheData = DiskCache.AddOrUpdateValue(newCacheData);
+                
+                if(cacheData != null)
+                {
+                    data.SetCachedData(cacheData);
+                }
+            }
+
+
             if (deviceDatas.Length == 0)
             {
                 deviceDatas =
@@ -88,6 +124,15 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
             }
 
             return deviceDatas;
+        }
+
+        public async Task<bool> HasNewDeviceList()
+        {
+            var newDeviceStr = await cmdToolsProvider.GetAndroidDevicesStrAsync();
+            var result = !newDeviceStr.Equals(prevDeviceStr);
+
+            prevDeviceStr = newDeviceStr;
+            return result;
         }
     }
 }

@@ -160,7 +160,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
                 .ToArray();
         } 
 
-        private async Task<string> GetAndroidDevicesStrAsync()
+        public async Task<string> GetAndroidDevicesStrAsync()
         {
             var args = "devices -l";
             var processData = await CmdHelper.StartProcessAsync(AdbPath, args);
