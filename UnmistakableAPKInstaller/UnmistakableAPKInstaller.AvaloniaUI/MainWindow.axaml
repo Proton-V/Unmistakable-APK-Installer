@@ -1,0 +1,74 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="UnmistakableAPKInstaller.AvaloniaUI.MainWindow"
+        Title="UnmistakableAPKInstaller.AvaloniaUI"
+		CanResize="False"
+		Width="800" Height="450"
+		WindowStartupLocation="CenterScreen">
+
+	<DockPanel Name="Root">
+		
+		<StackPanel DockPanel.Dock="Top">
+			<Button Name="ButtonSettings"
+					Margin="10" Width="90" HorizontalContentAlignment="Center">Settings</Button>
+		</StackPanel>
+		
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="40,10,0,0">
+			<Label Name="LabelPath">APK Path</Label>
+			<TextBlock Name="InputPath"
+						Padding="3" TextAlignment="Center" Background="Gray"
+						Margin="60,0,0,0" Width="200" Height="30"/>
+			<Button Name="ButtonPath"
+					Margin="30,0,0,0" Width="240" HorizontalContentAlignment="Center">Select Manually</Button>
+			<Button Name="ButtonInstall"
+					Margin="30,0,0,0" Width="120" HorizontalContentAlignment="Center">Install APK</Button>
+		</StackPanel>
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="40,10,0,0">
+			<Label Name="LabelDownload">Google Drive Link</Label>
+			<TextBox Name="InputDownload"
+						Padding="3" TextAlignment="Center" Background="White"
+						Margin="7,0,0,0" Width="200" Height="30"/>
+			<Button Name="ButtonDownload"
+					Margin="30,0,0,0" Width="120" HorizontalContentAlignment="Center">Download APK</Button>
+			<Button Name="ButtonDownloadInstall"
+					Margin="30,0,0,0" Width="240" HorizontalContentAlignment="Center">Download And Install</Button>
+		</StackPanel>
+
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="100,50,0,0">
+			<Label Name="LabelDevices">Devices:</Label>
+			<ComboBox Name="DropdownListDevices"
+					  Margin="30,0,0,0" Width="240"></ComboBox>
+			<Button Name="ButtonDeviceListUpdate"
+				Margin="30,0,0,0" Width="240" HorizontalContentAlignment="Center">Update Device List</Button>
+		</StackPanel>
+		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="100,10,0,0">
+			<Label Name="LabelStatusDevice"
+				   Width="145">{Status}</Label>
+			<Label Name="LabelUsbMode"
+				   Margin="10,0">USB</Label>
+			<TextBlock Name="PictureBoxUsbMode" Background="Red" 
+					   Margin="10,0" Width="20" Height="20"></TextBlock>
+			<Label Name="LabelWifiMode"
+				   Margin="10,0">WIFI</Label>
+			<TextBlock Name="PictureBoxWifiMode" Background="Red"
+					   Margin="10,0" Width="20" Height="20"></TextBlock>
+			<Button Name="ButtonWifiModeUpdate"
+				Margin="30,0,0,0" Width="180" HorizontalContentAlignment="Center">Update Wifi Mode</Button>
+		</StackPanel>
+		<StackPanel DockPanel.Dock="Top" Margin="0,20">
+			<Button Name="ButtonSaveLogToFile" HorizontalAlignment="Center"
+						Width="180" HorizontalContentAlignment="Center">Save Log to File</Button>
+		</StackPanel>
+
+		<StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+			<ProgressBar Name="ProgressBar"
+						IsIndeterminate="False" Minimum="0" Maximum="100" Height="30" Margin="10"/>
+			<TextBlock Name="OutStrOpText"
+					   TextAlignment="Center" Margin="10" Background="Gray" Height="60"/>
+		</StackPanel>
+		
+	</DockPanel>
+</Window>
