@@ -17,27 +17,25 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
         #endregion
 
         #region UI Actions
-        public async void ButtonWifiModeUpdate_ClickActionAsync(Action OnCompleteAction)
+        public async Task ButtonWifiModeUpdate_ClickActionAsync(Action<bool> OnCompleteAction)
         {
             var currentStatus = CurrentDevice?.IsActiveWifi;
+            var res = currentStatus != null;
 
-            if (currentStatus != null)
+            if (res)
             {
                 await cmdToolsProvider.CreateOrUpdateWifiDeviceByUsb(CurrentDevice);
 
                 // Add or Update Cache value if Wifi mode turn on
-                if (!(bool)currentStatus)
+                DiskCache.AddOrUpdateValue(new DeviceCacheData()
                 {
-                    DiskCache.AddOrUpdateValue(new DeviceCacheData()
-                    {
-                        CustomName = null,
-                        SerialNumber = CurrentDevice.SerialNumber,
-                        IPAddressWPort = CurrentDevice.WifiDeviceData.SerialNumber
-                    });
-                }
+                    CustomName = null,
+                    SerialNumber = CurrentDevice?.SerialNumber,
+                    IPAddressWPort = CurrentDevice?.WifiDeviceData?.SerialNumber
+                });
             }
 
-            OnCompleteAction?.Invoke();
+            OnCompleteAction?.Invoke(res);
         }
 
         public async void DropdownListDevices_SelectedIndexChangedActionAsync(string customName,
