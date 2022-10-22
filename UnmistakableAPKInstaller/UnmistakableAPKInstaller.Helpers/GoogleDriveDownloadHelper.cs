@@ -18,6 +18,11 @@ namespace UnmistakableAPKInstaller.Helpers
 
         public bool ValidateUrl(string url)
         {
+            if(url is null)
+            {
+                return false;
+            }
+
             return url.StartsWith("https://drive.google.com/file/d/") && url.Contains("/view");
         }
 
