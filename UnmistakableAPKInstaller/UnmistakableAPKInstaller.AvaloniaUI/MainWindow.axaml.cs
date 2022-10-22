@@ -80,7 +80,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
 
         private void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
         {
-            Dispatcher.UIThread.InvokeAsync(async () => await InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber, null));
+            Dispatcher.UIThread.InvokeAsync(async () => await InitDevicesDropDownListAsync(CurrentDevice?.CustomCachedData.CustomName, null));
         }
 
         private void InitHandlers()
@@ -175,15 +175,14 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
                 this.LabelStatusDevice.Content =
                     $"{CurrentDevice.Model} {CurrentDevice.Status}";
 
-                var isUsbDevice = !CurrentDevice.IsWifiDevice;
+                var isNullDevice = CurrentDevice.Status == DeviceData.NULL_VALUE;
+                this.LabelUsbMode.IsVisible = !isNullDevice;
+                this.PictureBoxUsbMode.IsVisible = !isNullDevice;
+                this.LabelWifiMode.IsVisible = !isNullDevice;
+                this.PictureBoxWifiMode.IsVisible = !isNullDevice;
+                this.ButtonWifiModeUpdate.IsVisible = !isNullDevice;
 
-                this.LabelUsbMode.IsVisible = isUsbDevice;
-                this.PictureBoxUsbMode.IsVisible = isUsbDevice;
-                this.LabelWifiMode.IsVisible = isUsbDevice;
-                this.PictureBoxWifiMode.IsVisible = isUsbDevice;
-                this.ButtonWifiModeUpdate.IsVisible = isUsbDevice;
-
-                this.PictureBoxUsbMode.Background = GetDefaultSolidColorBrush(CurrentDevice.IsActive);
+                this.PictureBoxUsbMode.Background = GetDefaultSolidColorBrush(!CurrentDevice.IsWifiDevice && CurrentDevice.IsActive);
                 this.PictureBoxWifiMode.Background = GetDefaultSolidColorBrush(CurrentDevice.IsActiveWifi);
 
                 var wifiModeButtonStateStr = CurrentDevice.IsActiveWifi ? "Off" : "On";
@@ -204,9 +203,6 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         #endregion
 
         #region Form events
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-        }
 
         private void ButtonDownload_Click(object sender, EventArgs e)
         {
@@ -261,8 +257,8 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         private void DropdownListDevices_SelectedIndexChanged(object sender, EventArgs e)
         {
             EnableThisForm(false);
-            var serialNumber = $"{DropdownListDevices.SelectedItem}";
-            controller.DropdownListDevices_SelectedIndexChangedActionAsync(serialNumber, () =>
+            var customName = $"{DropdownListDevices.SelectedItem}";
+            controller.DropdownListDevices_SelectedIndexChangedActionAsync(customName, () =>
             {
                 UpdateCurrentDeviceLayout();
                 EnableThisForm(true);
@@ -272,7 +268,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         private async void ButtonDeviceListUpdate_Click(object sender, EventArgs e)
         {
             EnableThisForm(false);
-            await InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber,
+            await InitDevicesDropDownListAsync(CurrentDevice?.CustomCachedData.CustomName,
                 OnCompleteAction: () => EnableThisForm(true));
         }
 
@@ -281,35 +277,40 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             EnableThisForm(false);
             controller.ButtonWifiModeUpdate_ClickActionAsync(() =>
             {
-                UpdateCurrentDeviceLayout();
-                EnableThisForm(true);
+                PictureBoxWifiMode.PropertyChanged += PictureBoxWifiMode_PropertyChanged;
             });
+        }
+
+        private void PictureBoxWifiMode_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            PictureBoxWifiMode.PropertyChanged -= PictureBoxWifiMode_PropertyChanged;
+            EnableThisForm(true);
         }
         #endregion
 
         #region Additional UI controller methods
-        private async Task InitDevicesDropDownListAsync(string selectedSerialNumber = default, Action OnCompleteAction = null)
+        private async Task InitDevicesDropDownListAsync(string selectedCustomName = default, Action OnCompleteAction = null)
         {
-            var datas = await controller.GetDeviceListAsync();
-            var newDropDownDatas = datas.Select(x => x.SerialNumber).ToList();
-
-            if (DropdownListDevices.ItemCount == newDropDownDatas.Count()
-                && newDropDownDatas.All(x => DropdownListDevices.Items.Cast<string>().Contains(x)))
+            var hasNewDeviceList = await controller.HasNewDeviceList();
+            if (!hasNewDeviceList)
             {
                 OnCompleteAction?.Invoke();
                 return;
             }
 
+            var datas = await controller.GetDeviceListAsync();
+            var newDropDownDatas = datas.Select(x => x.CustomCachedData.CustomName).ToList();
+
             DropdownListDevices.Items = newDropDownDatas;
 
-            if (string.IsNullOrEmpty(selectedSerialNumber)
-                || !DropdownListDevices.Items.Cast<string>().Contains(selectedSerialNumber))
+            if (string.IsNullOrEmpty(selectedCustomName)
+                || !DropdownListDevices.Items.Cast<string>().Contains(selectedCustomName))
             {
                 DropdownListDevices.SelectedIndex = DropdownListDevices.ItemCount - 1;
             }
             else
             {
-                DropdownListDevices.SelectedItem = selectedSerialNumber;
+                DropdownListDevices.SelectedItem = selectedCustomName;
             }
 
             OnCompleteAction?.Invoke();

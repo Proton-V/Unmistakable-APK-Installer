@@ -58,14 +58,14 @@ namespace UnmistakableAPKInstaller.Tools
                 var nextVal = !deviceData.IsActiveWifi;
                 var result = await TryUpdateConnectToDeviceAsync(nextVal, ipAddress);
 
-                DeviceData newWifiDeviceData = null;
+                WifiDeviceData newWifiDeviceData = null;
                 if (nextVal && result)
                 {
                     await SetTempPropAsync(deviceData.SerialNumber,
                         AndroidPlatformTools.DEFAULT_TCP_PORT_PROP_NAME,
                         AndroidPlatformTools.DEFAULT_TCP_PORT.ToString());
 
-                    newWifiDeviceData = await GetAndroidDeviceDataAsync(ipAddress);
+                    newWifiDeviceData = new WifiDeviceData(await GetAndroidDeviceDataAsync(ipAddress));
                 }
                 deviceData.SetWifiDeviceData(newWifiDeviceData);
 
@@ -80,6 +80,8 @@ namespace UnmistakableAPKInstaller.Tools
 
         public async Task<bool> ContainsAnyDevicesAsync() => 
             await AndroidPlatformTools?.ContainsAnyDevicesAsync();
+        public async Task<string> GetAndroidDevicesStrAsync() =>
+            await AndroidPlatformTools?.GetAndroidDevicesStrAsync();
         public async Task<DeviceData[]> GetAndroidDevicesAsync() => 
             await AndroidPlatformTools?.GetAndroidDevicesAsync();
         public async Task<bool> TryUninstallAPKAsync(string serialNumber, string bundleName, Action<string> outText) => 
@@ -90,7 +92,7 @@ namespace UnmistakableAPKInstaller.Tools
             await AndroidPlatformTools?.TrySetLogBufferSizeAsync(serialNumber, sizeInMb, outText);
         public async Task<bool> TrySaveLogToFileAsync(string serialNumber, string path, Action<string>? outText) => 
             await AndroidPlatformTools?.TrySaveLogToFileAsync(serialNumber, path, outText);
-        public async Task<string> GetDeviceIpAddressAsync(DeviceData deviceData) =>
+        public async Task<string> GetDeviceIpAddressAsync(BaseDeviceData deviceData) =>
             await AndroidPlatformTools?.GetDeviceIpAddressAsync(deviceData);
         public async Task<bool> TryOpenPortAsync(string serialNumber, int port = 5555) =>
             await AndroidPlatformTools?.TryOpenPortAsync(serialNumber, port);
@@ -98,7 +100,7 @@ namespace UnmistakableAPKInstaller.Tools
             await AndroidPlatformTools?.SetTempPropAsync(serialNumber, propName, propValue);
         public async Task<bool> TryUpdateConnectToDeviceAsync(bool value, string ipAddress, int port = 5555) =>
             await AndroidPlatformTools?.TryUpdateConnectToDeviceAsync(value, ipAddress, port);
-        public async Task<DeviceData> GetAndroidDeviceDataAsync(string serialNumber) =>
+        public async Task<BaseDeviceData> GetAndroidDeviceDataAsync(string serialNumber) =>
             await AndroidPlatformTools?.GetAndroidDeviceDataAsync(serialNumber);
 
         Aapt2Tool Aapt2Tool => GetTool<Aapt2Tool>();

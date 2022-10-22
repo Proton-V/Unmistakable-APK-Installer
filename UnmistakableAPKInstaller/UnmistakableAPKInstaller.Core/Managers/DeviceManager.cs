@@ -14,7 +14,13 @@ namespace UnmistakableAPKInstaller.Core.Managers
                     return null;
                 }
 
-                return CurrentDevice.WifiDeviceData?.SerialNumber ?? CurrentDevice.SerialNumber;
+                string? serialNumber = null;
+                if (CurrentDevice is DeviceData deviceData)
+                {
+                    serialNumber = deviceData?.WifiDeviceData?.SerialNumber;
+                }
+
+                return serialNumber ?? CurrentDevice.SerialNumber;
             }
         }
 

@@ -1,7 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Controls.Shapes;
 using Avalonia.Markup.Xaml;
+using System;
 using System.Configuration;
+using UnmistakableAPKInstaller.Core.Controllers.UI;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools.Android;
 
@@ -20,7 +23,13 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             {
                 desktop.Exit += App_Exit;
                 var logFileName = ConfigurationManager.AppSettings["LogFileName"];
-                CustomLogger.Init(logFileName);
+                CustomLogger.Init(DiskCache.AppDataDirectory, logFileName);
+
+                var diskCacheFilePath = System.IO.Path.Combine(DiskCache.AppDataDirectory,
+                    ConfigurationManager.AppSettings["DiskCacheFileName"]);
+                DiskCache.Init(diskCacheFilePath);
+                DiskCache.LoadFromDisk();
+
                 desktop.MainWindow = new MainWindow(true);
             }
 
@@ -31,6 +40,8 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         {
             // Stop all adb processes
             CmdHelper.StopAllProcessesByName(AndroidPlatformTools.ADB_PROCESS_NAME);
+            // Save cache to disk
+            DiskCache.SaveToDisk();
         }
     }
 }
