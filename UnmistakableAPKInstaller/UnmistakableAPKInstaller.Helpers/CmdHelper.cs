@@ -49,5 +49,15 @@ namespace UnmistakableAPKInstaller.Helpers
                 return (null, e.Message);
             }
         }
+
+        public static Task StopAllProcessesByName(string name)
+        {
+            foreach (var process in Process.GetProcessesByName(name))
+            {
+                process.Kill();
+            }
+
+            return Task.CompletedTask;
+        }
     }
 }

@@ -283,14 +283,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
                 return;
             }
 
-            var newItems = new List<string>();
-
-            foreach (var data in newDropDownDatas)
-            {
-                newItems.Add(data);
-            }
-
-            DropdownListDevices.Items = newItems;
+            DropdownListDevices.Items = newDropDownDatas;
 
             if (string.IsNullOrEmpty(selectedSerialNumber)
                 || !DropdownListDevices.Items.Cast<string>().Contains(selectedSerialNumber))
