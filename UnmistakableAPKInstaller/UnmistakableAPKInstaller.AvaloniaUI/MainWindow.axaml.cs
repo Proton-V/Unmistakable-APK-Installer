@@ -275,9 +275,16 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         private void ButtonWifiModeUpdate_Click(object sender, EventArgs e)
         {
             EnableThisForm(false);
-            controller.ButtonWifiModeUpdate_ClickActionAsync(() =>
+            controller.ButtonWifiModeUpdate_ClickActionAsync((res) =>
             {
-                PictureBoxWifiMode.PropertyChanged += PictureBoxWifiMode_PropertyChanged;
+                if (res)
+                {
+                    PictureBoxWifiMode.PropertyChanged += PictureBoxWifiMode_PropertyChanged;
+                }
+                else
+                {
+                    EnableThisForm(true);
+                }
             });
         }
 

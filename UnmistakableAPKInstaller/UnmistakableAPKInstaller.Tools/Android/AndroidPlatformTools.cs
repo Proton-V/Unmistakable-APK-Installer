@@ -113,9 +113,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             List<DeviceData> results = new List<DeviceData>();
 
             var baseDatas = deviceListDataStr
-                .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                .Where(x => 
-                    !x.StartsWith("List") && !x.StartsWith("*"))        
+                .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)     
                 .Select(x => new BaseDeviceData(x))
                 .ToArray();
 
@@ -165,7 +163,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
         public async Task<string> GetAndroidDevicesStrAsync()
         {
             var args = "devices -l";
-            var processData = await CmdHelper.StartProcessAsync(AdbPath, args);
+            var processData = await CmdHelper.StartProcessAsync(AdbPath, args, timeoutInSec: -1);
 
             if (!string.IsNullOrEmpty(processData.error))
             {
@@ -174,7 +172,11 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
             else
             {
-                return processData.data;
+                var arr = processData.data
+                    .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                    .Where(x =>
+                        !x.StartsWith("List") && !x.StartsWith("*"));
+                return string.Join(Environment.NewLine, arr);
             }
         }
 
@@ -206,7 +208,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} uninstall {bundleName}";
-            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args, timeoutInSec: -1);
             outText(data.data ?? data.error);
             if (!string.IsNullOrEmpty(data.error))
             {
@@ -229,7 +231,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} install {path}";
-            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args, timeoutInSec: -1);
             if (!string.IsNullOrEmpty(data.error))
             {
                 CustomLogger.Log("Android platform tools: {0}", data.error);
@@ -251,7 +253,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} logcat -G {sizeInMb}M";
-            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args, timeoutInSec: -1);
             if (!string.IsNullOrEmpty(data.error))
             {
                 CustomLogger.Log("Android platform tools: {0}", data.error);
@@ -273,7 +275,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} logcat -d";
-            var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+            var data = await CmdHelper.StartProcessAsync(AdbPath, args, timeoutInSec: -1);
 
             if (!string.IsNullOrEmpty(data.error))
             {
@@ -311,7 +313,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
         public async Task<bool> TryOpenPortAsync(string serialNumber, int port = 5555)
         {
-            if (!await ContainsAnyDevicesAsync())
+            if (!(await ContainsAnyDevicesAsync()))
             {
                 return false;
             }

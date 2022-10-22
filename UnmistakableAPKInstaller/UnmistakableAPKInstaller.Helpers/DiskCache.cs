@@ -66,7 +66,10 @@ namespace UnmistakableAPKInstaller.Helpers
                 return;
             }
 
-            var datas = JsonSerializer.Deserialize<DeviceCacheData[]>(json);
+            var datas = JsonSerializer.Deserialize<DeviceCacheData[]>(json)?
+                // To reduce errors
+                .DistinctBy(x => x.SerialNumber)
+                .ToArray();
             foreach (var data in datas)
             {
                 deviceDict.Add(data.SerialNumber, data);
@@ -82,7 +85,10 @@ namespace UnmistakableAPKInstaller.Helpers
             }
 
             var options = new JsonSerializerOptions { WriteIndented = true };
-            var text = JsonSerializer.Serialize(deviceDict.Values.Cast<DeviceCacheData>().ToArray(), options);
+            var datas = deviceDict.Values.Cast<DeviceCacheData>()
+                .DistinctBy(x => x.SerialNumber)
+                .ToArray();
+            var text = JsonSerializer.Serialize(datas, options);
             File.WriteAllText(path, text);
         }
     }

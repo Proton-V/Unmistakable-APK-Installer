@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using System.Configuration;
 using System;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
 {
@@ -71,17 +72,16 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             OpenDeviceLogPathExplorer();
         }
 
-        private void OpenDeviceLogPathExplorer()
+        private async Task OpenDeviceLogPathExplorer()
         {
-            //using (FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog())
-            //{
-            //    folderBrowserDialog.InitialDirectory = Environment.CurrentDirectory;
+            OpenFolderDialog openFolderDialog = new OpenFolderDialog();
+            openFolderDialog.InitialDirectory = Environment.CurrentDirectory;
 
-            //    if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
-            //    {
-            //        this.InputDeviceLogFolderPath.Text = folderBrowserDialog.SelectedPath;
-            //    }
-            //}
+            var res = await openFolderDialog.ShowAsync(this);
+            if (res != null)
+            {
+                this.InputDeviceLogFolderPath.Text = res;
+            }
         }
     }
 }

@@ -5,7 +5,7 @@ namespace UnmistakableAPKInstaller.Helpers
 {
     public class CmdHelper
     {
-        public static async Task<(string data, string error)> StartProcessAsync(string path, string arguments)
+        public static async Task<(string data, string error)> StartProcessAsync(string path, string arguments, int timeoutInSec = 20)
         {
             try
             {
@@ -29,8 +29,22 @@ namespace UnmistakableAPKInstaller.Helpers
                     p.Start();
                     p.BeginErrorReadLine();
                     p.BeginOutputReadLine();
-
-                    await p.WaitForExitAsync();
+     
+                    CancellationToken token = default;
+                    try
+                    {
+                        if(timeoutInSec > 0)
+                        {
+                            var timeoutSignal = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutInSec));
+                            token = timeoutSignal.Token;
+                        }
+                        await p.WaitForExitAsync(token);
+                    }
+                    catch (OperationCanceledException e)
+                    {
+                        CustomLogger.Log($"Process {p.ProcessName} exit with: {e}");
+                        p.Kill();
+                    }
 
                     var outStr = outData.ToString();
                     var errorStr = outErrorData.ToString();
