@@ -24,7 +24,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         {
             Idle,
             APKLoading,
-            ToolsLoading,
+            AppLoading,
         }
 
         public MainWindow()
@@ -46,24 +46,41 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
 
         public void ForceUpdate()
         {
-            controller.Init(DownloadToolsAsync);
+            controller.Init();
         }
 
         #region Init
-        private void InitInternalComponents()
+        private async void InitInternalComponents()
         {
+            ChangeFormState(MainFormState.AppLoading);
+
             controller = new MainWindowController();
 
-            controller.Init(DownloadToolsAsync);
-            InitDevicesDropDownListAsync();
+            controller.Init();
+            var hasAllTools = controller.HasAllTools;
+            if (!hasAllTools)
+            {
+                await DownloadToolsAsync();
+            }
+            InitHandlers();
+
+            OutStrOpText.Text = "Initialize devices...";
+            ProgressBar.IsIndeterminate = true;
+
+            await InitDevicesDropDownListAsync();
+
             controller.InitTimers(
                 UpdateDeviceListAction: TimerUpdateDeviceListAction);
-            InitHandlers();
+
+            ChangeFormState(MainFormState.Idle);
+
+            OutStrOpText.Text = string.Empty;
+            ProgressBar.IsIndeterminate = false;
         }
 
         private void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
         {
-            Dispatcher.UIThread.InvokeAsync(() => InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber, null));
+            Dispatcher.UIThread.InvokeAsync(async () => await InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber, null));
         }
 
         private void InitHandlers()
@@ -95,7 +112,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
                 case MainFormState.Idle:
                     ChangeVisibility(true);
                     break;
-                case MainFormState.ToolsLoading:
+                case MainFormState.AppLoading:
                     ChangeVisibility(false);
                     ImageBanner.IsVisible = true;
 
@@ -252,10 +269,10 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             });
         }
 
-        private void ButtonDeviceListUpdate_Click(object sender, EventArgs e)
+        private async void ButtonDeviceListUpdate_Click(object sender, EventArgs e)
         {
             EnableThisForm(false);
-            InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber,
+            await InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber,
                 OnCompleteAction: () => EnableThisForm(true));
         }
 
@@ -271,7 +288,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         #endregion
 
         #region Additional UI controller methods
-        private async void InitDevicesDropDownListAsync(string selectedSerialNumber = default, Action OnCompleteAction = null)
+        private async Task InitDevicesDropDownListAsync(string selectedSerialNumber = default, Action OnCompleteAction = null)
         {
             var datas = await controller.GetDeviceListAsync();
             var newDropDownDatas = datas.Select(x => x.SerialNumber).ToList();
@@ -321,10 +338,8 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             InputPath.Text = filePath;
         }
 
-        private async void DownloadToolsAsync()
+        private async Task DownloadToolsAsync()
         {
-            ChangeFormState(MainFormState.ToolsLoading);
-
             var status = await controller.TryDownloadToolsAsync(
                 (str) => OutStrOpText.Text = str,
                 (progress) => ProgressBar.Value = progress);
@@ -334,8 +349,6 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
 
             OutStrOpText.Text = string.Empty;
             ProgressBar.Value = 0;
-
-            ChangeFormState(MainFormState.Idle);
         }
 
         public async Task InstallAPKAsync()

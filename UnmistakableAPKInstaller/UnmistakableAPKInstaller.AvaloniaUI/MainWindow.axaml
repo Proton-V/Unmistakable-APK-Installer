@@ -70,7 +70,7 @@
 		
 		<Image Name="ImageBanner" Source="avares://UnmistakableAPKInstaller/Assets/logo-banner@0.5x.png"
 			VerticalAlignment="Top" DockPanel.Dock="Top"
-			IsVisible="False" Margin="10,20"></Image>
+			IsVisible="False" Margin="40,40"></Image>
 
 		<StackPanel Name="Panel7" VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
 			<ProgressBar Name="ProgressBar"
