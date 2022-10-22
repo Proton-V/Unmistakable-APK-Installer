@@ -114,7 +114,8 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             var datas = deviceListDataStr
                 .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                .Skip(1)
+                .Where(x => 
+                    !x.StartsWith("List") && !x.StartsWith("*"))        
                 .Select(x => new DeviceData(x))
                 .ToArray();
 
