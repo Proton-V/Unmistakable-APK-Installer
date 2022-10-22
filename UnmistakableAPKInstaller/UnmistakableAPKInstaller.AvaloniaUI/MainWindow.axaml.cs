@@ -11,6 +11,7 @@ using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.Enums;
 using Avalonia;
 using System.Diagnostics;
+using Avalonia.Threading;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
 {
@@ -57,10 +58,9 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             InitHandlers();
         }
 
-        void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
+        private void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
         {
-            //this.Invoke(InitDevicesDropDownListAsync, CurrentDevice?.SerialNumber, null);
-            InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber, null);
+            Dispatcher.UIThread.InvokeAsync(() => InitDevicesDropDownListAsync(CurrentDevice?.SerialNumber, null));
         }
 
         private void InitHandlers()
@@ -139,7 +139,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         {
             if (CurrentDevice != null)
             {
-                this.LabelStatusDevice.Name =
+                this.LabelStatusDevice.Content =
                     $"{CurrentDevice.Model} {CurrentDevice.Status}";
 
                 var isUsbDevice = !CurrentDevice.IsWifiDevice;
@@ -154,7 +154,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
                 this.PictureBoxWifiMode.Background = GetDefaultSolidColorBrush(CurrentDevice.IsActiveWifi);
 
                 var wifiModeButtonStateStr = CurrentDevice.IsActiveWifi ? "Off" : "On";
-                this.ButtonWifiModeUpdate.Name = $"{wifiModeButtonStateStr} Wifi Mode";
+                this.ButtonWifiModeUpdate.Content = $"{wifiModeButtonStateStr} Wifi Mode";
             }
         }
 
