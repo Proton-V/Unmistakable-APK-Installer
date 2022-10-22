@@ -19,6 +19,7 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
         string CurrentDeviceSerialNumber
             => deviceManager.CurrentDeviceSerialNumber;
 
+        public bool HasAllTools => cmdToolsProvider.CheckExistsTools();
         public string DownloadedAPKFolderPath => $"{Path.Combine(AppDirectory, "GoogleDrive")}";
         public bool AutoDelPrevApp => Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
         public bool DeviceLogEnabled => Convert.ToBoolean(ConfigurationManager.AppSettings["DeviceLogEnabled"]);
