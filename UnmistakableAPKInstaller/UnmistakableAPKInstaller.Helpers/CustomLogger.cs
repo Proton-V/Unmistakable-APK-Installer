@@ -1,4 +1,6 @@
-﻿namespace UnmistakableAPKInstaller.Helpers
+﻿using System.IO;
+
+namespace UnmistakableAPKInstaller.Helpers
 {
     // TODO: add log type
 
@@ -14,9 +16,16 @@
 
         static readonly object logLock = new object();
 
-        public static void Init(string logFileName)
+        public static void Init(string logFolder, string logFileName)
         {
+            CustomLogger.logFolder = logFolder;
             CustomLogger.logFileName = logFileName;
+
+            if (!Directory.Exists(CustomLogger.logFolder))
+            {
+                Directory.CreateDirectory(CustomLogger.logFolder);
+            }
+
             Clear();
         }
 

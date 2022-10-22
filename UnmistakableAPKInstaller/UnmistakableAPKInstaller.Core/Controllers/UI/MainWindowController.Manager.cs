@@ -26,7 +26,7 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
         int DeviceLogBufferSize => Convert.ToInt32(ConfigurationManager.AppSettings["DeviceLogBufferSize"]);
 
         string AppDirectory => Environment.CurrentDirectory;
-        private string GetFullAppPath(string relativePath) => $"{AppDirectory}/{relativePath}";
+        private string GetFullAppDataPath(string relativePath) => $"{DiskCache.AppDataDirectory}/{relativePath}";
 
         CmdToolsProvider cmdToolsProvider;
         GoogleDriveDownloadHelper gdDownloadHelper;
@@ -52,11 +52,11 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
 
             var platformToolsDownloadLink = ConfigurationManager.AppSettings["PlatformToolsDownloadLink"];
             var platformToolsFolderPath = ConfigurationManager.AppSettings["AndroidPlatformToolsFolderPath"];
-            var platformTools = new AndroidPlatformTools(platformToolsDownloadLink, GetFullAppPath(platformToolsFolderPath));
+            var platformTools = new AndroidPlatformTools(platformToolsDownloadLink, GetFullAppDataPath(platformToolsFolderPath));
 
             var aapt2DownloadLink = ConfigurationManager.AppSettings["Aapt2DownloadLink"];
             var aapt2FolderPath = ConfigurationManager.AppSettings["Aapt2FolderPath"];
-            var aapt2Tool = new Aapt2Tool(aapt2DownloadLink, GetFullAppPath(aapt2FolderPath));
+            var aapt2Tool = new Aapt2Tool(aapt2DownloadLink, GetFullAppDataPath(aapt2FolderPath));
 
             var gdApiKey = ConfigurationManager.AppSettings["GoogleDriveApiKey"];
             gdDownloadHelper = new GoogleDriveDownloadHelper(gdApiKey, DownloadedAPKFolderPath);
