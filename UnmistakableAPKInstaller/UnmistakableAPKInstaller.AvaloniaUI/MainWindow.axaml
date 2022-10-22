@@ -4,10 +4,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="UnmistakableAPKInstaller.AvaloniaUI.MainWindow"
-        Title="UnmistakableAPKInstaller.AvaloniaUI"
+        Title="UnmistakableAPKInstaller"
 		CanResize="False"
 		Width="800" Height="450"
-		WindowStartupLocation="CenterScreen">
+		WindowStartupLocation="CenterScreen"
+		Icon="/Assets/logo-min.ico">
 
 	<DockPanel Name="Root">
 		
@@ -46,7 +47,7 @@
 		</StackPanel>
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="100,10,0,0">
 			<Label Name="LabelStatusDevice"
-				   Width="145">{Status}</Label>
+				   Width="145"></Label>
 			<Label Name="LabelUsbMode"
 				   Margin="10,0">USB</Label>
 			<TextBlock Name="PictureBoxUsbMode" Background="Red" 

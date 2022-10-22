@@ -9,7 +9,9 @@
     <AssemblyName>UnmistakableAPKInstaller</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+	<AvaloniaResource Include="Assets\**" />
     <None Remove=".gitignore" />
+    <None Remove="Assets\logo-min.ico" />
   </ItemGroup>
   <ItemGroup>
     <!--This helps with theme dll-s trimming.
