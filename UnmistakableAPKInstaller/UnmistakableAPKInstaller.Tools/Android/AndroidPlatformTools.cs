@@ -112,25 +112,27 @@ namespace UnmistakableAPKInstaller.Tools.Android
         {
             List<DeviceData> results = new List<DeviceData>();
 
-            var datas = deviceListDataStr
+            var baseDatas = deviceListDataStr
                 .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
                 .Where(x => 
                     !x.StartsWith("List") && !x.StartsWith("*"))        
-                .Select(x => new DeviceData(x))
+                .Select(x => new BaseDeviceData(x))
                 .ToArray();
 
             var usbDeviceDatas =
-                datas
+                baseDatas
                 // Skip devices with ip serial number
-                .Where(x => !IPEndPoint.TryParse(x.SerialNumber, out IPEndPoint endpoint))
+                .Where(x => !x.IsWifiDevice)
                 .ToList();
 
-            var wifiDeviceDatas = datas.ToList();
-            wifiDeviceDatas.RemoveAll(x => usbDeviceDatas.Contains(x));
+            var wifiDeviceDatas =
+                baseDatas
+                .Where(x => !usbDeviceDatas.Contains(x))
+                .ToList();
 
             for (int i = 0; i < usbDeviceDatas.Count; i++)
             {
-                var deviceData = datas[i];
+                var deviceData = new DeviceData(usbDeviceDatas[i]);
                 var deviceIpAddress = await GetDeviceIpAddressAsync(deviceData);
 
                 var wifiData = wifiDeviceDatas
@@ -145,7 +147,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
                 if (wifiData != null)
                 {
-                    deviceData.SetWifiDeviceData(wifiData);
+                    deviceData.SetWifiDeviceData(new WifiDeviceData(wifiData));
                     wifiDeviceDatas.Remove(wifiData);
                 }
 
@@ -153,7 +155,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             // Add all self-hosted wifi devices
-            results.AddRange(wifiDeviceDatas);
+            results.AddRange(wifiDeviceDatas.Select(x => new DeviceData(x)));
 
             return results
                 .Where(x => x != null)
@@ -182,7 +184,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
         /// </summary>
         /// <param name="serialNumber"></param>
         /// <returns></returns>
-        public async Task<DeviceData> GetAndroidDeviceDataAsync(string serialNumber)
+        public async Task<BaseDeviceData> GetAndroidDeviceDataAsync(string serialNumber)
         {
             var devicesStr = await GetAndroidDevicesStrAsync();
             var deviceStr = devicesStr
@@ -191,7 +193,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             if (!string.IsNullOrEmpty(deviceStr))
             {
-                return new DeviceData(deviceStr);
+                return new BaseDeviceData(deviceStr);
             }
             return null;
         }
@@ -287,7 +289,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return string.IsNullOrEmpty(data.error);
         }
 
-        public async Task<string> GetDeviceIpAddressAsync(DeviceData deviceData)
+        public async Task<string> GetDeviceIpAddressAsync(BaseDeviceData deviceData)
         {
             var args = $"{GetSpecialAdbSerialNumberArg(deviceData.SerialNumber)} shell ip route";
             var processData = await CmdHelper.StartProcessAsync(AdbPath, args);

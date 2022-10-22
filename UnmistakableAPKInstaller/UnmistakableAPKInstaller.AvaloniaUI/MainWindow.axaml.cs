@@ -80,7 +80,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
 
         private void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
         {
-            Dispatcher.UIThread.InvokeAsync(async () => await InitDevicesDropDownListAsync(CurrentDevice?.CachedData.CustomName, null));
+            Dispatcher.UIThread.InvokeAsync(async () => await InitDevicesDropDownListAsync(CurrentDevice?.CustomCachedData.CustomName, null));
         }
 
         private void InitHandlers()
@@ -268,7 +268,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         private async void ButtonDeviceListUpdate_Click(object sender, EventArgs e)
         {
             EnableThisForm(false);
-            await InitDevicesDropDownListAsync(CurrentDevice?.CachedData.CustomName,
+            await InitDevicesDropDownListAsync(CurrentDevice?.CustomCachedData.CustomName,
                 OnCompleteAction: () => EnableThisForm(true));
         }
 
@@ -299,7 +299,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             }
 
             var datas = await controller.GetDeviceListAsync();
-            var newDropDownDatas = datas.Select(x => x.CachedData.CustomName).ToList();
+            var newDropDownDatas = datas.Select(x => x.CustomCachedData.CustomName).ToList();
 
             DropdownListDevices.Items = newDropDownDatas;
 

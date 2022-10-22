@@ -1,23 +1,24 @@
-﻿using System.Net;
-using UnmistakableAPKInstaller.Helpers;
-using UnmistakableAPKInstaller.Helpers.Models.DiskCache;
+﻿using UnmistakableAPKInstaller.Helpers.Models.DiskCache;
 
 namespace UnmistakableAPKInstaller.Tools.Android.Models
 {
-    public class DeviceData
+    public class DeviceData : BaseDeviceData
     {
         public const string NULL_VALUE = "Null";
 
-        private DeviceData() 
+        private DeviceData() : base() { }
+
+        public DeviceData(string input, WifiDeviceData wifiDeviceData = default) : base(input)
         {
-            Info = new Dictionary<string, string>();
-            CachedData = new DeviceCacheData();
+            WifiDeviceData = wifiDeviceData;
         }
 
-        public DeviceData(string input, DeviceData wifiDeviceData = default) : this()
+        public DeviceData(BaseDeviceData baseDeviceData) 
         {
-            Update(input);
-            WifiDeviceData = wifiDeviceData;
+            this.SerialNumber = baseDeviceData.SerialNumber;
+            this.Status = baseDeviceData.Status;
+            this.Info = baseDeviceData.Info;
+            this.CustomCachedData = baseDeviceData.CustomCachedData;
         }
 
         public static DeviceData Default
@@ -40,59 +41,13 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
             }
         }
 
-        public bool IsActive => Status.Contains("device");
         public bool IsActiveWifi => (IsWifiDevice && IsActive) || (WifiDeviceData?.IsActive ?? false);
-        public bool IsWifiDevice => IPAddress.TryParse(SerialNumber.Split(':')[0], out IPAddress iPAddress);
 
-        public DeviceData WifiDeviceData { get; private set; }
+        public WifiDeviceData WifiDeviceData { get; protected set; }
 
-        public string SerialNumber { get; private set; }
-        public string Status { get; private set; }
-
-        public string Model => Info.GetValueOrDefault("model");
-
-        public Dictionary<string, string> Info { get; private set; }
-
-        public DeviceCacheData CachedData { get; private set; }
-
-        public void SetWifiDeviceData(DeviceData wifiDeviceData)
+        public void SetWifiDeviceData(WifiDeviceData wifiDeviceData)
         {
             WifiDeviceData = wifiDeviceData;
-        }
-
-        public void SetCachedData(DeviceCacheData cacheData)
-        {
-            CachedData = cacheData;
-        }
-
-        private void Update(string input)
-        {
-            try
-            {
-                var inputArray = input
-                    .Split(null)
-                    .Where(x => !string.IsNullOrEmpty(x))
-                    .ToArray();
-                SerialNumber = inputArray[0];
-                Status = inputArray[1];
-
-                for (int i = 2; i < inputArray.Length; i++)
-                {
-                    var infoKeyValue = inputArray[i].Split(':');
-                    if (infoKeyValue.Length == 2)
-                    {
-                        Info.Add(infoKeyValue[0], infoKeyValue[1]);
-                    }
-                    else
-                    {
-                        CustomLogger.Log($"Error reading part of android device data ({inputArray[i]})");
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                CustomLogger.Log($"{e}");
-            }
         }
     }
 }

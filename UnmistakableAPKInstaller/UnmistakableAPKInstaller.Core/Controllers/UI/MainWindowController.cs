@@ -44,7 +44,7 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
             Action OnCompleteAction)
         {
             var deviceDatas = await GetDeviceListAsync();
-            CurrentDevice = deviceDatas.FirstOrDefault(x => x.CachedData.CustomName == customName);
+            CurrentDevice = deviceDatas.FirstOrDefault(x => x.CustomCachedData.CustomName == customName);
             OnCompleteAction?.Invoke();
         }
 
