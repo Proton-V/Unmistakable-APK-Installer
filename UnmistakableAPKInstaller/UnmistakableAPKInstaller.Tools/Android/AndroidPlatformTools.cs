@@ -113,9 +113,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             List<DeviceData> results = new List<DeviceData>();
 
             var baseDatas = deviceListDataStr
-                .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                .Where(x => 
-                    !x.StartsWith("List") && !x.StartsWith("*"))        
+                .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)     
                 .Select(x => new BaseDeviceData(x))
                 .ToArray();
 
@@ -174,7 +172,11 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
             else
             {
-                return processData.data;
+                var arr = processData.data
+                    .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                    .Where(x =>
+                        !x.StartsWith("List") && !x.StartsWith("*"));
+                return string.Join(Environment.NewLine, arr);
             }
         }
 
