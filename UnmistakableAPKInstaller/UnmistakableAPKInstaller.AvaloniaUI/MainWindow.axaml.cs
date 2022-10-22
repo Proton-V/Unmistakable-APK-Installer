@@ -28,6 +28,14 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             InitializeComponent();
         }
 
+        public MainWindow(bool initInternalComponents) : this()
+        {
+            if (initInternalComponents)
+            {
+                InitInternalComponents();
+            }
+        }
+
         DeviceData CurrentDevice => controller.CurrentDevice;
 
         MainWindowController controller;
@@ -36,8 +44,9 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         {
             controller.Init(DownloadToolsAsync);
         }
+
         #region Init
-        public void InitInternalComponents()
+        private void InitInternalComponents()
         {
             controller = new MainWindowController();
 
@@ -58,6 +67,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         {
             this.Closed += Window_OnClose;
 
+            ButtonSettings.Click += ButtonSettings_Click;
             ButtonDownload.Click += ButtonDownload_Click;
             ButtonPath.Click += ButtonPath_Click;
             ButtonInstall.Click += ButtonInstall_Click;
@@ -203,15 +213,15 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
 
         private void ButtonSettings_Click(object sender, EventArgs e)
         {
-            //var settingsForm = new SettingsForm();
-            //settingsForm.ShowDialog();
+            var settingsForm = new SettingsWindow(true);
+            settingsForm.ShowDialog(this);
         }
 
         private void ButtonSaveLogToFile_Click(object sender, EventArgs e)
         {
             EnableThisForm(false);
             controller.ButtonSaveLogToFile_ClickActionAsync(
-                (text, caption) => GetDefaultMessageBox(text, caption).Show(),
+                (text, caption) => GetDefaultMessageBox(text, caption).ShowDialog(this),
                 OnCompleteAction: () => EnableThisForm(true));
         }
 
@@ -311,7 +321,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
                 (progress) => ProgressBar.Value = progress);
 
             await GetDefaultMessageBox(status ? "Download is completed!" : "Fail with download...",
-                "Download status").Show();
+                "Download status").ShowDialog(this);
 
             OutStrOpText.Text = string.Empty;
             ProgressBar.Value = 0;
@@ -343,7 +353,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager
                 .GetMessageBoxStandardWindow("title", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed...");
             await GetDefaultMessageBox(status ? "Install is completed!" : "Fail with install...",
-                "Install status").Show();
+                "Install status").ShowDialog(this);
 
             OutStrOpText.Text = string.Empty;
             ProgressBar.Value = 0;
@@ -359,7 +369,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             if (showStatus)
             {
                 await GetDefaultMessageBox(data.status ? "Download is completed!" : "Fail with download...",
-                    "File download status").Show();
+                    "File download status").ShowDialog(this);
             }
 
             OutStrOpText.Text = string.Empty;

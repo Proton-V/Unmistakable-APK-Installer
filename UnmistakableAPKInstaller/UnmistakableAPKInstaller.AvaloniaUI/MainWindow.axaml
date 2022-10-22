@@ -19,7 +19,7 @@
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="40,10,0,0">
 			<Label Name="LabelPath">APK Path</Label>
 			<TextBlock Name="InputPath"
-						Padding="3" TextAlignment="Center" Background="Gray"
+						Padding="5" TextAlignment="Center" Background="Gray"
 						Margin="60,0,0,0" Width="200" Height="30"/>
 			<Button Name="ButtonPath"
 					Margin="30,0,0,0" Width="240" HorizontalContentAlignment="Center">Select Manually</Button>
@@ -29,7 +29,7 @@
 		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="40,10,0,0">
 			<Label Name="LabelDownload">Google Drive Link</Label>
 			<TextBox Name="InputDownload"
-						Padding="3" TextAlignment="Center" Background="White"
+						Padding="5" TextAlignment="Center" Background="White"
 						Margin="7,0,0,0" Width="200" Height="30"/>
 			<Button Name="ButtonDownload"
 					Margin="30,0,0,0" Width="120" HorizontalContentAlignment="Center">Download APK</Button>

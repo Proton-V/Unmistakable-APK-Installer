@@ -15,10 +15,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                var mainWindow = new MainWindow();
-                // Manual call to solve bug with preview
-                mainWindow.InitInternalComponents();
-                desktop.MainWindow = mainWindow;
+                desktop.MainWindow = new MainWindow(true);
             }
 
             base.OnFrameworkInitializationCompleted();
