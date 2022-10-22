@@ -9,8 +9,6 @@ using System.Linq;
 using System.Collections.Generic;
 using MessageBox.Avalonia.BaseWindows.Base;
 using MessageBox.Avalonia.Enums;
-using Avalonia;
-using System.Diagnostics;
 using Avalonia.Threading;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
