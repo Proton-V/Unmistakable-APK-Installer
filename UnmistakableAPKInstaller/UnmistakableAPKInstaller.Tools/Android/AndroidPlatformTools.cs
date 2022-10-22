@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using System.Diagnostics;
+using System.IO.Compression;
 using System.Net;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools.Android.Models;
@@ -7,6 +8,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 {
     public class AndroidPlatformTools : BaseCmdTool
     {
+        public const string ADB_PROCESS_NAME = "adb";
         public const int DEFAULT_TCP_PORT = 5555;
         public const string DEFAULT_TCP_PORT_PROP_NAME = "service.adb.tcp.port";
 
@@ -14,7 +16,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
         {
         }
 
-        public string AdbPath => $"{toolFolderPath}/adb.exe";
+        public string AdbPath => $"{toolFolderPath}/{ADB_PROCESS_NAME}.exe";
         string ZipPath => $"{toolFolderPath}/PlatformTools.zip";
 
         string GetSpecialAdbSerialNumberArg(string serialNumber)
@@ -112,7 +114,8 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             var datas = deviceListDataStr
                 .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                .Skip(1)
+                .Where(x => 
+                    !x.StartsWith("List") && !x.StartsWith("*"))        
                 .Select(x => new DeviceData(x))
                 .ToArray();
 

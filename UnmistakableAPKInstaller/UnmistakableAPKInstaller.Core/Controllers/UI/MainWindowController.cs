@@ -5,13 +5,9 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
     public partial class MainWindowController
     {
         #region Init
-        public void Init(Action DownloadToolsAsync)
+        public void Init()
         {
             InitComponents();
-            if (!cmdToolsProvider.CheckExistsTools())
-            {
-                DownloadToolsAsync();
-            }
         }
         #endregion
 
