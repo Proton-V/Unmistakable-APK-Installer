@@ -97,6 +97,9 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
                     break;
                 case MainFormState.ToolsLoading:
                     ChangeVisibility(false);
+                    ImageBanner.IsVisible = true;
+
+                    Panel7.IsVisible = true;
                     OutStrOpText.IsVisible = true;
                     ProgressBar.IsVisible = true;
                     break;
@@ -113,6 +116,16 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
 
         private void ChangeVisibility(bool value)
         {
+            ImageBanner.IsVisible = false;
+
+            Panel1.IsVisible = value;
+            Panel2.IsVisible = value;
+            Panel3.IsVisible = value;
+            Panel4.IsVisible = value;
+            Panel5.IsVisible = value;
+            Panel6.IsVisible = value;
+            Panel7.IsVisible = value;
+
             ButtonDownload.IsVisible = value;
             InputDownload.IsVisible = value;
             LabelDownload.IsVisible = value;

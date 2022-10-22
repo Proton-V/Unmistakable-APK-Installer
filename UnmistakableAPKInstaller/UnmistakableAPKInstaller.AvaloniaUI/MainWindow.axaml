@@ -11,14 +11,13 @@
 		Icon="/Assets/logo-min.ico">
 
 	<DockPanel Name="Root">
-		
-		<StackPanel DockPanel.Dock="Top">
+		<StackPanel Name="Panel1" DockPanel.Dock="Top">
 			<Button Name="ButtonSettings"
 					Background="#d77185" Foreground="White"
 					Margin="10" Width="90" HorizontalContentAlignment="Center">Settings</Button>
 		</StackPanel>
 		
-		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="40,10,0,0">
+		<StackPanel Name="Panel2" DockPanel.Dock="Top" Orientation="Horizontal" Margin="40,10,0,0">
 			<Label Name="LabelPath">APK Path</Label>
 			<TextBlock Name="InputPath"
 						Background="#a493c9" Foreground="White"
@@ -29,7 +28,7 @@
 			<Button Name="ButtonInstall"
 					Margin="30,0,0,0" Width="120" HorizontalContentAlignment="Center">Install APK</Button>
 		</StackPanel>
-		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="40,10,0,0">
+		<StackPanel Name="Panel3" DockPanel.Dock="Top" Orientation="Horizontal" Margin="40,10,0,0">
 			<Label Name="LabelDownload">Google Drive Link</Label>
 			<TextBox Name="InputDownload"
 						Padding="5" TextAlignment="Center" Background="White"
@@ -41,14 +40,14 @@
 					Margin="30,0,0,0" Width="240" HorizontalContentAlignment="Center">Download And Install</Button>
 		</StackPanel>
 
-		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="100,50,0,0">
+		<StackPanel Name="Panel4" DockPanel.Dock="Top" Orientation="Horizontal" Margin="100,50,0,0">
 			<Label Name="LabelDevices">Devices:</Label>
 			<ComboBox Name="DropdownListDevices"
 					  Margin="30,0,0,0" Width="240"></ComboBox>
 			<Button Name="ButtonDeviceListUpdate"
 				Margin="30,0,0,0" Width="240" HorizontalContentAlignment="Center">Update Device List</Button>
 		</StackPanel>
-		<StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="100,10,0,0">
+		<StackPanel Name="Panel5" DockPanel.Dock="Top" Orientation="Horizontal" Margin="100,10,0,0">
 			<Label Name="LabelStatusDevice"
 				   Width="145"></Label>
 			<Label Name="LabelUsbMode"
@@ -63,13 +62,17 @@
 			    Background="#d16e87" Foreground="White"
 				Margin="30,0,0,0" Width="180" HorizontalContentAlignment="Center">Update Wifi Mode</Button>
 		</StackPanel>
-		<StackPanel DockPanel.Dock="Top" Margin="0,20">
+		<StackPanel Name="Panel6" DockPanel.Dock="Top" Margin="0,20">
 			<Button Name="ButtonSaveLogToFile" HorizontalAlignment="Center"
 					Background="#8766ac" Foreground="White"
 						Width="180" HorizontalContentAlignment="Center">Save Log to File</Button>
 		</StackPanel>
+		
+		<Image Name="ImageBanner" Source="avares://UnmistakableAPKInstaller/Assets/logo-banner@0.5x.png"
+			VerticalAlignment="Top" DockPanel.Dock="Top"
+			IsVisible="False" Margin="10,20"></Image>
 
-		<StackPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+		<StackPanel Name="Panel7" VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
 			<ProgressBar Name="ProgressBar"
 						Background="#f6bf75" Foreground="#8766ac"
 						IsIndeterminate="False" Minimum="0" Maximum="100" Height="30" Margin="10"/>
