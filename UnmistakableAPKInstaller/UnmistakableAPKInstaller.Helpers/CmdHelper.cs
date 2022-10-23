@@ -5,7 +5,7 @@ namespace UnmistakableAPKInstaller.Helpers
 {
     public class CmdHelper
     {
-        public static async Task<(string data, string error)> StartProcessAsync(string path, string arguments, int timeoutInSec = 20)
+        public static async Task<(string data, string error)> StartProcessAsync(string path, string arguments, int timeoutInSec = -1)
         {
             try
             {
