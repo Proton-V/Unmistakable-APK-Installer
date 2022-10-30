@@ -22,14 +22,6 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.Exit += App_Exit;
-                var logFileName = ConfigurationManager.AppSettings["LogFileName"];
-                CustomLogger.Init(DiskCache.AppDataDirectory, logFileName);
-
-                var diskCacheFilePath = System.IO.Path.Combine(DiskCache.AppDataDirectory,
-                    ConfigurationManager.AppSettings["DiskCacheFileName"]);
-                DiskCache.Init(diskCacheFilePath);
-                DiskCache.LoadFromDisk();
-
                 desktop.MainWindow = new MainWindow(true);
             }
 
