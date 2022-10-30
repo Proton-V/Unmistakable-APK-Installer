@@ -63,6 +63,7 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
 
             cmdToolsProvider = new CmdToolsProvider()
                 .AddTool(platformTools)
+                .AddTool(platformTools)
                 .AddTool(aapt2Tool);
         }
 

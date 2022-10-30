@@ -15,6 +15,7 @@ namespace UnmistakableAPKInstaller.Helpers
         public static void Init(string diskCacheFilePath)
         {
             path = diskCacheFilePath;
+            LoadFromDisk();
         }
 
         public static DeviceCacheData AddOrUpdateValue(DeviceCacheData deviceCacheData)

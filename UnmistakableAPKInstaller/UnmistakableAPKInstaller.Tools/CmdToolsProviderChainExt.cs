@@ -1,4 +1,5 @@
-﻿using UnmistakableAPKInstaller.Helpers;
+﻿using Serilog;
+using UnmistakableAPKInstaller.Helpers;
 
 namespace UnmistakableAPKInstaller.Tools
 {
@@ -8,13 +9,13 @@ namespace UnmistakableAPKInstaller.Tools
         {
             var toolType = typeof(T);
 
-            if (!cmdToolsProvider.tools.Any(x => x.GetType() == toolType))
+            if (!cmdToolsProvider.tools.Any(x => x.Value.GetType() == toolType))
             {
                 cmdToolsProvider.tools.Add(toolType, toolInstance);
             }
             else
             {
-                CustomLogger.Log($"{toolType} Tool already exists");
+                Log.Debug($"{toolType} Tool already exists");
             }
 
             return cmdToolsProvider;

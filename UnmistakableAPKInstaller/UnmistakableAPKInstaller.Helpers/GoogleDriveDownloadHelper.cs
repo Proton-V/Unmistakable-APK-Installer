@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Serilog;
+using System.Net;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using UnmistakableAPKInstaller.Helpers.Models.GoogleDrive;
@@ -61,7 +62,7 @@ namespace UnmistakableAPKInstaller.Helpers
                 catch (Exception e)
                 {
                     outText(e.Message);
-                    CustomLogger.Log("GD Download Helper: {0}", e.ToString());
+                    Log.Error("GD Download Helper: {0}", e.ToString());
                     return (false, string.Empty);
                 }
             }
@@ -77,7 +78,7 @@ namespace UnmistakableAPKInstaller.Helpers
             }
             catch (Exception e)
             {
-                CustomLogger.Log("GD Download Helper: {0}", e.ToString());
+                Log.Error("GD Download Helper: {0}", e.ToString());
                 return string.Empty;
             }
         }
@@ -98,7 +99,7 @@ namespace UnmistakableAPKInstaller.Helpers
                 }
                 catch (Exception e)
                 {
-                    CustomLogger.Log("GD Download Helper: {0}", e.ToString());
+                    Log.Error("GD Download Helper: {0}", e.ToString());
                     return null;
                 }
             }

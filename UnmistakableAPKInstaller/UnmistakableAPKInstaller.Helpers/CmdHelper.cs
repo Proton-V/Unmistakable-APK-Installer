@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Serilog;
+using System.Diagnostics;
 using System.Text;
 
 namespace UnmistakableAPKInstaller.Helpers
@@ -42,7 +43,7 @@ namespace UnmistakableAPKInstaller.Helpers
                     }
                     catch (OperationCanceledException e)
                     {
-                        CustomLogger.Log($"Process {p.ProcessName} exit with: {e}");
+                        Log.Error($"Process {p.ProcessName} exit with: {e}");
                         p.Kill();
                     }
 
@@ -51,7 +52,7 @@ namespace UnmistakableAPKInstaller.Helpers
 
                     if (!string.IsNullOrEmpty(errorStr))
                     {
-                        CustomLogger.Log("CmdHelper: {0}", errorStr);
+                        Log.Warning("CmdHelper: {0}", errorStr);
                     }
 
                     return (outStr, errorStr);
@@ -59,7 +60,7 @@ namespace UnmistakableAPKInstaller.Helpers
             }
             catch(Exception e)
             {
-                CustomLogger.Log("GD Download Helper: {0}", e.ToString());
+                Log.Error("GD Download Helper: {0}", e.ToString());
                 return (null, e.Message);
             }
         }

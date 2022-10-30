@@ -15,6 +15,7 @@ using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia;
 using UnmistakableAPKInstaller.Helpers;
+using Serilog;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
 {
@@ -429,7 +430,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             }
             catch (Exception e)
             {
-                CustomLogger.Log($"Fail with open icon path: {iconPath} - {e}");
+                Log.Error($"Fail with open icon path: {iconPath} - {e}");
             }
 
             return MessageBox.Avalonia.MessageBoxManager
