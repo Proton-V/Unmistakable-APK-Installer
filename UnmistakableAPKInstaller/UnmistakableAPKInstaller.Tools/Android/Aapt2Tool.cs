@@ -1,4 +1,5 @@
-﻿using System.IO.Compression;
+﻿using Serilog;
+using System.IO.Compression;
 using System.Net;
 using UnmistakableAPKInstaller.Helpers;
 
@@ -49,7 +50,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
                 catch (Exception e)
                 {
                     outText(e.Message);
-                    CustomLogger.Log("Aapt2: {0}", e.ToString());
+                    Log.Error("Aapt2: {0}", e.ToString());
                     return false;
                 }
             }
@@ -72,7 +73,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
             catch (Exception e)
             {
-                CustomLogger.Log("Aapt2: {0}", e.ToString());
+                Log.Error("Aapt2: {0}", e.ToString());
                 return e.Message;
             }
         }

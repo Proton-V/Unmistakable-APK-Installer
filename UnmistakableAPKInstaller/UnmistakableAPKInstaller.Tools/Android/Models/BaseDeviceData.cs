@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using Serilog;
+using System.Net;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Helpers.Models.DiskCache;
 
@@ -53,13 +54,13 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
                     }
                     else
                     {
-                        CustomLogger.Log($"Error reading part of android device data ({inputArray[i]})");
+                        Log.Warning($"Error reading part of android device data ({inputArray[i]})");
                     }
                 }
             }
             catch (Exception e)
             {
-                CustomLogger.Log($"{e}");
+                Log.Error($"{e}");
             }
         }
     }
