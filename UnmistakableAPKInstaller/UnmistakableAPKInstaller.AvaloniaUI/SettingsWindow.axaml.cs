@@ -3,6 +3,7 @@ using System.Configuration;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using UnmistakableAPKInstaller.Core.Managers;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
 {
@@ -38,7 +39,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             var deviceLogFolder = ConfigurationManager.AppSettings["DeviceLogFolderPath"];
             if (deviceLogFolder == string.Empty)
             {
-                deviceLogFolder = Path.Combine(Environment.CurrentDirectory,
+                deviceLogFolder = Path.Combine(AppManager.AppDirectory,
                     ConfigurationManager.AppSettings["DeviceLogDefaultFolderName"]);
             }
             this.InputDeviceLogFolderPath.Text = deviceLogFolder;
@@ -75,7 +76,7 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         private async Task OpenDeviceLogPathExplorer()
         {
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();
-            openFolderDialog.InitialDirectory = Environment.CurrentDirectory;
+            openFolderDialog.InitialDirectory = AppManager.AppDirectory;
 
             var res = await openFolderDialog.ShowAsync(this);
             if (res != null)
