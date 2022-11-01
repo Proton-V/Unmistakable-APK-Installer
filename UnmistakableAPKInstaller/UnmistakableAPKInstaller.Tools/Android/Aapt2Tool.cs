@@ -7,16 +7,19 @@ namespace UnmistakableAPKInstaller.Tools.Android
 {
     public class Aapt2Tool : BaseCmdTool
     {
+        public const string AAPT2_FILE_NAME = "aapt2";
+
         public Aapt2Tool(string downloadLink, string toolFolderPath) : base(downloadLink, toolFolderPath)
         {
         }
 
-        public string Aapt2Path => $"{toolFolderPath}/aapt2.exe";
+        public string Aapt2Path => $"{toolFolderPath}/{AAPT2_FILE_NAME}";
         string ZipPath => $"{toolFolderPath}/Aapt2.zip";
 
         public override bool Exists()
         {
-            return File.Exists(Aapt2Path);
+            Directory.CreateDirectory(toolFolderPath);
+            return Directory.GetFiles(toolFolderPath, $"{AAPT2_FILE_NAME}.*").Length > 0;
         }
 
         public override async Task<bool> TryDownloadToolAsync(Action<string> outText, Action<int> outProgress)
@@ -27,8 +30,6 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             outText("Aapt2 is loading...");
-
-            Directory.CreateDirectory(toolFolderPath);
 
             using (WebClient wc = new WebClient())
             {

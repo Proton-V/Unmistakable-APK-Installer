@@ -17,7 +17,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
         {
         }
 
-        public string AdbPath => $"{toolFolderPath}/{ADB_PROCESS_NAME}.exe";
+        public string AdbPath => $"{toolFolderPath}/{ADB_PROCESS_NAME}";
         string ZipPath => $"{toolFolderPath}/PlatformTools.zip";
 
         string GetSpecialAdbSerialNumberArg(string serialNumber)
@@ -32,7 +32,8 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
         public override bool Exists()
         {
-            return File.Exists(AdbPath);
+            Directory.CreateDirectory(toolFolderPath);
+            return Directory.GetFiles(toolFolderPath, $"{ADB_PROCESS_NAME}.*").Length > 0;
         }
 
         public override async Task<bool> TryDownloadToolAsync(Action<string> outText, Action<int> outProgress)
@@ -43,8 +44,6 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             outText("Android PlatformTools is loading...");
-
-            Directory.CreateDirectory(toolFolderPath);
 
             using (WebClient wc = new WebClient())
             {
