@@ -61,11 +61,23 @@ namespace UnmistakableAPKInstaller.Tools.Android
         {
             try
             {
-                var args = $"dump {path} | findstr -n \"package: name = \"";
+                var args = $"dump {path}";
                 var data = await CmdHelper.StartProcessAsync(Aapt2Path, args);
                 if (!string.IsNullOrEmpty(data.data))
                 {
-                    return data.data;
+                    var packageNameStartStr = "Package name=";
+
+                    var packageName = data.data
+                        .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                        .First(x => x.StartsWith(packageNameStartStr))
+                        ?.Split("id=")
+                        ?.ElementAtOrDefault(0)
+                        ?.Replace(packageNameStartStr, string.Empty)
+                        .Trim();
+
+                    Log.Debug($"Found bundle name {packageName} for {path}");
+
+                    return packageName;
                 }
                 else
                 {
