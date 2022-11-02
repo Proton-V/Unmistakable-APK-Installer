@@ -29,6 +29,8 @@ namespace UnmistakableAPKInstaller.Tools.Android
                 return false;
             }
 
+            Log.Debug($"Tool {GetType().AssemblyQualifiedName} is loading:\n" +
+                $"folderPath - {toolFolderPath}\ndownloadLink - {downloadLink}");
             outText("Aapt2 is loading...");
 
             using (WebClient wc = new WebClient())
@@ -45,13 +47,14 @@ namespace UnmistakableAPKInstaller.Tools.Android
                     ZipFile.ExtractToDirectory(ZipPath, toolFolderPath, true);
                     File.Delete(ZipPath);
 
+                    Log.Debug("Aapt2 is loaded!");
                     outText("Aapt2 is loaded!");
                     return true;
                 }
                 catch (Exception e)
                 {
-                    outText(e.Message);
                     Log.Error("Aapt2: {0}", e.ToString());
+                    outText(e.Message);
                     return false;
                 }
             }
