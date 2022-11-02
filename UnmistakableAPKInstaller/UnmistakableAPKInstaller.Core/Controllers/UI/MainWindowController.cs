@@ -1,6 +1,13 @@
-﻿using System.Drawing.Drawing2D;
+﻿using Serilog;
+using System.Collections.Specialized;
+using System.Configuration;
+using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
+using UnmistakableAPKInstaller.Core.Managers;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Helpers.Models.DiskCache;
+using UnmistakableAPKInstaller.Tools.Android;
+using UnmistakableAPKInstaller.Tools;
 using UnmistakableAPKInstaller.Tools.Android.Models;
 
 namespace UnmistakableAPKInstaller.Core.Controllers.UI
@@ -13,6 +20,42 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
         public void Init()
         {
             InitComponents();
+        }
+
+        public void InitComponents()
+        {
+            timerController = new TimerController();
+            deviceManager = new DeviceManager();
+
+            deviceLogFolderPath = ConfigurationManager.AppSettings["DeviceLogFolderPath"];
+            if (deviceLogFolderPath == string.Empty)
+            {
+                deviceLogFolderPath = Path.Combine(AppManager.AppDirectory,
+                    ConfigurationManager.AppSettings["DeviceLogDefaultFolderName"]);
+            }
+            Directory.CreateDirectory(deviceLogFolderPath);
+
+            Directory.CreateDirectory(DownloadedAPKFolderPath);
+
+            var currentPlatformKeyName = GetCurrentPlatformSectionKeyName();
+
+            var platformToolsDownloadLinkSection = ConfigurationManager.GetSection("AndroidPlatformToolsDownloadLink") as NameValueCollection;
+            var aapt2DownloadLinkSection = ConfigurationManager.GetSection("Aapt2DownloadLink") as NameValueCollection;
+
+            var platformToolsDownloadLink = platformToolsDownloadLinkSection[currentPlatformKeyName];
+            var platformToolsFolderPath = ConfigurationManager.AppSettings["AndroidPlatformToolsFolderPath"];
+            var platformTools = new AndroidPlatformTools(platformToolsDownloadLink, GetFullAppDataPath(platformToolsFolderPath));
+
+            var aapt2DownloadLink = aapt2DownloadLinkSection[currentPlatformKeyName];
+            var aapt2FolderPath = ConfigurationManager.AppSettings["Aapt2FolderPath"];
+            var aapt2Tool = new Aapt2Tool(aapt2DownloadLink, GetFullAppDataPath(aapt2FolderPath));
+
+            var gdApiKey = ConfigurationManager.AppSettings["GoogleDriveApiKey"];
+            gdDownloadHelper = new GoogleDriveDownloadHelper(gdApiKey, DownloadedAPKFolderPath);
+
+            cmdToolsProvider = new CmdToolsProvider()
+                .AddTool(platformTools)
+                .AddTool(aapt2Tool);
         }
         #endregion
 

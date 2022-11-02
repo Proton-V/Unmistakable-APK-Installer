@@ -1,9 +1,10 @@
-﻿using System.Configuration;
+﻿using Serilog;
+using System.Configuration;
+using System.Runtime.InteropServices;
 using System.Timers;
 using UnmistakableAPKInstaller.Core.Managers;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools;
-using UnmistakableAPKInstaller.Tools.Android;
 using UnmistakableAPKInstaller.Tools.Android.Models;
 
 namespace UnmistakableAPKInstaller.Core.Controllers.UI
@@ -20,12 +21,11 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
             => deviceManager.CurrentDeviceSerialNumber;
 
         public bool HasAllTools => cmdToolsProvider.CheckExistsTools();
-        public string DownloadedAPKFolderPath => $"{Path.Combine(AppDirectory, "GoogleDrive")}";
+        public string DownloadedAPKFolderPath => $"{Path.Combine(AppManager.AppDirectory, "GoogleDrive")}";
         public bool AutoDelPrevApp => Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
         public bool DeviceLogEnabled => Convert.ToBoolean(ConfigurationManager.AppSettings["DeviceLogEnabled"]);
         int DeviceLogBufferSize => Convert.ToInt32(ConfigurationManager.AppSettings["DeviceLogBufferSize"]);
 
-        string AppDirectory => Environment.CurrentDirectory;
         private string GetFullAppDataPath(string relativePath) => $"{DiskCache.AppDataDirectory}/{relativePath}";
 
         CmdToolsProvider cmdToolsProvider;
@@ -35,35 +35,27 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
         TimerController timerController;
         DeviceManager deviceManager;
 
-        public void InitComponents()
+        /// <summary>
+        /// Method to get section key name for current platform
+        /// </summary>
+        /// <returns></returns>
+        private string GetCurrentPlatformSectionKeyName()
         {
-            timerController = new TimerController();
-            deviceManager = new DeviceManager();
-
-            deviceLogFolderPath = ConfigurationManager.AppSettings["DeviceLogFolderPath"];
-            if (deviceLogFolderPath == string.Empty)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             {
-                deviceLogFolderPath = Path.Combine(Environment.CurrentDirectory,
-                    ConfigurationManager.AppSettings["DeviceLogDefaultFolderName"]);
+                return "OSx";
             }
-            Directory.CreateDirectory(deviceLogFolderPath);
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                return "Linux";
+            }
+            else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "Windows";
+            }
 
-            Directory.CreateDirectory(DownloadedAPKFolderPath);
-
-            var platformToolsDownloadLink = ConfigurationManager.AppSettings["PlatformToolsDownloadLink"];
-            var platformToolsFolderPath = ConfigurationManager.AppSettings["AndroidPlatformToolsFolderPath"];
-            var platformTools = new AndroidPlatformTools(platformToolsDownloadLink, GetFullAppDataPath(platformToolsFolderPath));
-
-            var aapt2DownloadLink = ConfigurationManager.AppSettings["Aapt2DownloadLink"];
-            var aapt2FolderPath = ConfigurationManager.AppSettings["Aapt2FolderPath"];
-            var aapt2Tool = new Aapt2Tool(aapt2DownloadLink, GetFullAppDataPath(aapt2FolderPath));
-
-            var gdApiKey = ConfigurationManager.AppSettings["GoogleDriveApiKey"];
-            gdDownloadHelper = new GoogleDriveDownloadHelper(gdApiKey, DownloadedAPKFolderPath);
-
-            cmdToolsProvider = new CmdToolsProvider()
-                .AddTool(platformTools)
-                .AddTool(aapt2Tool);
+            Log.Warning("Section key name not found for current platform");
+            return string.Empty;
         }
 
         public async Task<bool> TryDownloadToolsAsync(Action<string> outText, Action<int> outProgress) =>
