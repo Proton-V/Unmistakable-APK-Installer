@@ -123,17 +123,13 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
                     break;
                 case MainFormState.APKLoading:
                     ChangeVisibility(true);
-                    ButtonDownload.IsVisible = false;
-                    ButtonDownloadInstall.IsVisible = false;
-                    ButtonInstall.IsVisible = false;
-                    ButtonSettings.IsVisible = false;
-                    ButtonSaveLogToFile.IsVisible = false;
                     break;
             }
         }
 
         private void ChangeVisibility(bool value)
         {
+            // Default image banner state
             ImageBanner.IsVisible = false;
 
             Panel1.IsVisible = value;
