@@ -14,6 +14,12 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
 {
     public partial class MainWindowController
     {
+        public MainWindowController()
+        {
+            timerController = new TimerController();
+            deviceManager = new DeviceManager();
+        }
+
         string prevDeviceStr;
 
         #region Init
@@ -24,9 +30,6 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
 
         public void InitComponents()
         {
-            timerController = new TimerController();
-            deviceManager = new DeviceManager();
-
             deviceLogFolderPath = ConfigurationManager.AppSettings["DeviceLogFolderPath"];
             if (deviceLogFolderPath == string.Empty)
             {

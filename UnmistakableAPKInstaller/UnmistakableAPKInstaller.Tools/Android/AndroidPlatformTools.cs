@@ -43,6 +43,8 @@ namespace UnmistakableAPKInstaller.Tools.Android
                 return false;
             }
 
+            Log.Debug($"Tool {GetType().AssemblyQualifiedName} is loading:\n" +
+                $"folderPath - {toolFolderPath}\ndownloadLink - {downloadLink}");
             outText("Android PlatformTools is loading...");
 
             using (WebClient wc = new WebClient())
@@ -66,13 +68,14 @@ namespace UnmistakableAPKInstaller.Tools.Android
                         .ForEach(x => File.Move(x, $"{toolFolderPath}/{Path.GetFileName(x)}"));
                     Directory.Delete(internalZipDirectory, true);
 
+                    Log.Debug("Android PlatformTools is loaded!");
                     outText("Android PlatformTools is loaded!");
                     return true;
                 }
                 catch (Exception e)
                 {
-                    outText(e.Message);
                     Log.Error("Android platform tools: {0}", e.ToString());
+                    outText(e.Message);
                     return false;
                 }
             }
@@ -209,7 +212,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} uninstall {bundleName}";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
-            outText(data.data ?? data.error);
+
             if (!string.IsNullOrEmpty(data.error))
             {
                 Log.Warning("Android platform tools: {0}", data.error);
@@ -232,6 +235,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} install {path}";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+
             if (!string.IsNullOrEmpty(data.error))
             {
                 Log.Warning("Android platform tools: {0}", data.error);
@@ -254,6 +258,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} logcat -G {sizeInMb}M";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+
             if (!string.IsNullOrEmpty(data.error))
             {
                 Log.Warning("Android platform tools: {0}", data.error);
