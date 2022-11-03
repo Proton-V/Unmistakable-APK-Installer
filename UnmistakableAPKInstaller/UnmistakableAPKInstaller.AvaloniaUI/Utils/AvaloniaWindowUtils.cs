@@ -3,13 +3,12 @@ using Avalonia.Platform;
 using Serilog;
 using System;
 using System.Numerics;
+using System.Runtime.InteropServices;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI.Utils
 {
     public static class AvaloniaWindowUtils
     {
-        // TODO: check && update this method to cross-platform
-
         /// <summary>
         /// This method only works for Windows OS
         /// Possible bugowner: <see cref="Screen"/>
@@ -22,6 +21,12 @@ namespace UnmistakableAPKInstaller.AvaloniaUI.Utils
         {
             try
             {
+                // TODO: check && update this method to cross-platform
+                if(!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                {
+                    throw new PlatformNotSupportedException();
+                }    
+
                 var targetRatio = defaultSize.X / defaultSize.Y;
 
                 var screenBounds = screen.Bounds.Size;
