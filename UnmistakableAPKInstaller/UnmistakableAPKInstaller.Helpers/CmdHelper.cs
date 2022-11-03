@@ -1,11 +1,12 @@
-﻿using System.Diagnostics;
+﻿using Serilog;
+using System.Diagnostics;
 using System.Text;
 
 namespace UnmistakableAPKInstaller.Helpers
 {
     public class CmdHelper
     {
-        public static async Task<(string data, string error)> StartProcessAsync(string path, string arguments)
+        public static async Task<(string data, string error)> StartProcessAsync(string path, string arguments, int timeoutInSec = -1)
         {
             try
             {
@@ -29,15 +30,29 @@ namespace UnmistakableAPKInstaller.Helpers
                     p.Start();
                     p.BeginErrorReadLine();
                     p.BeginOutputReadLine();
-
-                    await p.WaitForExitAsync();
+     
+                    CancellationToken token = default;
+                    try
+                    {
+                        if(timeoutInSec > 0)
+                        {
+                            var timeoutSignal = new CancellationTokenSource(TimeSpan.FromSeconds(timeoutInSec));
+                            token = timeoutSignal.Token;
+                        }
+                        await p.WaitForExitAsync(token);
+                    }
+                    catch (OperationCanceledException e)
+                    {
+                        Log.Error($"Process {p.ProcessName} exit with: {e}");
+                        p.Kill();
+                    }
 
                     var outStr = outData.ToString();
                     var errorStr = outErrorData.ToString();
 
                     if (!string.IsNullOrEmpty(errorStr))
                     {
-                        CustomLogger.Log("CmdHelper: {0}", errorStr);
+                        Log.Warning("CmdHelper: {0}", errorStr);
                     }
 
                     return (outStr, errorStr);
@@ -45,9 +60,19 @@ namespace UnmistakableAPKInstaller.Helpers
             }
             catch(Exception e)
             {
-                CustomLogger.Log("GD Download Helper: {0}", e.ToString());
+                Log.Error("GD Download Helper: {0}", e.ToString());
                 return (null, e.Message);
             }
+        }
+
+        public static Task StopAllProcessesByName(string name)
+        {
+            foreach (var process in Process.GetProcessesByName(name))
+            {
+                process.Kill();
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

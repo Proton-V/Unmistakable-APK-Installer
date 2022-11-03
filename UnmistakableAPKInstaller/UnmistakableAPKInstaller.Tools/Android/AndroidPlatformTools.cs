@@ -1,4 +1,6 @@
-﻿using System.IO.Compression;
+﻿using Serilog;
+using System.Diagnostics;
+using System.IO.Compression;
 using System.Net;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools.Android.Models;
@@ -7,6 +9,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 {
     public class AndroidPlatformTools : BaseCmdTool
     {
+        public const string ADB_PROCESS_NAME = "adb";
         public const int DEFAULT_TCP_PORT = 5555;
         public const string DEFAULT_TCP_PORT_PROP_NAME = "service.adb.tcp.port";
 
@@ -14,7 +17,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
         {
         }
 
-        public string AdbPath => $"{toolFolderPath}/adb.exe";
+        public string AdbPath => $"{toolFolderPath}/{ADB_PROCESS_NAME}";
         string ZipPath => $"{toolFolderPath}/PlatformTools.zip";
 
         string GetSpecialAdbSerialNumberArg(string serialNumber)
@@ -29,7 +32,8 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
         public override bool Exists()
         {
-            return File.Exists(AdbPath);
+            Directory.CreateDirectory(toolFolderPath);
+            return Directory.GetFiles(toolFolderPath, $"{ADB_PROCESS_NAME}.*").Length > 0;
         }
 
         public override async Task<bool> TryDownloadToolAsync(Action<string> outText, Action<int> outProgress)
@@ -39,9 +43,9 @@ namespace UnmistakableAPKInstaller.Tools.Android
                 return false;
             }
 
+            Log.Debug($"Tool {GetType().AssemblyQualifiedName} is loading:\n" +
+                $"folderPath - {toolFolderPath}\ndownloadLink - {downloadLink}");
             outText("Android PlatformTools is loading...");
-
-            Directory.CreateDirectory(toolFolderPath);
 
             using (WebClient wc = new WebClient())
             {
@@ -64,13 +68,14 @@ namespace UnmistakableAPKInstaller.Tools.Android
                         .ForEach(x => File.Move(x, $"{toolFolderPath}/{Path.GetFileName(x)}"));
                     Directory.Delete(internalZipDirectory, true);
 
+                    Log.Debug("Android PlatformTools is loaded!");
                     outText("Android PlatformTools is loaded!");
                     return true;
                 }
                 catch (Exception e)
                 {
+                    Log.Error("Android platform tools: {0}", e.ToString());
                     outText(e.Message);
-                    CustomLogger.Log("Android platform tools: {0}", e.ToString());
                     return false;
                 }
             }
@@ -86,7 +91,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             var hasDevice = str.Replace("devices", "").Contains("device");
             if (!hasDevice)
             {
-                CustomLogger.Log("Device list is empty!");
+                Log.Debug("Device list is empty!");
             }
 
             return hasDevice;
@@ -110,24 +115,25 @@ namespace UnmistakableAPKInstaller.Tools.Android
         {
             List<DeviceData> results = new List<DeviceData>();
 
-            var datas = deviceListDataStr
-                .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                .Skip(1)
-                .Select(x => new DeviceData(x))
+            var baseDatas = deviceListDataStr
+                .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)     
+                .Select(x => new BaseDeviceData(x))
                 .ToArray();
 
             var usbDeviceDatas =
-                datas
+                baseDatas
                 // Skip devices with ip serial number
-                .Where(x => !IPEndPoint.TryParse(x.SerialNumber, out IPEndPoint endpoint))
+                .Where(x => !x.IsWifiDevice)
                 .ToList();
 
-            var wifiDeviceDatas = datas.ToList();
-            wifiDeviceDatas.RemoveAll(x => usbDeviceDatas.Contains(x));
+            var wifiDeviceDatas =
+                baseDatas
+                .Where(x => !usbDeviceDatas.Contains(x))
+                .ToList();
 
             for (int i = 0; i < usbDeviceDatas.Count; i++)
             {
-                var deviceData = datas[i];
+                var deviceData = new DeviceData(usbDeviceDatas[i]);
                 var deviceIpAddress = await GetDeviceIpAddressAsync(deviceData);
 
                 var wifiData = wifiDeviceDatas
@@ -142,7 +148,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
                 if (wifiData != null)
                 {
-                    deviceData.SetWifiDeviceData(wifiData);
+                    deviceData.SetWifiDeviceData(new WifiDeviceData(wifiData));
                     wifiDeviceDatas.Remove(wifiData);
                 }
 
@@ -150,26 +156,30 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
 
             // Add all self-hosted wifi devices
-            results.AddRange(wifiDeviceDatas);
+            results.AddRange(wifiDeviceDatas.Select(x => new DeviceData(x)));
 
             return results
                 .Where(x => x != null)
                 .ToArray();
         } 
 
-        private async Task<string> GetAndroidDevicesStrAsync()
+        public async Task<string> GetAndroidDevicesStrAsync()
         {
             var args = "devices -l";
             var processData = await CmdHelper.StartProcessAsync(AdbPath, args);
 
             if (!string.IsNullOrEmpty(processData.error))
             {
-                CustomLogger.Log("Android platform tools: {0}", processData.error);
+                Log.Warning("Android platform tools: {0}", processData.error);
                 return string.Empty;
             }
             else
             {
-                return processData.data;
+                var arr = processData.data
+                    .Split(Environment.NewLine.ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                    .Where(x =>
+                        !x.StartsWith("List") && !x.StartsWith("*"));
+                return string.Join(Environment.NewLine, arr);
             }
         }
 
@@ -179,7 +189,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
         /// </summary>
         /// <param name="serialNumber"></param>
         /// <returns></returns>
-        public async Task<DeviceData> GetAndroidDeviceDataAsync(string serialNumber)
+        public async Task<BaseDeviceData> GetAndroidDeviceDataAsync(string serialNumber)
         {
             var devicesStr = await GetAndroidDevicesStrAsync();
             var deviceStr = devicesStr
@@ -188,7 +198,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             if (!string.IsNullOrEmpty(deviceStr))
             {
-                return new DeviceData(deviceStr);
+                return new BaseDeviceData(deviceStr);
             }
             return null;
         }
@@ -202,10 +212,10 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} uninstall {bundleName}";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
-            outText(data.data ?? data.error);
+
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.Log("Android platform tools: {0}", data.error);
+                Log.Warning("Android platform tools: {0}", data.error);
                 outText(data.error);
             }
             else
@@ -225,9 +235,10 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} install {path}";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.Log("Android platform tools: {0}", data.error);
+                Log.Warning("Android platform tools: {0}", data.error);
                 outText(data.error);
             }
             else
@@ -247,9 +258,10 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} logcat -G {sizeInMb}M";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
+
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.Log("Android platform tools: {0}", data.error);
+                Log.Warning("Android platform tools: {0}", data.error);
                 outText(data.error);
             }
             else
@@ -272,7 +284,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.Log("Android platform tools: {0}", data.error);
+                Log.Warning("Android platform tools: {0}", data.error);
                 outText?.Invoke(data.error);
             }
             else
@@ -284,14 +296,14 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return string.IsNullOrEmpty(data.error);
         }
 
-        public async Task<string> GetDeviceIpAddressAsync(DeviceData deviceData)
+        public async Task<string> GetDeviceIpAddressAsync(BaseDeviceData deviceData)
         {
             var args = $"{GetSpecialAdbSerialNumberArg(deviceData.SerialNumber)} shell ip route";
             var processData = await CmdHelper.StartProcessAsync(AdbPath, args);
 
             if (!string.IsNullOrEmpty(processData.error))
             {
-                CustomLogger.Log("Android platform tools: {0}", processData.error);
+                Log.Warning("Android platform tools: {0}", processData.error);
                 return string.Empty;
             }
             else
@@ -306,7 +318,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
         public async Task<bool> TryOpenPortAsync(string serialNumber, int port = 5555)
         {
-            if (!await ContainsAnyDevicesAsync())
+            if (!(await ContainsAnyDevicesAsync()))
             {
                 return false;
             }
@@ -316,7 +328,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.Log("Android platform tools: {0}", data.error);
+                Log.Warning("Android platform tools: {0}", data.error);
             }
 
             return string.IsNullOrEmpty(data.error);
@@ -334,7 +346,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.Log("Android platform tools: {0}", data.error);
+                Log.Warning("Android platform tools: {0}", data.error);
             }
 
             return string.IsNullOrEmpty(data.error);
@@ -353,7 +365,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
 
             if (!string.IsNullOrEmpty(data.error))
             {
-                CustomLogger.Log("Android platform tools: {0}", data.error);
+                Log.Warning("Android platform tools: {0}", data.error);
             }
 
             return string.IsNullOrEmpty(data.error);
