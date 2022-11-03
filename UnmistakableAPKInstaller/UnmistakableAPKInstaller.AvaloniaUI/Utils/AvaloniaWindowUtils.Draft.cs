@@ -7,6 +7,9 @@ using System.Runtime.InteropServices;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI.Utils
 {
+    /// <summary>
+    /// Draft for AvaloniaWindowUtils
+    /// </summary>
     public static class AvaloniaWindowUtils
     {
         /// <summary>
