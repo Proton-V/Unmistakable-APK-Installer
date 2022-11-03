@@ -4,20 +4,13 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using UnmistakableAPKInstaller.Core.Managers;
-using UnmistakableAPKInstaller.AvaloniaUI.Utils;
-using System.Numerics;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
 {
     public partial class SettingsWindow : Window
     {
-        const float DEFAULT_SIZE_FACTOR = 1f / 2;
-        Vector2 defaultWindowSize = new Vector2(300, 400);
-
         public SettingsWindow()
         {
-            this.SetDefaultWindowSize(Screens.Primary,
-                defaultWindowSize, DEFAULT_SIZE_FACTOR);
             InitializeComponent();
         }
 

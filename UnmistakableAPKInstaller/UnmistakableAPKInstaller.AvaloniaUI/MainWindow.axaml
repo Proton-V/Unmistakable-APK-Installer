@@ -5,8 +5,9 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="UnmistakableAPKInstaller.AvaloniaUI.MainWindow"
         Title="UnmistakableAPKInstaller"
-		CanResize="False"
-		WindowState="Minimized"
+		CanResize="True"
+		WindowState="Normal"
+		Width="800" Height="450"
 		WindowStartupLocation="CenterScreen"
 		Icon="/Assets/logo-min.ico">
 	<Viewbox>

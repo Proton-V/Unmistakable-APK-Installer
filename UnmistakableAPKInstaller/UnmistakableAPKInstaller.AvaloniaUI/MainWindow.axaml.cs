@@ -14,18 +14,12 @@ using MessageBox.Avalonia.DTO;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia;
-using UnmistakableAPKInstaller.Helpers;
 using Serilog;
-using UnmistakableAPKInstaller.AvaloniaUI.Utils;
-using System.Numerics;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
 {
     public partial class MainWindow : Window
     {
-        const float DEFAULT_SIZE_FACTOR = 1f / 2;
-        Vector2 defaultWindowSize = new Vector2(800, 450);
-
         enum MainFormState
         {
             Idle,
@@ -35,8 +29,6 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
 
         public MainWindow()
         {
-            this.SetDefaultWindowSize(Screens.Primary,
-                defaultWindowSize, DEFAULT_SIZE_FACTOR);
             InitializeComponent();
         }
 
