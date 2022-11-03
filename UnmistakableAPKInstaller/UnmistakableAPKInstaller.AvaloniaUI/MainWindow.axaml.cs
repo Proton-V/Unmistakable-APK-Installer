@@ -14,7 +14,6 @@ using MessageBox.Avalonia.DTO;
 using Avalonia.Media.Imaging;
 using Avalonia.Platform;
 using Avalonia;
-using UnmistakableAPKInstaller.Helpers;
 using Serilog;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
