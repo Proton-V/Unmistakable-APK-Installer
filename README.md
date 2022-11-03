@@ -1,28 +1,33 @@
-# Unmistakable-APK-Installer
-Simple APK installer 
-
-Download v 1.0.4
-[win-x64](https://github.com/Proton-V/Unmistakable-APK-Installer/releases/download/v1.0.4/UnmistakableAPKInstaller-v1.0.4-win-x64.rar)
-
-Prev tags:
-[v1.0.3](https://github.com/Proton-V/Unmistakable-APK-Installer/tree/v1.0.3)
-[v1.0.2](https://github.com/Proton-V/Unmistakable-APK-Installer/tree/v1.0.2)
-[v1.0.1](https://github.com/Proton-V/Unmistakable-APK-Installer/tree/v1.0.1)
-[v1.0.0](https://github.com/Proton-V/Unmistakable-APK-Installer/tree/v1.0.0)
+# Unmistakable-APK-Installer v 1.0.5
+Simple APK installer
 
 - WiFi mode (device log/install without USB connection)
 - Easy-load APK by Google Drive public URL
 - Auto-del previous version before installation
 - Saving device log
 
-![image](https://user-images.githubusercontent.com/65833201/193483241-d79eadbe-8db2-4774-993d-55eaf40cd3c6.png)
+Download:
+[Windows-x64](https://github.com/Proton-V/Unmistakable-APK-Installer/releases/latest/download/UnmistakableAPKInstaller-win-x64.exe) | 
+[Linux-x64](https://github.com/Proton-V/Unmistakable-APK-Installer/releases/latest/download/UnmistakableAPKInstaller-linux-x64) | 
+[MacOS-x64](https://github.com/Proton-V/Unmistakable-APK-Installer/releases/latest/download/UnmistakableAPKInstaller-osx-x64)
+
+![GitBunner1920](https://user-images.githubusercontent.com/65833201/199653349-81f39a7e-2c42-489e-9973-6da3614e8d3e.png)
+
+Tested on:
+- Windows 10 Pro 10.0.19044 Build 19044
+- Ubuntu 22.04.1 LTS
+- MacOS Big Sur 11.0.1 (20B29)
+
+[Prev tags](https://github.com/Proton-V/Unmistakable-APK-Installer/tags)
+
+![image](https://user-images.githubusercontent.com/65833201/199654325-afa5855e-f704-49e0-95e7-c360861354ce.png)
 
 ## Important
 **You should change default API key if you want to use this app without limitations**
 
-1. Open App.exe -> Settings.
+1. Open App -> Settings
 
-![image](https://user-images.githubusercontent.com/65833201/193483272-26e6db2c-70f6-4dc8-8f50-e4a00fad4276.png)
+![image](https://user-images.githubusercontent.com/65833201/199654449-f4024a4e-9564-4fc3-8630-94efdb7b8864.png)
 
 2. Create your own API key.
 
