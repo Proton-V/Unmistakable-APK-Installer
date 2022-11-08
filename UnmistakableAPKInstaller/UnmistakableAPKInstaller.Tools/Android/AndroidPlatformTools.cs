@@ -1,5 +1,4 @@
 ﻿using Serilog;
-using System.Diagnostics;
 using System.IO.Compression;
 using System.Net;
 using UnmistakableAPKInstaller.Helpers;
@@ -7,6 +6,10 @@ using UnmistakableAPKInstaller.Tools.Android.Models;
 
 namespace UnmistakableAPKInstaller.Tools.Android
 {
+    /// <summary>
+    /// AndroidPlatformTools cmd tool class.
+    /// Includes ADB, etc.
+    /// </summary>
     public class AndroidPlatformTools : BaseCmdTool
     {
         public const string ADB_PROCESS_NAME = "adb";
@@ -97,6 +100,10 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return hasDevice;
         }
 
+        /// <summary>
+        /// Get all connected device datas as <see cref="DeviceData"/> array
+        /// </summary>
+        /// <returns></returns>
         public async Task<DeviceData[]> GetAndroidDevicesAsync()
         {
             var results = new DeviceData[] {};
@@ -111,6 +118,11 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return results;
         }
 
+        /// <summary>
+        /// Convert <paramref name="deviceListDataStr"/> to <see cref="DeviceData"/> array
+        /// </summary>
+        /// <param name="deviceListDataStr"></param>
+        /// <returns></returns>
         private async Task<DeviceData[]> NormalizeDeviceList(string deviceListDataStr)
         {
             List<DeviceData> results = new List<DeviceData>();
@@ -161,8 +173,12 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return results
                 .Where(x => x != null)
                 .ToArray();
-        } 
+        }
 
+        /// <summary>
+        /// Get all connected devices string
+        /// </summary>
+        /// <returns></returns>
         public async Task<string> GetAndroidDevicesStrAsync()
         {
             var args = "devices -l";
@@ -203,6 +219,13 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return null;
         }
 
+        /// <summary>
+        /// Unistall actual APK by <paramref name="bundleName"/>
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        /// <param name="bundleName"></param>
+        /// <param name="outText"></param>
+        /// <returns></returns>
         public async Task<bool> TryUninstallAPKAsync(string serialNumber, string bundleName, Action<string> outText)
         {
             if (!await ContainsAnyDevicesAsync())
@@ -226,6 +249,13 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return data.data != null;
         }
 
+        /// <summary>
+        /// Install APK by <paramref name="path"/>
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        /// <param name="path"></param>
+        /// <param name="outText"></param>
+        /// <returns></returns>
         public async Task<bool> TryInstallAPKAsync(string serialNumber, string path, Action<string> outText)
         {
             if (!await ContainsAnyDevicesAsync())
@@ -249,6 +279,13 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return !string.IsNullOrEmpty(data.data) && data.data.Contains("Success");
         }
 
+        /// <summary>
+        /// Set LogBuffer size to device with <paramref name="serialNumber"/>
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        /// <param name="sizeInMb"></param>
+        /// <param name="outText"></param>
+        /// <returns></returns>
         public async Task<bool> TrySetLogBufferSizeAsync(string serialNumber, int sizeInMb, Action<string> outText)
         {
             if (!await ContainsAnyDevicesAsync())
@@ -272,6 +309,13 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return string.IsNullOrEmpty(data.error);
         }
 
+        /// <summary>
+        /// Save current device log to <paramref name="path"/>
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        /// <param name="path"></param>
+        /// <param name="outText"></param>
+        /// <returns></returns>
         public async Task<bool> TrySaveLogToFileAsync(string serialNumber, string path, Action<string>? outText)
         {
             if (!await ContainsAnyDevicesAsync())
@@ -296,6 +340,11 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return string.IsNullOrEmpty(data.error);
         }
 
+        /// <summary>
+        /// Get device IP address by <paramref name="deviceData"/>
+        /// </summary>
+        /// <param name="deviceData"></param>
+        /// <returns></returns>
         public async Task<string> GetDeviceIpAddressAsync(BaseDeviceData deviceData)
         {
             var args = $"{GetSpecialAdbSerialNumberArg(deviceData.SerialNumber)} shell ip route";
@@ -316,6 +365,12 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
         }
 
+        /// <summary>
+        /// Opent port on Device with <paramref name="serialNumber"/>
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        /// <param name="port"></param>
+        /// <returns></returns>
         public async Task<bool> TryOpenPortAsync(string serialNumber, int port = 5555)
         {
             if (!(await ContainsAnyDevicesAsync()))
@@ -334,6 +389,13 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return string.IsNullOrEmpty(data.error);
         }
 
+        /// <summary>
+        /// Set prop <paramref name="propName"/> to device with <paramref name="serialNumber"/>
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        /// <param name="propName"></param>
+        /// <param name="propValue"></param>
+        /// <returns></returns>
         public async Task<bool> SetTempPropAsync(string serialNumber, string propName, string propValue)
         {
             if (!await ContainsAnyDevicesAsync())
@@ -352,6 +414,13 @@ namespace UnmistakableAPKInstaller.Tools.Android
             return string.IsNullOrEmpty(data.error);
         }
 
+        /// <summary>
+        /// Connect/Disconnect from device using <paramref name="ipAddress"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="ipAddress"></param>
+        /// <param name="port"></param>
+        /// <returns></returns>
         public async Task<bool> TryUpdateConnectToDeviceAsync(bool value, string ipAddress, int port = 5555)
         {
             if (!await ContainsAnyDevicesAsync())

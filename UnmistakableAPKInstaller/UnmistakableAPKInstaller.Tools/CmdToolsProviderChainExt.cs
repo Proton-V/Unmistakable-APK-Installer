@@ -1,10 +1,19 @@
 ﻿using Serilog;
-using UnmistakableAPKInstaller.Helpers;
 
 namespace UnmistakableAPKInstaller.Tools
 {
+    /// <summary>
+    /// Extension class for chain <see cref="CmdToolsProvider"/>
+    /// </summary>
     public static class CmdToolsProviderChainExt
     {
+        /// <summary>
+        /// Try Add new Tool to current <paramref name="cmdToolsProvider"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="cmdToolsProvider"></param>
+        /// <param name="toolInstance"></param>
+        /// <returns></returns>
         public static CmdToolsProvider AddTool<T>(this CmdToolsProvider cmdToolsProvider, T toolInstance) where T : BaseCmdTool
         {
             var toolType = typeof(T);

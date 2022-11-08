@@ -5,6 +5,9 @@ using UnmistakableAPKInstaller.Helpers;
 
 namespace UnmistakableAPKInstaller.Tools.Android
 {
+    /// <summary>
+    /// Android Aapt2 cmd tool class
+    /// </summary>
     public class Aapt2Tool : BaseCmdTool
     {
         public const string AAPT2_FILE_NAME = "aapt2";
@@ -60,6 +63,11 @@ namespace UnmistakableAPKInstaller.Tools.Android
             }
         }
 
+        /// <summary>
+        /// Get bundle name from APK file
+        /// </summary>
+        /// <param name="path">APK file path</param>
+        /// <returns></returns>
         public async Task<string> TryGetAPKBundleNameAsync(string path)
         {
             try

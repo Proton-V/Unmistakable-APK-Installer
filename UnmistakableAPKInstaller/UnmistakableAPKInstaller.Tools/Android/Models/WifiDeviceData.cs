@@ -1,5 +1,8 @@
 ﻿namespace UnmistakableAPKInstaller.Tools.Android.Models
 {
+    /// <summary>
+    /// Default Wi-Fi DeviceData.
+    /// </summary>
     public class WifiDeviceData : BaseDeviceData
     {
         private WifiDeviceData() : base() { }
