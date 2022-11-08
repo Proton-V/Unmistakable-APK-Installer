@@ -8,18 +8,22 @@ using System.Runtime.InteropServices;
 namespace UnmistakableAPKInstaller.AvaloniaUI.Utils
 {
     /// <summary>
-    /// Draft for AvaloniaWindowUtils
+    /// Draft for AvaloniaWindowUtils class.
+    /// Not used yet
     /// </summary>
     public static class AvaloniaWindowUtils
     {
         /// <summary>
-        /// This method only works for Windows OS
+        /// Extension method for classes <see cref="Window"/>.
+        /// This method only works for Windows OS.
         /// Possible bugowner: <see cref="Screen"/>
         /// </summary>
         /// <param name="window"></param>
-        /// <param name="screen"></param>
-        /// <param name="targetRatio"></param>
-        /// <param name="targetSizeFactor"></param>
+        /// <param name="screen">current screen object</param>
+        /// <param name="defaultSize">default window size</param>
+        /// <param name="targetSizeFactor">default size factor</param>
+        [Obsolete("This method is obsolete.\n" +
+            "Instead, don't call anything.", true)]
         public static void SetDefaultWindowSize(this Window window, Screen screen, Vector2 defaultSize, float targetSizeFactor)
         {
             try

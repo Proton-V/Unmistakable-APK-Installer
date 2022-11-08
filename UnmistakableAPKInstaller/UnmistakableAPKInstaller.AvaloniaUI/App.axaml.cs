@@ -1,16 +1,16 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Controls.Shapes;
 using Avalonia.Markup.Xaml;
 using Serilog;
-using System;
 using System.Configuration;
-using UnmistakableAPKInstaller.Core.Controllers.UI;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools.Android;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
 {
+    /// <summary>
+    /// Default main App class
+    /// </summary>
     public partial class App : Application
     {
         public override void Initialize()
@@ -22,15 +22,29 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
-                desktop.Exit += App_Exit;
-                InitDiskCacheAndLogger();
-                desktop.MainWindow = new MainWindow(true);
+                InitApp(desktop);
             }
 
             base.OnFrameworkInitializationCompleted();
         }
 
-        private void InitDiskCacheAndLogger()
+        /// <summary>
+        /// Init App method.
+        /// Call after AvaloniaUI initialization
+        /// </summary>
+        /// <param name="desktop"></param>
+        private void InitApp(IClassicDesktopStyleApplicationLifetime desktop)
+        {
+            desktop.Exit += App_Exit;
+            InitLogger();
+            InitDiskCache();
+            desktop.MainWindow = new MainWindow(true);
+        }
+
+        /// <summary>
+        /// Initialize app logger
+        /// </summary>
+        private void InitLogger()
         {
             var logFilePath = System.IO.Path.Combine(DiskCache.AppDataDirectory,
                 ConfigurationManager.AppSettings["LogFileName"]);
@@ -41,12 +55,24 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
                 rollingInterval: RollingInterval.Day,
                 retainedFileCountLimit: 10)
                 .CreateLogger();
+        }
 
+        /// <summary>
+        /// Initialize disk cache
+        /// </summary>
+        private void InitDiskCache()
+        {
             var diskCacheFilePath = System.IO.Path.Combine(DiskCache.AppDataDirectory,
                 ConfigurationManager.AppSettings["DiskCacheFileName"]);
             DiskCache.Init(diskCacheFilePath);
         }
 
+        /// <summary>
+        /// On AppExit method.
+        /// Save current cache to disk && stop unused processes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void App_Exit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
         {
             // Stop all adb processes
