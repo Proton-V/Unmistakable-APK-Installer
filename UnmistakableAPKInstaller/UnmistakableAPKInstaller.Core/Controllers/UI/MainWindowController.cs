@@ -1,8 +1,5 @@
-﻿using Serilog;
-using System.Collections.Specialized;
+﻿using System.Collections.Specialized;
 using System.Configuration;
-using System.Drawing.Drawing2D;
-using System.Runtime.InteropServices;
 using UnmistakableAPKInstaller.Core.Managers;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Helpers.Models.DiskCache;
@@ -12,6 +9,9 @@ using UnmistakableAPKInstaller.Tools.Android.Models;
 
 namespace UnmistakableAPKInstaller.Core.Controllers.UI
 {
+    /// <summary>
+    /// MainWindow controller class
+    /// </summary>
     public partial class MainWindowController
     {
         public MainWindowController()
@@ -20,6 +20,9 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
             deviceManager = new DeviceManager();
         }
 
+        /// <summary>
+        /// Cached string for latest DeviceStr
+        /// </summary>
         string prevDeviceStr;
 
         #region Init
@@ -138,6 +141,11 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
         }
         #endregion
 
+
+        /// <summary>
+        /// Get actual version of device list
+        /// </summary>
+        /// <returns></returns>
         public async Task<DeviceData[]> GetDeviceListAsync()
         {
             var deviceDatas = await cmdToolsProvider.GetAndroidDevicesAsync();
@@ -170,6 +178,10 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
             return deviceDatas;
         }
 
+        /// <summary>
+        /// Check for updates in device list
+        /// </summary>
+        /// <returns></returns>
         public async Task<bool> HasNewDeviceList()
         {
             var newDeviceStr = await cmdToolsProvider.GetAndroidDevicesStrAsync();
