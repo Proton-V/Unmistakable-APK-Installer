@@ -1,0 +1,4 @@
+var namespace_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache =
+[
+    [ "DeviceCacheData", "class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data.html", "class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data" ]
+];

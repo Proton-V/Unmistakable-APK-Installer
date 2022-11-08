@@ -1,0 +1,164 @@
+\hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper}{}\doxysection{Unmistakable\+APKInstaller.\+Helpers.\+Google\+Drive\+Download\+Helper Class Reference}
+\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper}\index{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}}
+
+
+Google Drive API helper class   
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_afe6c48f18e3129c2980bc14fc327500d}{Google\+Drive\+Download\+Helper}} (string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a4b576230394c38be87e9b14adc825213}{api\+Key}}, string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a3c24d997b8b5a58ab3d8a723432197cb}{extract\+Folder}})
+\item 
+bool \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a515d49bb3e895fb067622e0dc4cd5f93}{Validate\+Url}} (string url)
+\begin{DoxyCompactList}\small\item\em Check GD link  \end{DoxyCompactList}\item 
+async Task$<$(bool status, string path)$>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_ab569c8f686c9a2450e91899a77b82dd6}{Download\+File\+Async}} (string url, Action$<$ string $>$ out\+Text, Action$<$ int $>$ out\+Progress)
+\begin{DoxyCompactList}\small\item\em Download file asynchronously  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a0566c117a47f0e53435e3e8308adb4f4}{Get\+File\+Id}} (string url)
+\begin{DoxyCompactList}\small\item\em Find file id by {\itshape url}   \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a3c56be679e00772e20151279f6095b46}{Get\+Download\+File\+Data\+Url}} (string file\+Id)
+\begin{DoxyCompactList}\small\item\em Get File\+Data URL by {\itshape file\+Id}   \end{DoxyCompactList}\item 
+async Task$<$ string $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_ac35e6ef548bb1f5b29ea5be383d5e9ff}{Get\+Filename\+Async}} (string file\+Data\+Url)
+\begin{DoxyCompactList}\small\item\em Get filename by {\itshape file\+Data\+Url}   \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a4b576230394c38be87e9b14adc825213}{api\+Key}}
+\begin{DoxyCompactList}\small\item\em API key  \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a3c24d997b8b5a58ab3d8a723432197cb}{extract\+Folder}}
+\begin{DoxyCompactList}\small\item\em Folder to save GD files  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Google Drive API helper class  
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_afe6c48f18e3129c2980bc14fc327500d}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_afe6c48f18e3129c2980bc14fc327500d}} 
+\index{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}!GoogleDriveDownloadHelper@{GoogleDriveDownloadHelper}}
+\index{GoogleDriveDownloadHelper@{GoogleDriveDownloadHelper}!UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}}
+\doxysubsubsection{\texorpdfstring{GoogleDriveDownloadHelper()}{GoogleDriveDownloadHelper()}}
+{\footnotesize\ttfamily Unmistakable\+APKInstaller.\+Helpers.\+Google\+Drive\+Download\+Helper.\+Google\+Drive\+Download\+Helper (\begin{DoxyParamCaption}\item[{string}]{api\+Key,  }\item[{string}]{extract\+Folder }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_ab569c8f686c9a2450e91899a77b82dd6}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_ab569c8f686c9a2450e91899a77b82dd6}} 
+\index{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}!DownloadFileAsync@{DownloadFileAsync}}
+\index{DownloadFileAsync@{DownloadFileAsync}!UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}}
+\doxysubsubsection{\texorpdfstring{DownloadFileAsync()}{DownloadFileAsync()}}
+{\footnotesize\ttfamily async Task$<$(bool status, string path)$>$ Unmistakable\+APKInstaller.\+Helpers.\+Google\+Drive\+Download\+Helper.\+Download\+File\+Async (\begin{DoxyParamCaption}\item[{string}]{url,  }\item[{Action$<$ string $>$}]{out\+Text,  }\item[{Action$<$ int $>$}]{out\+Progress }\end{DoxyParamCaption})}
+
+
+
+Download file asynchronously  
+
+
+\begin{DoxyParams}{Parameters}
+{\em url} & \\
+\hline
+{\em out\+Text} & \\
+\hline
+{\em out\+Progress} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a3c56be679e00772e20151279f6095b46}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a3c56be679e00772e20151279f6095b46}} 
+\index{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}!GetDownloadFileDataUrl@{GetDownloadFileDataUrl}}
+\index{GetDownloadFileDataUrl@{GetDownloadFileDataUrl}!UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}}
+\doxysubsubsection{\texorpdfstring{GetDownloadFileDataUrl()}{GetDownloadFileDataUrl()}}
+{\footnotesize\ttfamily string Unmistakable\+APKInstaller.\+Helpers.\+Google\+Drive\+Download\+Helper.\+Get\+Download\+File\+Data\+Url (\begin{DoxyParamCaption}\item[{string}]{file\+Id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Get File\+Data URL by {\itshape file\+Id}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Id} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a0566c117a47f0e53435e3e8308adb4f4}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a0566c117a47f0e53435e3e8308adb4f4}} 
+\index{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}!GetFileId@{GetFileId}}
+\index{GetFileId@{GetFileId}!UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}}
+\doxysubsubsection{\texorpdfstring{GetFileId()}{GetFileId()}}
+{\footnotesize\ttfamily string Unmistakable\+APKInstaller.\+Helpers.\+Google\+Drive\+Download\+Helper.\+Get\+File\+Id (\begin{DoxyParamCaption}\item[{string}]{url }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Find file id by {\itshape url}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em url} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_ac35e6ef548bb1f5b29ea5be383d5e9ff}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_ac35e6ef548bb1f5b29ea5be383d5e9ff}} 
+\index{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}!GetFilenameAsync@{GetFilenameAsync}}
+\index{GetFilenameAsync@{GetFilenameAsync}!UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}}
+\doxysubsubsection{\texorpdfstring{GetFilenameAsync()}{GetFilenameAsync()}}
+{\footnotesize\ttfamily async Task$<$ string $>$ Unmistakable\+APKInstaller.\+Helpers.\+Google\+Drive\+Download\+Helper.\+Get\+Filename\+Async (\begin{DoxyParamCaption}\item[{string}]{file\+Data\+Url }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Get filename by {\itshape file\+Data\+Url}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Data\+Url} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a515d49bb3e895fb067622e0dc4cd5f93}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a515d49bb3e895fb067622e0dc4cd5f93}} 
+\index{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}!ValidateUrl@{ValidateUrl}}
+\index{ValidateUrl@{ValidateUrl}!UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}}
+\doxysubsubsection{\texorpdfstring{ValidateUrl()}{ValidateUrl()}}
+{\footnotesize\ttfamily bool Unmistakable\+APKInstaller.\+Helpers.\+Google\+Drive\+Download\+Helper.\+Validate\+Url (\begin{DoxyParamCaption}\item[{string}]{url }\end{DoxyParamCaption})}
+
+
+
+Check GD link  
+
+
+\begin{DoxyParams}{Parameters}
+{\em url} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a4b576230394c38be87e9b14adc825213}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a4b576230394c38be87e9b14adc825213}} 
+\index{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}!apiKey@{apiKey}}
+\index{apiKey@{apiKey}!UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}}
+\doxysubsubsection{\texorpdfstring{apiKey}{apiKey}}
+{\footnotesize\ttfamily string Unmistakable\+APKInstaller.\+Helpers.\+Google\+Drive\+Download\+Helper.\+api\+Key\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+API key  
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a3c24d997b8b5a58ab3d8a723432197cb}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_google_drive_download_helper_a3c24d997b8b5a58ab3d8a723432197cb}} 
+\index{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}!extractFolder@{extractFolder}}
+\index{extractFolder@{extractFolder}!UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper@{UnmistakableAPKInstaller.Helpers.GoogleDriveDownloadHelper}}
+\doxysubsubsection{\texorpdfstring{extractFolder}{extractFolder}}
+{\footnotesize\ttfamily string Unmistakable\+APKInstaller.\+Helpers.\+Google\+Drive\+Download\+Helper.\+extract\+Folder\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Folder to save GD files  
+

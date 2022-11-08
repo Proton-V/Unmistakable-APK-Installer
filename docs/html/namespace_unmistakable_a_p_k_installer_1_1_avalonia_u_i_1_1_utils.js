@@ -1,0 +1,4 @@
+var namespace_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_utils =
+[
+    [ "AvaloniaWindowUtils", "class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_utils_1_1_avalonia_window_utils.html", "class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_utils_1_1_avalonia_window_utils" ]
+];
