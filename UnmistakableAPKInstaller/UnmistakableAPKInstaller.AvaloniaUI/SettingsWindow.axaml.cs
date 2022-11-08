@@ -23,12 +23,18 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             }
         }
 
+        /// <summary>
+        /// Initialize handlers for UI elements
+        /// </summary>
         public void InitHandlers()
         {
             ButtonLogFolderSelect.Click += ButtonLogFolderSelect_Click;
             ButtonSave.Click += ButtonSave_Click;
         }
 
+        /// <summary>
+        /// Initialize UI elements && set actual values
+        /// </summary>
         private void Init()
         {
             CheckBoxAutoDelPrevApp.IsChecked = Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
@@ -73,6 +79,10 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             OpenDeviceLogPathExplorer();
         }
 
+
+        /// <summary>
+        /// Open Folder Dialog
+        /// </summary>
         private async Task OpenDeviceLogPathExplorer()
         {
             OpenFolderDialog openFolderDialog = new OpenFolderDialog();

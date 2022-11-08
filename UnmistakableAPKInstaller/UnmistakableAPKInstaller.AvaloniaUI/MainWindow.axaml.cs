@@ -18,8 +18,14 @@ using Serilog;
 
 namespace UnmistakableAPKInstaller.AvaloniaUI
 {
+    /// <summary>
+    /// AvaloniaUI MainWindow class
+    /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// MainWindow states
+        /// </summary>
         enum MainFormState
         {
             Idle,
@@ -40,16 +46,29 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             }
         }
 
+        /// <summary>
+        /// Current active device (selected)
+        /// </summary>
         DeviceData CurrentDevice => controller.CurrentDevice;
 
+        /// <summary>
+        /// Controller instance
+        /// </summary>
         MainWindowController controller;
 
+        /// <summary>
+        /// Method to force update controller or window (update internal fields)
+        /// </summary>
         public void ForceUpdate()
         {
             controller.Init();
         }
 
         #region Init
+
+        /// <summary>
+        /// Method to init internal components
+        /// </summary>
         private async void InitInternalComponents()
         {
             ChangeFormState(MainFormState.AppLoading);
@@ -78,11 +97,19 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             ProgressBar.IsIndeterminate = false;
         }
 
+        /// <summary>
+        /// Update device list for timer (call on UIThread)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TimerUpdateDeviceListAction(object sender, ElapsedEventArgs e)
         {
             Dispatcher.UIThread.InvokeAsync(async () => await InitDevicesDropDownListAsync(CurrentDevice?.CustomCachedData.CustomName, null));
         }
 
+        /// <summary>
+        /// Initialize handlers for UI elements
+        /// </summary>
         private void InitHandlers()
         {
             this.Closed += Window_OnClose;
@@ -97,14 +124,25 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             ButtonWifiModeUpdate.Click += ButtonWifiModeUpdate_Click;
             ButtonDeviceListUpdate.Click += ButtonDeviceListUpdate_Click;
         }
+
         #endregion
 
+        /// <summary>
+        /// Call when this window closes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Window_OnClose(object sender, EventArgs e)
         {
             controller.StopAllTimers();
         }
 
         #region Form state methods
+
+        /// <summary>
+        /// Update window state
+        /// </summary>
+        /// <param name="state">next state</param>
         private void ChangeFormState(MainFormState state)
         {
             switch (state)
@@ -126,6 +164,10 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             }
         }
 
+        /// <summary>
+        /// Update UI elements visibility
+        /// </summary>
+        /// <param name="value"></param>
         private void ChangeVisibility(bool value)
         {
             // Default image banner state
@@ -164,6 +206,9 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             ButtonWifiModeUpdate.IsVisible = value;
         }
 
+        /// <summary>
+        /// Update device layout elements with <see cref="CurrentDevice"/>
+        /// </summary>
         private void UpdateCurrentDeviceLayout()
         {
             if (CurrentDevice != null)
@@ -186,16 +231,26 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             }
         }
 
+        /// <summary>
+        /// Method to get <see cref="SolidColorBrush"/> for active/deactivated state
+        /// </summary>
+        /// <param name="value">is active state</param>
+        /// <returns></returns>
         private SolidColorBrush GetDefaultSolidColorBrush(bool value)
         {
             var color = value ? Colors.Green : Colors.Red;
             return new SolidColorBrush(color);
         }
 
+        /// <summary>
+        /// Activate/deactivate root element
+        /// </summary>
+        /// <param name="value"></param>
         private void EnableThisForm(bool value)
         {
             Root.IsEnabled = value;
         }
+
         #endregion
 
         #region Form events
@@ -292,6 +347,13 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
         #endregion
 
         #region Additional UI controller methods
+
+        /// <summary>
+        /// Init/Update UI device list
+        /// </summary>
+        /// <param name="selectedCustomName">selected device</param>
+        /// <param name="OnCompleteAction"></param>
+        /// <returns></returns>
         private async Task InitDevicesDropDownListAsync(string selectedCustomName = default, Action OnCompleteAction = null)
         {
             var hasNewDeviceList = await controller.HasNewDeviceList();
@@ -319,6 +381,9 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             OnCompleteAction?.Invoke();
         }
 
+        /// <summary>
+        /// Open APK File Dialog
+        /// </summary>
         private async void OpenFileExplorer()
         {
             var filePath = string.Empty;
@@ -342,6 +407,10 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             InputPath.Text = filePath;
         }
 
+        /// <summary>
+        /// Download tools method (with UI logic)
+        /// </summary>
+        /// <returns></returns>
         private async Task DownloadToolsAsync()
         {
             var status = await controller.TryDownloadToolsAsync(
@@ -355,6 +424,10 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             ProgressBar.Value = 0;
         }
 
+        /// <summary>
+        /// Install APK with logic to uninstall current bundle && enable buffer
+        /// </summary>
+        /// <returns></returns>
         public async Task InstallAPKAsync()
         {
             if (controller.AutoDelPrevApp)
@@ -385,6 +458,11 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             ProgressBar.Value = 0;
         }
 
+        /// <summary>
+        /// Download APK from GD link
+        /// </summary>
+        /// <param name="showStatus"></param>
+        /// <returns></returns>
         public async Task DownloadAPKAsync(bool showStatus = true)
         {
             var url = InputDownload.Text;
@@ -408,6 +486,12 @@ namespace UnmistakableAPKInstaller.AvaloniaUI
             }
         }
 
+        /// <summary>
+        /// Method to open MSG dialog
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="title"></param>
+        /// <returns></returns>
         private IMsBoxWindow<ButtonResult> GetDefaultMessageBox(string text, string title = default)
         {
             var standardParams = new MessageBoxStandardParams();

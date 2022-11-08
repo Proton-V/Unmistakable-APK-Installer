@@ -1,0 +1,446 @@
+\hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider}{}\doxysection{Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider Class Reference}
+\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider}\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+
+
+Provider class for all \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool}{Base\+Cmd\+Tool}}   
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a7c9642bc3c132d76c3f67eaf251f1b94}{Cmd\+Tools\+Provider}} (params \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool}{Base\+Cmd\+Tool}}\mbox{[}$\,$\mbox{]} default\+Tools)
+\item 
+bool \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a68e7fa12027b1c2e0b2511bab86f2164}{Check\+Exists\+Tools}} ()
+\begin{DoxyCompactList}\small\item\em Check if all tools exists  \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_acacfcac28cf57211ec0518b811f5db02}{Try\+Download\+Tools\+Async}} (Action$<$ string $>$ out\+Text, Action$<$ int $>$ out\+Progress)
+\begin{DoxyCompactList}\small\item\em Download all tools that don\textquotesingle{}t exist  \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a675d453b31cb02f3663440aad0041711}{Try\+Uninstall\+APKBy\+Path\+Async}} (string serial\+Number, string path, Action$<$ string $>$ out\+Text)
+\begin{DoxyCompactList}\small\item\em Unistall current APK version using {\itshape path}  apk file  \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a4d25689182b74ebe862ecd2188f57c56}{Create\+Or\+Update\+Wifi\+Device\+By\+Usb}} (\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_device_data}{Device\+Data}} device\+Data)
+\begin{DoxyCompactList}\small\item\em Upsert Wi-\/\+Fi mode status for USB connected device. Set next active status.  \end{DoxyCompactList}\item 
+async Task$<$ string $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a4b14125116c82c059ea762bc2038c4a7}{Try\+Get\+APKBundle\+Name\+Async}} (string path)
+\begin{DoxyCompactList}\small\item\em Get bundle name from APK file  \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a185189923158d6113a7a259b9c5f8e94}{Contains\+Any\+Devices\+Async}} ()
+\begin{DoxyCompactList}\small\item\em Quick check for active devices  \end{DoxyCompactList}\item 
+async Task$<$ string $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_ab17cf20d468761b326a47fb5ae38cba0}{Get\+Android\+Devices\+Str\+Async}} ()
+\begin{DoxyCompactList}\small\item\em Get all connected devices string  \end{DoxyCompactList}\item 
+async Task$<$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_device_data}{Device\+Data}}\mbox{[}$\,$\mbox{]}$>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a756c9898ea2d3c04fe1ca129c458917b}{Get\+Android\+Devices\+Async}} ()
+\begin{DoxyCompactList}\small\item\em Get all connected device datas as Device\+Data array  \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_aa7773cd4eba7b17cc61113bfa1cb2b29}{Try\+Uninstall\+APKAsync}} (string serial\+Number, string bundle\+Name, Action$<$ string $>$ out\+Text)
+\begin{DoxyCompactList}\small\item\em Unistall actual APK by {\itshape bundle\+Name}   \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a6d7a8548b483caf418b76b16abce9a79}{Try\+Install\+APKAsync}} (string serial\+Number, string path, Action$<$ string $>$ out\+Text)
+\begin{DoxyCompactList}\small\item\em Install APK by {\itshape path}   \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a5aac805b8eb9726495296d6108872d33}{Try\+Set\+Log\+Buffer\+Size\+Async}} (string serial\+Number, int size\+In\+Mb, Action$<$ string $>$ out\+Text)
+\begin{DoxyCompactList}\small\item\em Set Log\+Buffer size to device with {\itshape serial\+Number}   \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a63979977060579b30e459b0328aa6db5}{Try\+Save\+Log\+To\+File\+Async}} (string serial\+Number, string path, Action$<$ string $>$? out\+Text)
+\begin{DoxyCompactList}\small\item\em Save current device log to {\itshape path}   \end{DoxyCompactList}\item 
+async Task$<$ string $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a74cab094a9ff1f01af2b08f38268f164}{Get\+Device\+Ip\+Address\+Async}} (\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_base_device_data}{Base\+Device\+Data}} device\+Data)
+\begin{DoxyCompactList}\small\item\em Get device IP address by {\itshape device\+Data}   \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_ad57e5552f215796a071d88838329830b}{Try\+Open\+Port\+Async}} (string serial\+Number, int port=5555)
+\begin{DoxyCompactList}\small\item\em Opent port on Device with {\itshape serial\+Number}   \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_abefa7fcaf5d4f8698993cc2ddbdf9c73}{Set\+Temp\+Prop\+Async}} (string serial\+Number, string prop\+Name, string prop\+Value)
+\begin{DoxyCompactList}\small\item\em Set prop {\itshape prop\+Name}  to device with {\itshape serial\+Number}   \end{DoxyCompactList}\item 
+async Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a3ea92dda4d73cfb7dbb18c2b33717c49}{Try\+Update\+Connect\+To\+Device\+Async}} (bool value, string ip\+Address, int port=5555)
+\begin{DoxyCompactList}\small\item\em Connect/\+Disconnect from device using {\itshape ip\+Address}   \end{DoxyCompactList}\item 
+async Task$<$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_base_device_data}{Base\+Device\+Data}} $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_aa264ffc10f784038f34a08c5ab8e3676}{Get\+Android\+Device\+Data\+Async}} (string serial\+Number)
+\begin{DoxyCompactList}\small\item\em Get basic data for special device by serial number without wifi device data  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Package Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Dictionary$<$ Type, \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool}{Base\+Cmd\+Tool}} $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a97c92dbe1dd7687f20838fb816e2820d}{tools}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{namespace_unmistakable_a_p_k_installer_1_1_tools}{Tools}} container  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_aapt2_tool}{Aapt2\+Tool}} \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_accebeac194086d0f0e03d09ac38a0d60}{Aapt2\+Tool}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\item 
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_android_platform_tools}{Android\+Platform\+Tools}} \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a6f3430c7052055d7b39bf1cc56f6d357}{Android\+Platform\+Tools}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+T \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a734720d8cdffd28a9ccd92567bdb3913}{Get\+Tool$<$ T $>$}} ()
+\begin{DoxyCompactList}\small\item\em Get tool with type of {\itshape T}   \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Provider class for all \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool}{Base\+Cmd\+Tool}}  
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a7c9642bc3c132d76c3f67eaf251f1b94}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a7c9642bc3c132d76c3f67eaf251f1b94}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!CmdToolsProvider@{CmdToolsProvider}}
+\index{CmdToolsProvider@{CmdToolsProvider}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{CmdToolsProvider()}{CmdToolsProvider()}}
+{\footnotesize\ttfamily Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Cmd\+Tools\+Provider (\begin{DoxyParamCaption}\item[{params \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool}{Base\+Cmd\+Tool}}\mbox{[}$\,$\mbox{]}}]{default\+Tools }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a68e7fa12027b1c2e0b2511bab86f2164}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a68e7fa12027b1c2e0b2511bab86f2164}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!CheckExistsTools@{CheckExistsTools}}
+\index{CheckExistsTools@{CheckExistsTools}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{CheckExistsTools()}{CheckExistsTools()}}
+{\footnotesize\ttfamily bool Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Check\+Exists\+Tools (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Check if all tools exists  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a185189923158d6113a7a259b9c5f8e94}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a185189923158d6113a7a259b9c5f8e94}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!ContainsAnyDevicesAsync@{ContainsAnyDevicesAsync}}
+\index{ContainsAnyDevicesAsync@{ContainsAnyDevicesAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{ContainsAnyDevicesAsync()}{ContainsAnyDevicesAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Contains\+Any\+Devices\+Async (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Quick check for active devices  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a4d25689182b74ebe862ecd2188f57c56}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a4d25689182b74ebe862ecd2188f57c56}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!CreateOrUpdateWifiDeviceByUsb@{CreateOrUpdateWifiDeviceByUsb}}
+\index{CreateOrUpdateWifiDeviceByUsb@{CreateOrUpdateWifiDeviceByUsb}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{CreateOrUpdateWifiDeviceByUsb()}{CreateOrUpdateWifiDeviceByUsb()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Create\+Or\+Update\+Wifi\+Device\+By\+Usb (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_device_data}{Device\+Data}}}]{device\+Data }\end{DoxyParamCaption})}
+
+
+
+Upsert Wi-\/\+Fi mode status for USB connected device. Set next active status.  
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\+Data} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_aa264ffc10f784038f34a08c5ab8e3676}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_aa264ffc10f784038f34a08c5ab8e3676}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!GetAndroidDeviceDataAsync@{GetAndroidDeviceDataAsync}}
+\index{GetAndroidDeviceDataAsync@{GetAndroidDeviceDataAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{GetAndroidDeviceDataAsync()}{GetAndroidDeviceDataAsync()}}
+{\footnotesize\ttfamily async Task$<$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_base_device_data}{Base\+Device\+Data}} $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Get\+Android\+Device\+Data\+Async (\begin{DoxyParamCaption}\item[{string}]{serial\+Number }\end{DoxyParamCaption})}
+
+
+
+Get basic data for special device by serial number without wifi device data  
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Number} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a756c9898ea2d3c04fe1ca129c458917b}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a756c9898ea2d3c04fe1ca129c458917b}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!GetAndroidDevicesAsync@{GetAndroidDevicesAsync}}
+\index{GetAndroidDevicesAsync@{GetAndroidDevicesAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{GetAndroidDevicesAsync()}{GetAndroidDevicesAsync()}}
+{\footnotesize\ttfamily async Task$<$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_device_data}{Device\+Data}}\mbox{[}$\,$\mbox{]}$>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Get\+Android\+Devices\+Async (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get all connected device datas as Device\+Data array  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_ab17cf20d468761b326a47fb5ae38cba0}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_ab17cf20d468761b326a47fb5ae38cba0}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!GetAndroidDevicesStrAsync@{GetAndroidDevicesStrAsync}}
+\index{GetAndroidDevicesStrAsync@{GetAndroidDevicesStrAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{GetAndroidDevicesStrAsync()}{GetAndroidDevicesStrAsync()}}
+{\footnotesize\ttfamily async Task$<$ string $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Get\+Android\+Devices\+Str\+Async (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Get all connected devices string  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a74cab094a9ff1f01af2b08f38268f164}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a74cab094a9ff1f01af2b08f38268f164}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!GetDeviceIpAddressAsync@{GetDeviceIpAddressAsync}}
+\index{GetDeviceIpAddressAsync@{GetDeviceIpAddressAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{GetDeviceIpAddressAsync()}{GetDeviceIpAddressAsync()}}
+{\footnotesize\ttfamily async Task$<$ string $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Get\+Device\+Ip\+Address\+Async (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_base_device_data}{Base\+Device\+Data}}}]{device\+Data }\end{DoxyParamCaption})}
+
+
+
+Get device IP address by {\itshape device\+Data}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\+Data} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a734720d8cdffd28a9ccd92567bdb3913}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a734720d8cdffd28a9ccd92567bdb3913}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!GetTool$<$ T $>$@{GetTool$<$ T $>$}}
+\index{GetTool$<$ T $>$@{GetTool$<$ T $>$}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{GetTool$<$ T $>$()}{GetTool< T >()}}
+{\footnotesize\ttfamily T Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Get\+Tool$<$ T $>$ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Get tool with type of {\itshape T}   
+
+
+\begin{DoxyTemplParams}{Template Parameters}
+{\em T} & \\
+\hline
+\end{DoxyTemplParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\begin{Desc}
+\item[Type Constraints]\begin{description}
+\item[{\em T} : {\em Base\+Cmd\+Tool}]\end{description}
+\end{Desc}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_abefa7fcaf5d4f8698993cc2ddbdf9c73}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_abefa7fcaf5d4f8698993cc2ddbdf9c73}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!SetTempPropAsync@{SetTempPropAsync}}
+\index{SetTempPropAsync@{SetTempPropAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{SetTempPropAsync()}{SetTempPropAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Set\+Temp\+Prop\+Async (\begin{DoxyParamCaption}\item[{string}]{serial\+Number,  }\item[{string}]{prop\+Name,  }\item[{string}]{prop\+Value }\end{DoxyParamCaption})}
+
+
+
+Set prop {\itshape prop\+Name}  to device with {\itshape serial\+Number}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Number} & \\
+\hline
+{\em prop\+Name} & \\
+\hline
+{\em prop\+Value} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_acacfcac28cf57211ec0518b811f5db02}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_acacfcac28cf57211ec0518b811f5db02}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!TryDownloadToolsAsync@{TryDownloadToolsAsync}}
+\index{TryDownloadToolsAsync@{TryDownloadToolsAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{TryDownloadToolsAsync()}{TryDownloadToolsAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Try\+Download\+Tools\+Async (\begin{DoxyParamCaption}\item[{Action$<$ string $>$}]{out\+Text,  }\item[{Action$<$ int $>$}]{out\+Progress }\end{DoxyParamCaption})}
+
+
+
+Download all tools that don\textquotesingle{}t exist  
+
+
+\begin{DoxyParams}{Parameters}
+{\em out\+Text} & \\
+\hline
+{\em out\+Progress} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a4b14125116c82c059ea762bc2038c4a7}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a4b14125116c82c059ea762bc2038c4a7}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!TryGetAPKBundleNameAsync@{TryGetAPKBundleNameAsync}}
+\index{TryGetAPKBundleNameAsync@{TryGetAPKBundleNameAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{TryGetAPKBundleNameAsync()}{TryGetAPKBundleNameAsync()}}
+{\footnotesize\ttfamily async Task$<$ string $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Try\+Get\+APKBundle\+Name\+Async (\begin{DoxyParamCaption}\item[{string}]{path }\end{DoxyParamCaption})}
+
+
+
+Get bundle name from APK file  
+
+
+\begin{DoxyParams}{Parameters}
+{\em path} & APK file path\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a6d7a8548b483caf418b76b16abce9a79}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a6d7a8548b483caf418b76b16abce9a79}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!TryInstallAPKAsync@{TryInstallAPKAsync}}
+\index{TryInstallAPKAsync@{TryInstallAPKAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{TryInstallAPKAsync()}{TryInstallAPKAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Try\+Install\+APKAsync (\begin{DoxyParamCaption}\item[{string}]{serial\+Number,  }\item[{string}]{path,  }\item[{Action$<$ string $>$}]{out\+Text }\end{DoxyParamCaption})}
+
+
+
+Install APK by {\itshape path}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Number} & \\
+\hline
+{\em path} & \\
+\hline
+{\em out\+Text} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_ad57e5552f215796a071d88838329830b}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_ad57e5552f215796a071d88838329830b}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!TryOpenPortAsync@{TryOpenPortAsync}}
+\index{TryOpenPortAsync@{TryOpenPortAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{TryOpenPortAsync()}{TryOpenPortAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Try\+Open\+Port\+Async (\begin{DoxyParamCaption}\item[{string}]{serial\+Number,  }\item[{int}]{port = {\ttfamily 5555} }\end{DoxyParamCaption})}
+
+
+
+Opent port on Device with {\itshape serial\+Number}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Number} & \\
+\hline
+{\em port} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a63979977060579b30e459b0328aa6db5}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a63979977060579b30e459b0328aa6db5}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!TrySaveLogToFileAsync@{TrySaveLogToFileAsync}}
+\index{TrySaveLogToFileAsync@{TrySaveLogToFileAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{TrySaveLogToFileAsync()}{TrySaveLogToFileAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Try\+Save\+Log\+To\+File\+Async (\begin{DoxyParamCaption}\item[{string}]{serial\+Number,  }\item[{string}]{path,  }\item[{Action$<$ string $>$?}]{out\+Text }\end{DoxyParamCaption})}
+
+
+
+Save current device log to {\itshape path}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Number} & \\
+\hline
+{\em path} & \\
+\hline
+{\em out\+Text} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a5aac805b8eb9726495296d6108872d33}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a5aac805b8eb9726495296d6108872d33}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!TrySetLogBufferSizeAsync@{TrySetLogBufferSizeAsync}}
+\index{TrySetLogBufferSizeAsync@{TrySetLogBufferSizeAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{TrySetLogBufferSizeAsync()}{TrySetLogBufferSizeAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Try\+Set\+Log\+Buffer\+Size\+Async (\begin{DoxyParamCaption}\item[{string}]{serial\+Number,  }\item[{int}]{size\+In\+Mb,  }\item[{Action$<$ string $>$}]{out\+Text }\end{DoxyParamCaption})}
+
+
+
+Set Log\+Buffer size to device with {\itshape serial\+Number}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Number} & \\
+\hline
+{\em size\+In\+Mb} & \\
+\hline
+{\em out\+Text} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_aa7773cd4eba7b17cc61113bfa1cb2b29}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_aa7773cd4eba7b17cc61113bfa1cb2b29}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!TryUninstallAPKAsync@{TryUninstallAPKAsync}}
+\index{TryUninstallAPKAsync@{TryUninstallAPKAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{TryUninstallAPKAsync()}{TryUninstallAPKAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Try\+Uninstall\+APKAsync (\begin{DoxyParamCaption}\item[{string}]{serial\+Number,  }\item[{string}]{bundle\+Name,  }\item[{Action$<$ string $>$}]{out\+Text }\end{DoxyParamCaption})}
+
+
+
+Unistall actual APK by {\itshape bundle\+Name}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Number} & \\
+\hline
+{\em bundle\+Name} & \\
+\hline
+{\em out\+Text} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a675d453b31cb02f3663440aad0041711}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a675d453b31cb02f3663440aad0041711}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!TryUninstallAPKByPathAsync@{TryUninstallAPKByPathAsync}}
+\index{TryUninstallAPKByPathAsync@{TryUninstallAPKByPathAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{TryUninstallAPKByPathAsync()}{TryUninstallAPKByPathAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Try\+Uninstall\+APKBy\+Path\+Async (\begin{DoxyParamCaption}\item[{string}]{serial\+Number,  }\item[{string}]{path,  }\item[{Action$<$ string $>$}]{out\+Text }\end{DoxyParamCaption})}
+
+
+
+Unistall current APK version using {\itshape path}  apk file  
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Number} & \\
+\hline
+{\em path} & \\
+\hline
+{\em out\+Text} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a3ea92dda4d73cfb7dbb18c2b33717c49}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a3ea92dda4d73cfb7dbb18c2b33717c49}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!TryUpdateConnectToDeviceAsync@{TryUpdateConnectToDeviceAsync}}
+\index{TryUpdateConnectToDeviceAsync@{TryUpdateConnectToDeviceAsync}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{TryUpdateConnectToDeviceAsync()}{TryUpdateConnectToDeviceAsync()}}
+{\footnotesize\ttfamily async Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Try\+Update\+Connect\+To\+Device\+Async (\begin{DoxyParamCaption}\item[{bool}]{value,  }\item[{string}]{ip\+Address,  }\item[{int}]{port = {\ttfamily 5555} }\end{DoxyParamCaption})}
+
+
+
+Connect/\+Disconnect from device using {\itshape ip\+Address}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & \\
+\hline
+{\em ip\+Address} & \\
+\hline
+{\em port} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a97c92dbe1dd7687f20838fb816e2820d}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a97c92dbe1dd7687f20838fb816e2820d}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!tools@{tools}}
+\index{tools@{tools}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{tools}{tools}}
+{\footnotesize\ttfamily Dictionary$<$Type, \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool}{Base\+Cmd\+Tool}}$>$ Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+tools\hspace{0.3cm}{\ttfamily [package]}}
+
+
+
+\mbox{\hyperlink{namespace_unmistakable_a_p_k_installer_1_1_tools}{Tools}} container  
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_accebeac194086d0f0e03d09ac38a0d60}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_accebeac194086d0f0e03d09ac38a0d60}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!Aapt2Tool@{Aapt2Tool}}
+\index{Aapt2Tool@{Aapt2Tool}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{Aapt2Tool}{Aapt2Tool}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_aapt2_tool}{Aapt2\+Tool}} Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Aapt2\+Tool\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a6f3430c7052055d7b39bf1cc56f6d357}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider_a6f3430c7052055d7b39bf1cc56f6d357}} 
+\index{UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}!AndroidPlatformTools@{AndroidPlatformTools}}
+\index{AndroidPlatformTools@{AndroidPlatformTools}!UnmistakableAPKInstaller.Tools.CmdToolsProvider@{UnmistakableAPKInstaller.Tools.CmdToolsProvider}}
+\doxysubsubsection{\texorpdfstring{AndroidPlatformTools}{AndroidPlatformTools}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_android_platform_tools}{Android\+Platform\+Tools}} Unmistakable\+APKInstaller.\+Tools.\+Cmd\+Tools\+Provider.\+Android\+Platform\+Tools\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [private]}}
+

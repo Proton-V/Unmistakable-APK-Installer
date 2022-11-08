@@ -1,5 +1,8 @@
 ﻿namespace UnmistakableAPKInstaller.Helpers.Models.GoogleDrive
 {
+    /// <summary>
+    /// Google Drive file data class
+    /// </summary>
     public class FileData
     {
         public string kind { get; set; }

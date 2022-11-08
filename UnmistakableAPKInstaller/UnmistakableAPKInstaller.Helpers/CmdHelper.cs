@@ -4,8 +4,18 @@ using System.Text;
 
 namespace UnmistakableAPKInstaller.Helpers
 {
+    /// <summary>
+    /// Cmd helper class for start/close process
+    /// </summary>
     public class CmdHelper
     {
+        /// <summary>
+        /// Start default hidden process
+        /// </summary>
+        /// <param name="path">program file path</param>
+        /// <param name="arguments">args params single line</param>
+        /// <param name="timeoutInSec">default: infinity</param>
+        /// <returns></returns>
         public static async Task<(string data, string error)> StartProcessAsync(string path, string arguments, int timeoutInSec = -1)
         {
             try
@@ -65,6 +75,11 @@ namespace UnmistakableAPKInstaller.Helpers
             }
         }
 
+        /// <summary>
+        /// Stop all processes by name
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public static Task StopAllProcessesByName(string name)
         {
             foreach (var process in Process.GetProcessesByName(name))

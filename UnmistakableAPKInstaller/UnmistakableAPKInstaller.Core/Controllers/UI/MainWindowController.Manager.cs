@@ -11,21 +11,51 @@ namespace UnmistakableAPKInstaller.Core.Controllers.UI
 {
     public partial class MainWindowController
     {
+        /// <summary>
+        /// Get/Set selected device
+        /// </summary>
         public DeviceData CurrentDevice
         {
             get => deviceManager.CurrentDevice;
             private set => deviceManager.UpdateCurrentDevice(value);
         }
 
+        /// <summary>
+        /// Get serial number of Current Device
+        /// </summary>
         string CurrentDeviceSerialNumber
             => deviceManager.CurrentDeviceSerialNumber;
 
+        /// <summary>
+        /// Check existence of all tools
+        /// </summary>
         public bool HasAllTools => cmdToolsProvider.CheckExistsTools();
+
+        /// <summary>
+        /// Path to folder with downloaded APK
+        /// </summary>
         public string DownloadedAPKFolderPath => $"{Path.Combine(AppManager.AppDirectory, "GoogleDrive")}";
+
+        /// <summary>
+        /// Auto-delete previous version app
+        /// </summary>
         public bool AutoDelPrevApp => Convert.ToBoolean(ConfigurationManager.AppSettings["AutoDelPrevApp"]);
+
+        /// <summary>
+        /// DeviceLog enable status
+        /// </summary>
         public bool DeviceLogEnabled => Convert.ToBoolean(ConfigurationManager.AppSettings["DeviceLogEnabled"]);
+
+        /// <summary>
+        /// Buffer Size for DeviceLog
+        /// </summary>
         int DeviceLogBufferSize => Convert.ToInt32(ConfigurationManager.AppSettings["DeviceLogBufferSize"]);
 
+        /// <summary>
+        /// Get full app path from relative path
+        /// </summary>
+        /// <param name="relativePath"></param>
+        /// <returns></returns>
         private string GetFullAppDataPath(string relativePath) => $"{DiskCache.AppDataDirectory}/{relativePath}";
 
         CmdToolsProvider cmdToolsProvider;

@@ -1,10 +1,12 @@
 # Unmistakable-APK-Installer v 1.0.5
-Simple APK installer
 
+Simple APK installer
 - WiFi mode (device log/install without USB connection)
 - Easy-load APK by Google Drive public URL
 - Auto-del previous version before installation
 - Saving device log
+
+[Docs link](https://proton-v.github.io/Unmistakable-APK-Installer/html/index.html)
 
 Download:
 [Windows-x64](https://github.com/Proton-V/Unmistakable-APK-Installer/releases/latest/download/UnmistakableAPKInstaller-win-x64.exe) | 

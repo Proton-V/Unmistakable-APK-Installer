@@ -2,8 +2,15 @@
 
 namespace UnmistakableAPKInstaller.Core.Managers
 {
+    /// <summary>
+    /// Default manager class for App
+    /// </summary>
     public class AppManager
     {
+        /// <summary>
+        /// Get AppDirectory from current process.
+        /// Cached from first call
+        /// </summary>
         public static string AppDirectory
         {
             get

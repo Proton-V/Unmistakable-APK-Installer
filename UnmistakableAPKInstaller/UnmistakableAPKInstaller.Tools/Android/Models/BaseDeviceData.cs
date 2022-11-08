@@ -1,10 +1,12 @@
 ﻿using Serilog;
 using System.Net;
-using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Helpers.Models.DiskCache;
 
 namespace UnmistakableAPKInstaller.Tools.Android.Models
 {
+    /// <summary>
+    /// Base class for all devices
+    /// </summary>
     public class BaseDeviceData
     {
         protected BaseDeviceData()
@@ -18,15 +20,39 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
             Update(input);
         }
 
+        /// <summary>
+        /// Device is active
+        /// </summary>
         public bool IsActive => Status.Contains("device");
+
+        /// <summary>
+        /// Device has IP address in <see cref="SerialNumber"/>
+        /// </summary>
         public bool IsWifiDevice => IPAddress.TryParse(SerialNumber.Split(':')[0], out IPAddress iPAddress);
+
+        /// <summary>
+        /// Model string
+        /// </summary>
         public string Model => Info.GetValueOrDefault("model");
 
+        /// <summary>
+        /// Serial number
+        /// </summary>
         public string SerialNumber { get; protected set; }
+
+        /// <summary>
+        /// Status
+        /// </summary>
         public string Status { get; protected set; }
 
+        /// <summary>
+        /// Extra device info
+        /// </summary>
         public Dictionary<string, string> Info { get; protected set; }
 
+        /// <summary>
+        /// Cached device data.
+        /// </summary>
         public DeviceCacheData CustomCachedData { get; protected set; }
 
         public void SetCachedData(DeviceCacheData cacheData)
@@ -34,6 +60,10 @@ namespace UnmistakableAPKInstaller.Tools.Android.Models
             CustomCachedData = cacheData;
         }
 
+        /// <summary>
+        /// Update device data with input str
+        /// </summary>
+        /// <param name="input"></param>
         protected void Update(string input)
         {
             try

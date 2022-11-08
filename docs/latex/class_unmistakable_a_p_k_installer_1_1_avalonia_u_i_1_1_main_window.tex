@@ -1,0 +1,441 @@
+\hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window}{}\doxysection{Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window Class Reference}
+\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window}\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+
+
+\mbox{\hyperlink{namespace_unmistakable_a_p_k_installer_1_1_avalonia_u_i}{Avalonia\+UI}} \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window}{Main\+Window}} class   
+
+
+Inheritance diagram for Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a1d2093badc2faaf97d86fa8dca4efb77}{Main\+Window}} ()
+\item 
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a90884d75708e57182bf8b7198f18988a}{Main\+Window}} (bool init\+Internal\+Components)
+\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a7f3ae61574d6a5664ec736a590cb9245}{Force\+Update}} ()
+\begin{DoxyCompactList}\small\item\em Method to force update controller or window (update internal fields)  \end{DoxyCompactList}\item 
+async Task \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a553e60065bc3f513ea82df71f851af6c}{Install\+APKAsync}} ()
+\begin{DoxyCompactList}\small\item\em Install APK with logic to uninstall current bundle \&\& enable buffer  \end{DoxyCompactList}\item 
+async Task \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a6fbb2c9dc2870014cfd1525a16b274b6}{Download\+APKAsync}} (bool show\+Status=true)
+\begin{DoxyCompactList}\small\item\em Download APK from GD link  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_device_data}{Device\+Data}} \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a7b458365dc79e5ab0289ce303bfb34ae}{Current\+Device}}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Current active device (selected)  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ae6bb560c3fb803bcf20698c2e39b2661}{Main\+Form\+State}} 
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window}{Main\+Window}} states  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+async void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_aba37bf4d97f80a0860dabe8591249abc}{Init\+Internal\+Components}} ()
+\begin{DoxyCompactList}\small\item\em Method to init internal components  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_acd9df1fea52dcbc7111545c6874a6884}{Timer\+Update\+Device\+List\+Action}} (object sender, Elapsed\+Event\+Args e)
+\begin{DoxyCompactList}\small\item\em Update device list for timer (call on UIThread)  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ab2df3504f56ed4f551c1be5c4386a887}{Init\+Handlers}} ()
+\begin{DoxyCompactList}\small\item\em Initialize handlers for UI elements  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ac3411ed20a0852d0cb257fed1d026a67}{Window\+\_\+\+On\+Close}} (object sender, Event\+Args e)
+\begin{DoxyCompactList}\small\item\em Call when this window closes  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a0cdb86c96f91f0e871fedd87cf6676c3}{Change\+Form\+State}} (\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ae6bb560c3fb803bcf20698c2e39b2661}{Main\+Form\+State}} state)
+\begin{DoxyCompactList}\small\item\em Update window state  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a5d9ed00373b185a413574c8ee3eafbb8}{Change\+Visibility}} (bool value)
+\begin{DoxyCompactList}\small\item\em Update UI elements visibility  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a0391e82a921c3c04a24ec2be81cd8ada}{Update\+Current\+Device\+Layout}} ()
+\begin{DoxyCompactList}\small\item\em Update device layout elements with \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a7b458365dc79e5ab0289ce303bfb34ae}{Current\+Device}}  \end{DoxyCompactList}\item 
+Solid\+Color\+Brush \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_abd386c62ed8ff6c681f659c975683775}{Get\+Default\+Solid\+Color\+Brush}} (bool value)
+\begin{DoxyCompactList}\small\item\em Method to get Solid\+Color\+Brush for active/deactivated state  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a488464317e338a219c8a1aed49b9ca76}{Enable\+This\+Form}} (bool value)
+\begin{DoxyCompactList}\small\item\em Activate/deactivate root element  \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_af5239dae122387155639a612e33f276f}{Button\+Download\+\_\+\+Click}} (object sender, Event\+Args e)
+\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a2302165b2ca0ed5b5363c98778f06ce6}{Button\+Path\+\_\+\+Click}} (object sender, Event\+Args e)
+\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_af4c1a8e63f201e8780e362dd1ece40fc}{Button\+Install\+\_\+\+Click}} (object sender, Event\+Args e)
+\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a3e4bbea1936967bc6cd3275a617f8320}{Button\+Download\+Install\+\_\+\+Click}} (object sender, Event\+Args e)
+\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a602177b57c678cf40a9dd6e02cb3e701}{Button\+Settings\+\_\+\+Click}} (object sender, Event\+Args e)
+\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a988ce59b28e1e1d35907e6f90e6a9842}{Button\+Save\+Log\+To\+File\+\_\+\+Click}} (object sender, Event\+Args e)
+\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_af0a0a367b2c51ac9b8c38d79c17f4439}{Dropdown\+List\+Devices\+\_\+\+Selected\+Index\+Changed}} (object sender, Event\+Args e)
+\item 
+async void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ae2cce09351fe68c5cb868e007a1c093a}{Button\+Device\+List\+Update\+\_\+\+Click}} (object sender, Event\+Args e)
+\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ace17b930143beee97caef83353b9b33d}{Button\+Wifi\+Mode\+Update\+\_\+\+Click}} (object sender, Event\+Args e)
+\item 
+void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_acb3899472d2d5d8062536af66cefb9c6}{Picture\+Box\+Wifi\+Mode\+\_\+\+Property\+Changed}} (object? sender, Avalonia\+Property\+Changed\+Event\+Args e)
+\item 
+async Task \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ab7eb8b071da39f7c1d5218335a5a84e5}{Init\+Devices\+Drop\+Down\+List\+Async}} (string selected\+Custom\+Name=default, Action On\+Complete\+Action=null)
+\begin{DoxyCompactList}\small\item\em Init/\+Update UI device list  \end{DoxyCompactList}\item 
+async void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ad862ebc89ea21cba367123d1f1984883}{Open\+File\+Explorer}} ()
+\begin{DoxyCompactList}\small\item\em Open APK File Dialog  \end{DoxyCompactList}\item 
+async Task \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ad178cc21cf41e9b947ccfc96afd6ebad}{Download\+Tools\+Async}} ()
+\begin{DoxyCompactList}\small\item\em Download tools method (with UI logic)  \end{DoxyCompactList}\item 
+IMs\+Box\+Window$<$ Button\+Result $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ad13dbe70e9bf54e108c49d8cd4128608}{Get\+Default\+Message\+Box}} (string text, string title=default)
+\begin{DoxyCompactList}\small\item\em Method to open MSG dialog  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_core_1_1_controllers_1_1_u_i_1_1_main_window_controller}{Main\+Window\+Controller}} \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ab0f29bbe504445e7ad630b3fa69f32a1}{controller}}
+\begin{DoxyCompactList}\small\item\em Controller instance  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{namespace_unmistakable_a_p_k_installer_1_1_avalonia_u_i}{Avalonia\+UI}} \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window}{Main\+Window}} class  
+
+\doxysubsection{Member Enumeration Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ae6bb560c3fb803bcf20698c2e39b2661}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ae6bb560c3fb803bcf20698c2e39b2661}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!MainFormState@{MainFormState}}
+\index{MainFormState@{MainFormState}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainFormState}{MainFormState}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ae6bb560c3fb803bcf20698c2e39b2661}{Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Main\+Form\+State}}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window}{Main\+Window}} states  
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a1d2093badc2faaf97d86fa8dca4efb77}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a1d2093badc2faaf97d86fa8dca4efb77}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!MainWindow@{MainWindow}}
+\index{MainWindow@{MainWindow}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainWindow()}{MainWindow()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Main\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a90884d75708e57182bf8b7198f18988a}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a90884d75708e57182bf8b7198f18988a}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!MainWindow@{MainWindow}}
+\index{MainWindow@{MainWindow}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{MainWindow()}{MainWindow()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Main\+Window (\begin{DoxyParamCaption}\item[{bool}]{init\+Internal\+Components }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ae2cce09351fe68c5cb868e007a1c093a}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ae2cce09351fe68c5cb868e007a1c093a}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ButtonDeviceListUpdate\_Click@{ButtonDeviceListUpdate\_Click}}
+\index{ButtonDeviceListUpdate\_Click@{ButtonDeviceListUpdate\_Click}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ButtonDeviceListUpdate\_Click()}{ButtonDeviceListUpdate\_Click()}}
+{\footnotesize\ttfamily async void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Button\+Device\+List\+Update\+\_\+\+Click (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_af5239dae122387155639a612e33f276f}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_af5239dae122387155639a612e33f276f}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ButtonDownload\_Click@{ButtonDownload\_Click}}
+\index{ButtonDownload\_Click@{ButtonDownload\_Click}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ButtonDownload\_Click()}{ButtonDownload\_Click()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Button\+Download\+\_\+\+Click (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a3e4bbea1936967bc6cd3275a617f8320}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a3e4bbea1936967bc6cd3275a617f8320}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ButtonDownloadInstall\_Click@{ButtonDownloadInstall\_Click}}
+\index{ButtonDownloadInstall\_Click@{ButtonDownloadInstall\_Click}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ButtonDownloadInstall\_Click()}{ButtonDownloadInstall\_Click()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Button\+Download\+Install\+\_\+\+Click (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_af4c1a8e63f201e8780e362dd1ece40fc}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_af4c1a8e63f201e8780e362dd1ece40fc}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ButtonInstall\_Click@{ButtonInstall\_Click}}
+\index{ButtonInstall\_Click@{ButtonInstall\_Click}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ButtonInstall\_Click()}{ButtonInstall\_Click()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Button\+Install\+\_\+\+Click (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a2302165b2ca0ed5b5363c98778f06ce6}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a2302165b2ca0ed5b5363c98778f06ce6}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ButtonPath\_Click@{ButtonPath\_Click}}
+\index{ButtonPath\_Click@{ButtonPath\_Click}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ButtonPath\_Click()}{ButtonPath\_Click()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Button\+Path\+\_\+\+Click (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a988ce59b28e1e1d35907e6f90e6a9842}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a988ce59b28e1e1d35907e6f90e6a9842}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ButtonSaveLogToFile\_Click@{ButtonSaveLogToFile\_Click}}
+\index{ButtonSaveLogToFile\_Click@{ButtonSaveLogToFile\_Click}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ButtonSaveLogToFile\_Click()}{ButtonSaveLogToFile\_Click()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Button\+Save\+Log\+To\+File\+\_\+\+Click (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a602177b57c678cf40a9dd6e02cb3e701}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a602177b57c678cf40a9dd6e02cb3e701}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ButtonSettings\_Click@{ButtonSettings\_Click}}
+\index{ButtonSettings\_Click@{ButtonSettings\_Click}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ButtonSettings\_Click()}{ButtonSettings\_Click()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Button\+Settings\+\_\+\+Click (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ace17b930143beee97caef83353b9b33d}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ace17b930143beee97caef83353b9b33d}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ButtonWifiModeUpdate\_Click@{ButtonWifiModeUpdate\_Click}}
+\index{ButtonWifiModeUpdate\_Click@{ButtonWifiModeUpdate\_Click}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ButtonWifiModeUpdate\_Click()}{ButtonWifiModeUpdate\_Click()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Button\+Wifi\+Mode\+Update\+\_\+\+Click (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a0cdb86c96f91f0e871fedd87cf6676c3}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a0cdb86c96f91f0e871fedd87cf6676c3}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ChangeFormState@{ChangeFormState}}
+\index{ChangeFormState@{ChangeFormState}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ChangeFormState()}{ChangeFormState()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Change\+Form\+State (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ae6bb560c3fb803bcf20698c2e39b2661}{Main\+Form\+State}}}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update window state  
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & next state\\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a5d9ed00373b185a413574c8ee3eafbb8}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a5d9ed00373b185a413574c8ee3eafbb8}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ChangeVisibility@{ChangeVisibility}}
+\index{ChangeVisibility@{ChangeVisibility}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ChangeVisibility()}{ChangeVisibility()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Change\+Visibility (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update UI elements visibility  
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a6fbb2c9dc2870014cfd1525a16b274b6}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a6fbb2c9dc2870014cfd1525a16b274b6}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!DownloadAPKAsync@{DownloadAPKAsync}}
+\index{DownloadAPKAsync@{DownloadAPKAsync}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{DownloadAPKAsync()}{DownloadAPKAsync()}}
+{\footnotesize\ttfamily async Task Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Download\+APKAsync (\begin{DoxyParamCaption}\item[{bool}]{show\+Status = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Download APK from GD link  
+
+
+\begin{DoxyParams}{Parameters}
+{\em show\+Status} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ad178cc21cf41e9b947ccfc96afd6ebad}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ad178cc21cf41e9b947ccfc96afd6ebad}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!DownloadToolsAsync@{DownloadToolsAsync}}
+\index{DownloadToolsAsync@{DownloadToolsAsync}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{DownloadToolsAsync()}{DownloadToolsAsync()}}
+{\footnotesize\ttfamily async Task Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Download\+Tools\+Async (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Download tools method (with UI logic)  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_af0a0a367b2c51ac9b8c38d79c17f4439}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_af0a0a367b2c51ac9b8c38d79c17f4439}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!DropdownListDevices\_SelectedIndexChanged@{DropdownListDevices\_SelectedIndexChanged}}
+\index{DropdownListDevices\_SelectedIndexChanged@{DropdownListDevices\_SelectedIndexChanged}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{DropdownListDevices\_SelectedIndexChanged()}{DropdownListDevices\_SelectedIndexChanged()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Dropdown\+List\+Devices\+\_\+\+Selected\+Index\+Changed (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a488464317e338a219c8a1aed49b9ca76}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a488464317e338a219c8a1aed49b9ca76}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!EnableThisForm@{EnableThisForm}}
+\index{EnableThisForm@{EnableThisForm}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{EnableThisForm()}{EnableThisForm()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Enable\+This\+Form (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Activate/deactivate root element  
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a7f3ae61574d6a5664ec736a590cb9245}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a7f3ae61574d6a5664ec736a590cb9245}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!ForceUpdate@{ForceUpdate}}
+\index{ForceUpdate@{ForceUpdate}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{ForceUpdate()}{ForceUpdate()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Force\+Update (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Method to force update controller or window (update internal fields)  
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ad13dbe70e9bf54e108c49d8cd4128608}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ad13dbe70e9bf54e108c49d8cd4128608}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!GetDefaultMessageBox@{GetDefaultMessageBox}}
+\index{GetDefaultMessageBox@{GetDefaultMessageBox}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{GetDefaultMessageBox()}{GetDefaultMessageBox()}}
+{\footnotesize\ttfamily IMs\+Box\+Window$<$ Button\+Result $>$ Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Get\+Default\+Message\+Box (\begin{DoxyParamCaption}\item[{string}]{text,  }\item[{string}]{title = {\ttfamily default} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method to open MSG dialog  
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & \\
+\hline
+{\em title} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_abd386c62ed8ff6c681f659c975683775}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_abd386c62ed8ff6c681f659c975683775}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!GetDefaultSolidColorBrush@{GetDefaultSolidColorBrush}}
+\index{GetDefaultSolidColorBrush@{GetDefaultSolidColorBrush}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{GetDefaultSolidColorBrush()}{GetDefaultSolidColorBrush()}}
+{\footnotesize\ttfamily Solid\+Color\+Brush Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Get\+Default\+Solid\+Color\+Brush (\begin{DoxyParamCaption}\item[{bool}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method to get Solid\+Color\+Brush for active/deactivated state  
+
+
+\begin{DoxyParams}{Parameters}
+{\em value} & is active state\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ab7eb8b071da39f7c1d5218335a5a84e5}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ab7eb8b071da39f7c1d5218335a5a84e5}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!InitDevicesDropDownListAsync@{InitDevicesDropDownListAsync}}
+\index{InitDevicesDropDownListAsync@{InitDevicesDropDownListAsync}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{InitDevicesDropDownListAsync()}{InitDevicesDropDownListAsync()}}
+{\footnotesize\ttfamily async Task Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Init\+Devices\+Drop\+Down\+List\+Async (\begin{DoxyParamCaption}\item[{string}]{selected\+Custom\+Name = {\ttfamily default},  }\item[{Action}]{On\+Complete\+Action = {\ttfamily null} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Init/\+Update UI device list  
+
+
+\begin{DoxyParams}{Parameters}
+{\em selected\+Custom\+Name} & selected device\\
+\hline
+{\em On\+Complete\+Action} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ab2df3504f56ed4f551c1be5c4386a887}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ab2df3504f56ed4f551c1be5c4386a887}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!InitHandlers@{InitHandlers}}
+\index{InitHandlers@{InitHandlers}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{InitHandlers()}{InitHandlers()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Init\+Handlers (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Initialize handlers for UI elements  
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_aba37bf4d97f80a0860dabe8591249abc}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_aba37bf4d97f80a0860dabe8591249abc}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!InitInternalComponents@{InitInternalComponents}}
+\index{InitInternalComponents@{InitInternalComponents}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{InitInternalComponents()}{InitInternalComponents()}}
+{\footnotesize\ttfamily async void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Init\+Internal\+Components (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Method to init internal components  
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a553e60065bc3f513ea82df71f851af6c}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a553e60065bc3f513ea82df71f851af6c}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!InstallAPKAsync@{InstallAPKAsync}}
+\index{InstallAPKAsync@{InstallAPKAsync}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{InstallAPKAsync()}{InstallAPKAsync()}}
+{\footnotesize\ttfamily async Task Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Install\+APKAsync (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Install APK with logic to uninstall current bundle \&\& enable buffer  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ad862ebc89ea21cba367123d1f1984883}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ad862ebc89ea21cba367123d1f1984883}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!OpenFileExplorer@{OpenFileExplorer}}
+\index{OpenFileExplorer@{OpenFileExplorer}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{OpenFileExplorer()}{OpenFileExplorer()}}
+{\footnotesize\ttfamily async void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Open\+File\+Explorer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Open APK File Dialog  
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_acb3899472d2d5d8062536af66cefb9c6}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_acb3899472d2d5d8062536af66cefb9c6}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!PictureBoxWifiMode\_PropertyChanged@{PictureBoxWifiMode\_PropertyChanged}}
+\index{PictureBoxWifiMode\_PropertyChanged@{PictureBoxWifiMode\_PropertyChanged}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{PictureBoxWifiMode\_PropertyChanged()}{PictureBoxWifiMode\_PropertyChanged()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Picture\+Box\+Wifi\+Mode\+\_\+\+Property\+Changed (\begin{DoxyParamCaption}\item[{object?}]{sender,  }\item[{Avalonia\+Property\+Changed\+Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_acd9df1fea52dcbc7111545c6874a6884}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_acd9df1fea52dcbc7111545c6874a6884}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!TimerUpdateDeviceListAction@{TimerUpdateDeviceListAction}}
+\index{TimerUpdateDeviceListAction@{TimerUpdateDeviceListAction}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{TimerUpdateDeviceListAction()}{TimerUpdateDeviceListAction()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Timer\+Update\+Device\+List\+Action (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Elapsed\+Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update device list for timer (call on UIThread)  
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & \\
+\hline
+{\em e} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a0391e82a921c3c04a24ec2be81cd8ada}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a0391e82a921c3c04a24ec2be81cd8ada}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!UpdateCurrentDeviceLayout@{UpdateCurrentDeviceLayout}}
+\index{UpdateCurrentDeviceLayout@{UpdateCurrentDeviceLayout}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{UpdateCurrentDeviceLayout()}{UpdateCurrentDeviceLayout()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Update\+Current\+Device\+Layout (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Update device layout elements with \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a7b458365dc79e5ab0289ce303bfb34ae}{Current\+Device}}  
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ac3411ed20a0852d0cb257fed1d026a67}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ac3411ed20a0852d0cb257fed1d026a67}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!Window\_OnClose@{Window\_OnClose}}
+\index{Window\_OnClose@{Window\_OnClose}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{Window\_OnClose()}{Window\_OnClose()}}
+{\footnotesize\ttfamily void Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Window\+\_\+\+On\+Close (\begin{DoxyParamCaption}\item[{object}]{sender,  }\item[{Event\+Args}]{e }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Call when this window closes  
+
+
+\begin{DoxyParams}{Parameters}
+{\em sender} & \\
+\hline
+{\em e} & \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ab0f29bbe504445e7ad630b3fa69f32a1}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_ab0f29bbe504445e7ad630b3fa69f32a1}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!controller@{controller}}
+\index{controller@{controller}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{controller}{controller}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_core_1_1_controllers_1_1_u_i_1_1_main_window_controller}{Main\+Window\+Controller}} Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+controller\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Controller instance  
+
+
+
+\doxysubsection{Property Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a7b458365dc79e5ab0289ce303bfb34ae}\label{class_unmistakable_a_p_k_installer_1_1_avalonia_u_i_1_1_main_window_a7b458365dc79e5ab0289ce303bfb34ae}} 
+\index{UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}!CurrentDevice@{CurrentDevice}}
+\index{CurrentDevice@{CurrentDevice}!UnmistakableAPKInstaller.AvaloniaUI.MainWindow@{UnmistakableAPKInstaller.AvaloniaUI.MainWindow}}
+\doxysubsubsection{\texorpdfstring{CurrentDevice}{CurrentDevice}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_models_1_1_device_data}{Device\+Data}} Unmistakable\+APKInstaller.\+Avalonia\+UI.\+Main\+Window.\+Current\+Device\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [private]}}
+
+
+
+Current active device (selected)  
+

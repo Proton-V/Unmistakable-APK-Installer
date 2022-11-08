@@ -1,0 +1,154 @@
+\hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache}{}\doxysection{Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache Class Reference}
+\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache}\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+
+
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache}{Disk\+Cache}} controller for Device\+Cache\+Data   
+
+
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a1305d0bcfb99ceef22027476fe7063cd}{Init}} (string disk\+Cache\+File\+Path)
+\item 
+static \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}} \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_ab9a6dcc21076a131fb826d62356a1610}{Add\+Or\+Update\+Value}} (\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}} device\+Cache\+Data)
+\begin{DoxyCompactList}\small\item\em Upsert method  \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a680cbf3fcf6d97bc7c17c09d80b3eeb5}{Load\+From\+Disk}} ()
+\begin{DoxyCompactList}\small\item\em Load disk cache from saved file  \end{DoxyCompactList}\item 
+static void \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_af170bb0bb5103ed3209f1d8230951b45}{Save\+To\+Disk}} ()
+\begin{DoxyCompactList}\small\item\em Save current cache to disk  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static readonly string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_ac048e9052ddb547488dd3a78ff200bd4}{App\+Data\+Directory}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}} \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a7588f1bd42b6c8cb7ce67435b27114d9}{Find\+Data\+By\+IP}} (string ip\+Address)
+\begin{DoxyCompactList}\small\item\em Find data with {\itshape ip\+Address}   \end{DoxyCompactList}\item 
+static \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}} \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a4be87a567ad24a4d182729659a273802}{Find\+Data\+By\+Serial\+Number}} (string serial\+Number)
+\begin{DoxyCompactList}\small\item\em Find data with {\itshape serial\+Number}   \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static Dictionary$<$ string, \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}} $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a3b0ac3cb7a4d89dbded874ae5061e365}{device\+Dict}} = new Dictionary$<$string, \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}}$>$()
+\item 
+static string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a8bf2d39263e22b8f2a06cd3eae7b3cd8}{path}}
+\begin{DoxyCompactList}\small\item\em Disk cache file path  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache}{Disk\+Cache}} controller for Device\+Cache\+Data  
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_ab9a6dcc21076a131fb826d62356a1610}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_ab9a6dcc21076a131fb826d62356a1610}} 
+\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}!AddOrUpdateValue@{AddOrUpdateValue}}
+\index{AddOrUpdateValue@{AddOrUpdateValue}!UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+\doxysubsubsection{\texorpdfstring{AddOrUpdateValue()}{AddOrUpdateValue()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}} Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache.\+Add\+Or\+Update\+Value (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}}}]{device\+Cache\+Data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Upsert method  
+
+
+\begin{DoxyParams}{Parameters}
+{\em device\+Cache\+Data} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a7588f1bd42b6c8cb7ce67435b27114d9}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a7588f1bd42b6c8cb7ce67435b27114d9}} 
+\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}!FindDataByIP@{FindDataByIP}}
+\index{FindDataByIP@{FindDataByIP}!UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+\doxysubsubsection{\texorpdfstring{FindDataByIP()}{FindDataByIP()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}} Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache.\+Find\+Data\+By\+IP (\begin{DoxyParamCaption}\item[{string}]{ip\+Address }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Find data with {\itshape ip\+Address}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em ip\+Address} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a4be87a567ad24a4d182729659a273802}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a4be87a567ad24a4d182729659a273802}} 
+\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}!FindDataBySerialNumber@{FindDataBySerialNumber}}
+\index{FindDataBySerialNumber@{FindDataBySerialNumber}!UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+\doxysubsubsection{\texorpdfstring{FindDataBySerialNumber()}{FindDataBySerialNumber()}}
+{\footnotesize\ttfamily static \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}} Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache.\+Find\+Data\+By\+Serial\+Number (\begin{DoxyParamCaption}\item[{string}]{serial\+Number }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Find data with {\itshape serial\+Number}   
+
+
+\begin{DoxyParams}{Parameters}
+{\em serial\+Number} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a1305d0bcfb99ceef22027476fe7063cd}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a1305d0bcfb99ceef22027476fe7063cd}} 
+\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}!Init@{Init}}
+\index{Init@{Init}!UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+\doxysubsubsection{\texorpdfstring{Init()}{Init()}}
+{\footnotesize\ttfamily static void Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache.\+Init (\begin{DoxyParamCaption}\item[{string}]{disk\+Cache\+File\+Path }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a680cbf3fcf6d97bc7c17c09d80b3eeb5}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a680cbf3fcf6d97bc7c17c09d80b3eeb5}} 
+\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}!LoadFromDisk@{LoadFromDisk}}
+\index{LoadFromDisk@{LoadFromDisk}!UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+\doxysubsubsection{\texorpdfstring{LoadFromDisk()}{LoadFromDisk()}}
+{\footnotesize\ttfamily static void Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache.\+Load\+From\+Disk (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Load disk cache from saved file  
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_af170bb0bb5103ed3209f1d8230951b45}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_af170bb0bb5103ed3209f1d8230951b45}} 
+\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}!SaveToDisk@{SaveToDisk}}
+\index{SaveToDisk@{SaveToDisk}!UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+\doxysubsubsection{\texorpdfstring{SaveToDisk()}{SaveToDisk()}}
+{\footnotesize\ttfamily static void Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache.\+Save\+To\+Disk (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Save current cache to disk  
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_ac048e9052ddb547488dd3a78ff200bd4}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_ac048e9052ddb547488dd3a78ff200bd4}} 
+\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}!AppDataDirectory@{AppDataDirectory}}
+\index{AppDataDirectory@{AppDataDirectory}!UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+\doxysubsubsection{\texorpdfstring{AppDataDirectory}{AppDataDirectory}}
+{\footnotesize\ttfamily readonly string Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache.\+App\+Data\+Directory\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=}
+\DoxyCodeLine{            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), nameof(\mbox{\hyperlink{namespace_unmistakable_a_p_k_installer}{UnmistakableAPKInstaller}}))}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a3b0ac3cb7a4d89dbded874ae5061e365}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a3b0ac3cb7a4d89dbded874ae5061e365}} 
+\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}!deviceDict@{deviceDict}}
+\index{deviceDict@{deviceDict}!UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+\doxysubsubsection{\texorpdfstring{deviceDict}{deviceDict}}
+{\footnotesize\ttfamily Dictionary$<$string, \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}}$>$ Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache.\+device\+Dict = new Dictionary$<$string, \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_models_1_1_disk_cache_1_1_device_cache_data}{Device\+Cache\+Data}}$>$()\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a8bf2d39263e22b8f2a06cd3eae7b3cd8}\label{class_unmistakable_a_p_k_installer_1_1_helpers_1_1_disk_cache_a8bf2d39263e22b8f2a06cd3eae7b3cd8}} 
+\index{UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}!path@{path}}
+\index{path@{path}!UnmistakableAPKInstaller.Helpers.DiskCache@{UnmistakableAPKInstaller.Helpers.DiskCache}}
+\doxysubsubsection{\texorpdfstring{path}{path}}
+{\footnotesize\ttfamily string Unmistakable\+APKInstaller.\+Helpers.\+Disk\+Cache.\+path\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Disk cache file path  
+

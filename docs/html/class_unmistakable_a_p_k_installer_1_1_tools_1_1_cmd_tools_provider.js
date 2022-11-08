@@ -1,0 +1,25 @@
+var class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider =
+[
+    [ "CmdToolsProvider", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a7c9642bc3c132d76c3f67eaf251f1b94", null ],
+    [ "CheckExistsTools", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a68e7fa12027b1c2e0b2511bab86f2164", null ],
+    [ "ContainsAnyDevicesAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a185189923158d6113a7a259b9c5f8e94", null ],
+    [ "CreateOrUpdateWifiDeviceByUsb", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a4d25689182b74ebe862ecd2188f57c56", null ],
+    [ "GetAndroidDeviceDataAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#aa264ffc10f784038f34a08c5ab8e3676", null ],
+    [ "GetAndroidDevicesAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a756c9898ea2d3c04fe1ca129c458917b", null ],
+    [ "GetAndroidDevicesStrAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#ab17cf20d468761b326a47fb5ae38cba0", null ],
+    [ "GetDeviceIpAddressAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a74cab094a9ff1f01af2b08f38268f164", null ],
+    [ "GetTool< T >", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a734720d8cdffd28a9ccd92567bdb3913", null ],
+    [ "SetTempPropAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#abefa7fcaf5d4f8698993cc2ddbdf9c73", null ],
+    [ "TryDownloadToolsAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#acacfcac28cf57211ec0518b811f5db02", null ],
+    [ "TryGetAPKBundleNameAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a4b14125116c82c059ea762bc2038c4a7", null ],
+    [ "TryInstallAPKAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a6d7a8548b483caf418b76b16abce9a79", null ],
+    [ "TryOpenPortAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#ad57e5552f215796a071d88838329830b", null ],
+    [ "TrySaveLogToFileAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a63979977060579b30e459b0328aa6db5", null ],
+    [ "TrySetLogBufferSizeAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a5aac805b8eb9726495296d6108872d33", null ],
+    [ "TryUninstallAPKAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#aa7773cd4eba7b17cc61113bfa1cb2b29", null ],
+    [ "TryUninstallAPKByPathAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a675d453b31cb02f3663440aad0041711", null ],
+    [ "TryUpdateConnectToDeviceAsync", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a3ea92dda4d73cfb7dbb18c2b33717c49", null ],
+    [ "tools", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a97c92dbe1dd7687f20838fb816e2820d", null ],
+    [ "Aapt2Tool", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#accebeac194086d0f0e03d09ac38a0d60", null ],
+    [ "AndroidPlatformTools", "class_unmistakable_a_p_k_installer_1_1_tools_1_1_cmd_tools_provider.html#a6f3430c7052055d7b39bf1cc56f6d357", null ]
+];
