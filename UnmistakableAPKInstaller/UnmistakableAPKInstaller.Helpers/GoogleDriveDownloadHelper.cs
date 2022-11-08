@@ -6,6 +6,9 @@ using UnmistakableAPKInstaller.Helpers.Models.GoogleDrive;
 
 namespace UnmistakableAPKInstaller.Helpers
 {
+    /// <summary>
+    /// Google Drive API helper class
+    /// </summary>
     public class GoogleDriveDownloadHelper
     {
         public GoogleDriveDownloadHelper(string apiKey, string extractFolder)
@@ -14,9 +17,21 @@ namespace UnmistakableAPKInstaller.Helpers
             this.extractFolder = extractFolder;
         }
 
+        /// <summary>
+        /// API key
+        /// </summary>
         string apiKey;
+
+        /// <summary>
+        /// Folder to save GD files
+        /// </summary>
         string extractFolder;
 
+        /// <summary>
+        /// Check GD link
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public bool ValidateUrl(string url)
         {
             if(url is null)
@@ -27,6 +42,13 @@ namespace UnmistakableAPKInstaller.Helpers
             return url.StartsWith("https://drive.google.com/file/d/") && url.Contains("/view");
         }
 
+        /// <summary>
+        /// Download file asynchronously
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="outText"></param>
+        /// <param name="outProgress"></param>
+        /// <returns></returns>
         public async Task<(bool status, string path)> DownloadFileAsync(string url,
             Action<string> outText, Action<int> outProgress)
         {
@@ -68,6 +90,11 @@ namespace UnmistakableAPKInstaller.Helpers
             }
         }
 
+        /// <summary>
+        /// Find file id by <paramref name="url"/>
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         private string GetFileId(string url)
         {
             try
@@ -83,11 +110,21 @@ namespace UnmistakableAPKInstaller.Helpers
             }
         }
 
+        /// <summary>
+        /// Get FileData URL by <paramref name="fileId"/>
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
         private string GetDownloadFileDataUrl(string fileId)
         {
             return $"https://www.googleapis.com/drive/v3/files/{fileId}?key={apiKey}";
         }
 
+        /// <summary>
+        /// Get filename by <paramref name="fileDataUrl"/>
+        /// </summary>
+        /// <param name="fileDataUrl"></param>
+        /// <returns></returns>
         private async Task<string> GetFilenameAsync(string fileDataUrl)
         {
             using (WebClient wc = new WebClient())

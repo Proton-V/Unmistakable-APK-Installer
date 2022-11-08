@@ -3,7 +3,7 @@
 namespace UnmistakableAPKInstaller.Core.Managers
 {
     /// <summary>
-    /// Device manager to store CurrentDevice and his data
+    /// Class to store CurrentDevice data
     /// </summary>
     public class DeviceManager
     {

@@ -3,6 +3,9 @@ using UnmistakableAPKInstaller.Helpers.Models.DiskCache;
 
 namespace UnmistakableAPKInstaller.Helpers
 {
+    /// <summary>
+    /// DiskCache controller for <see cref="DeviceCacheData"/>
+    /// </summary>
     public class DiskCache
     {
         public static readonly string AppDataDirectory =
@@ -10,6 +13,9 @@ namespace UnmistakableAPKInstaller.Helpers
 
         private static Dictionary<string, DeviceCacheData> deviceDict = new Dictionary<string, DeviceCacheData>();
 
+        /// <summary>
+        /// Disk cache file path
+        /// </summary>
         private static string path;
 
         public static void Init(string diskCacheFilePath)
@@ -18,6 +24,11 @@ namespace UnmistakableAPKInstaller.Helpers
             LoadFromDisk();
         }
 
+        /// <summary>
+        /// Upsert method
+        /// </summary>
+        /// <param name="deviceCacheData"></param>
+        /// <returns></returns>
         public static DeviceCacheData AddOrUpdateValue(DeviceCacheData deviceCacheData)
         {
             var deviceData = FindDataByIP(deviceCacheData.IPAddressWPort);
@@ -44,16 +55,29 @@ namespace UnmistakableAPKInstaller.Helpers
             return deviceData;
         }
 
+        /// <summary>
+        /// Find data with <paramref name="ipAddress"/>
+        /// </summary>
+        /// <param name="ipAddress"></param>
+        /// <returns></returns>
         private static DeviceCacheData FindDataByIP(string ipAddress)
         {
             return deviceDict.FirstOrDefault(x => x.Value.IPAddressWPort == ipAddress).Value;
         }
 
+        /// <summary>
+        /// Find data with <paramref name="serialNumber"/>
+        /// </summary>
+        /// <param name="serialNumber"></param>
+        /// <returns></returns>
         private static DeviceCacheData FindDataBySerialNumber(string serialNumber)
         {
             return deviceDict.FirstOrDefault(x => x.Value.SerialNumber == serialNumber).Value;
         }
 
+        /// <summary>
+        /// Load disk cache from saved file
+        /// </summary>
         public static void LoadFromDisk()
         {
             if (!File.Exists(path))
@@ -77,6 +101,9 @@ namespace UnmistakableAPKInstaller.Helpers
             }
         }
 
+        /// <summary>
+        /// Save current cache to disk
+        /// </summary>
         public static void SaveToDisk()
         {
             var directory = Path.GetDirectoryName(path);
