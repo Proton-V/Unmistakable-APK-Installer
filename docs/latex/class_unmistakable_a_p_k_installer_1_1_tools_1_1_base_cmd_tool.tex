@@ -1,0 +1,108 @@
+\hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool}{}\doxysection{Unmistakable\+APKInstaller.\+Tools.\+Base\+Cmd\+Tool Class Reference}
+\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool}\index{UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}}
+
+
+Base class for downloadable cmd tools.   
+
+
+Inheritance diagram for Unmistakable\+APKInstaller.\+Tools.\+Base\+Cmd\+Tool\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.513514cm]{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_a45882a95d542a27130abe98aadd6cad6}{Base\+Cmd\+Tool}} (string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ad2a82b150cda30be01e46d9a31d427b0}{download\+Link}}, string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ad143c409263e9310d916baa53d3ee742}{tool\+Folder\+Path}})
+\item 
+abstract bool \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ac10f51d645a57b035d4211a4b3752a14}{Exists}} ()
+\begin{DoxyCompactList}\small\item\em Check tool exists  \end{DoxyCompactList}\item 
+abstract Task$<$ bool $>$ \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_a39f23c4abca6a8991d1b85118b271d2f}{Try\+Download\+Tool\+Async}} (Action$<$ string $>$ out\+Text, Action$<$ int $>$ out\+Progress)
+\begin{DoxyCompactList}\small\item\em Try download tool  \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ad143c409263e9310d916baa53d3ee742}{tool\+Folder\+Path}}
+\begin{DoxyCompactList}\small\item\em Default folder  \end{DoxyCompactList}\item 
+string \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ad2a82b150cda30be01e46d9a31d427b0}{download\+Link}}
+\begin{DoxyCompactList}\small\item\em Tool download link  \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Base class for downloadable cmd tools.  
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_a45882a95d542a27130abe98aadd6cad6}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_a45882a95d542a27130abe98aadd6cad6}} 
+\index{UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}!BaseCmdTool@{BaseCmdTool}}
+\index{BaseCmdTool@{BaseCmdTool}!UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}}
+\doxysubsubsection{\texorpdfstring{BaseCmdTool()}{BaseCmdTool()}}
+{\footnotesize\ttfamily Unmistakable\+APKInstaller.\+Tools.\+Base\+Cmd\+Tool.\+Base\+Cmd\+Tool (\begin{DoxyParamCaption}\item[{string}]{download\+Link,  }\item[{string}]{tool\+Folder\+Path }\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ac10f51d645a57b035d4211a4b3752a14}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ac10f51d645a57b035d4211a4b3752a14}} 
+\index{UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}!Exists@{Exists}}
+\index{Exists@{Exists}!UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}}
+\doxysubsubsection{\texorpdfstring{Exists()}{Exists()}}
+{\footnotesize\ttfamily abstract bool Unmistakable\+APKInstaller.\+Tools.\+Base\+Cmd\+Tool.\+Exists (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Check tool exists  
+
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_aapt2_tool_a6ce1e8426bf466c94addb744670e0ee3}{Unmistakable\+APKInstaller.\+Tools.\+Android.\+Aapt2\+Tool}}, and \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_android_platform_tools_a8a4b970391e2fff57bb0388da6ae7714}{Unmistakable\+APKInstaller.\+Tools.\+Android.\+Android\+Platform\+Tools}}.
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_a39f23c4abca6a8991d1b85118b271d2f}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_a39f23c4abca6a8991d1b85118b271d2f}} 
+\index{UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}!TryDownloadToolAsync@{TryDownloadToolAsync}}
+\index{TryDownloadToolAsync@{TryDownloadToolAsync}!UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}}
+\doxysubsubsection{\texorpdfstring{TryDownloadToolAsync()}{TryDownloadToolAsync()}}
+{\footnotesize\ttfamily abstract Task$<$ bool $>$ Unmistakable\+APKInstaller.\+Tools.\+Base\+Cmd\+Tool.\+Try\+Download\+Tool\+Async (\begin{DoxyParamCaption}\item[{Action$<$ string $>$}]{out\+Text,  }\item[{Action$<$ int $>$}]{out\+Progress }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [pure virtual]}}
+
+
+
+Try download tool  
+
+
+\begin{DoxyParams}{Parameters}
+{\em out\+Text} & \\
+\hline
+{\em out\+Progress} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+Implemented in \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_aapt2_tool_acf26dc498139d6213c124fae8a884c45}{Unmistakable\+APKInstaller.\+Tools.\+Android.\+Aapt2\+Tool}}, and \mbox{\hyperlink{class_unmistakable_a_p_k_installer_1_1_tools_1_1_android_1_1_android_platform_tools_a70b8a4d26569476841f441f953e91872}{Unmistakable\+APKInstaller.\+Tools.\+Android.\+Android\+Platform\+Tools}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ad2a82b150cda30be01e46d9a31d427b0}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ad2a82b150cda30be01e46d9a31d427b0}} 
+\index{UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}!downloadLink@{downloadLink}}
+\index{downloadLink@{downloadLink}!UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}}
+\doxysubsubsection{\texorpdfstring{downloadLink}{downloadLink}}
+{\footnotesize\ttfamily string Unmistakable\+APKInstaller.\+Tools.\+Base\+Cmd\+Tool.\+download\+Link\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Tool download link  
+
+\mbox{\Hypertarget{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ad143c409263e9310d916baa53d3ee742}\label{class_unmistakable_a_p_k_installer_1_1_tools_1_1_base_cmd_tool_ad143c409263e9310d916baa53d3ee742}} 
+\index{UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}!toolFolderPath@{toolFolderPath}}
+\index{toolFolderPath@{toolFolderPath}!UnmistakableAPKInstaller.Tools.BaseCmdTool@{UnmistakableAPKInstaller.Tools.BaseCmdTool}}
+\doxysubsubsection{\texorpdfstring{toolFolderPath}{toolFolderPath}}
+{\footnotesize\ttfamily string Unmistakable\+APKInstaller.\+Tools.\+Base\+Cmd\+Tool.\+tool\+Folder\+Path\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Default folder  
+
