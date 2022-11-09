@@ -1,0 +1,56 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="400"
+        x:Class="UnmistakableAPKInstaller.AvaloniaUI.SettingsWindow"
+        Title="SettingsWindow"
+		CanResize="True"
+		WindowState="Normal"
+		Width="300" Height="400"
+		WindowStartupLocation="CenterOwner"
+		Icon="/Assets/logo-min.ico">
+	<Viewbox>
+		<DockPanel Name="Root">
+			<StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
+				<TextBlock TextDecorations="Underline"
+						   Margin="0, 10" HorizontalAlignment="Center">APK Installer settings</TextBlock>
+				<CheckBox Name="CheckBoxAutoDelPrevApp">Auto-delete previous app</CheckBox>
+			</StackPanel>
+
+			<StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center"
+						Margin="0, 10">
+				<TextBlock TextDecorations="Underline"
+						   Margin="0, 10" HorizontalAlignment="Center">Device log buffer settings</TextBlock>
+				<CheckBox Name="CheckBoxSetBufferSizeOnInstallAPK"
+						  HorizontalAlignment="Center">Set Buff Size On Install APK</CheckBox>
+				<StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center">Buff size (MB)</TextBlock>
+					<TextBox Name="TextBoxBuffSize"
+							 Margin="10,0" Width="125"></TextBox>
+				</StackPanel>
+				<TextBlock Margin="0,10">Device Log Folder</TextBlock>
+				<StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+					<TextBlock Name="InputDeviceLogFolderPath"
+							 Padding="5" Margin="0,0" Width="100" Background="Gray"></TextBlock>
+					<Button Name="ButtonLogFolderSelect"
+							Margin="5,0,0,0" Width="125" HorizontalContentAlignment="Center">Select Manually</Button>
+				</StackPanel>
+			</StackPanel>
+
+			<StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center">
+				<TextBlock TextDecorations="Underline"
+						   Margin="0, 10" HorizontalAlignment="Center">Google Drive settings</TextBlock>
+				<StackPanel DockPanel.Dock="Top" HorizontalAlignment="Center" Orientation="Horizontal">
+					<TextBlock VerticalAlignment="Center">Drive API key</TextBlock>
+					<TextBox Name="InputGDapiKey"
+							 Margin="10,0" Width="125"></TextBox>
+				</StackPanel>
+			</StackPanel>
+
+			<Button Name="ButtonSave"
+				Margin="0,15"
+				Width="125" HorizontalContentAlignment="Center" HorizontalAlignment="Center">Save Settings</Button>
+		</DockPanel>
+	</Viewbox>
+</Window>
