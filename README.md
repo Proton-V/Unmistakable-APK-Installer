@@ -1,4 +1,4 @@
-# Unmistakable-APK-Installer v 1.0.5
+# Unmistakable APK Installer
 
 Simple APK installer
 - WiFi mode (device log/install without USB connection)
