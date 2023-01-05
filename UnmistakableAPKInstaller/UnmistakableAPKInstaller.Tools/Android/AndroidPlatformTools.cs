@@ -263,7 +263,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
                 return false;
             }
 
-            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} install {path}";
+            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} install \"{path}\"";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
             if (!string.IsNullOrEmpty(data.error))
