@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using System.IO.Compression;
 using System.Net;
+using System.Text.RegularExpressions;
 using UnmistakableAPKInstaller.Helpers;
 using UnmistakableAPKInstaller.Tools.Android.Models;
 
@@ -236,17 +237,8 @@ namespace UnmistakableAPKInstaller.Tools.Android
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} uninstall {bundleName}";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
-            if (!string.IsNullOrEmpty(data.error))
-            {
-                Log.Warning("Android platform tools: {0}", data.error);
-                outText(data.error);
-            }
-            else
-            {
-                outText(data.data);
-            }
 
-            return data.data != null;
+            return IsSuccessfulOp(data, nameof(TryUninstallAPKAsync), outText);
         }
 
         /// <summary>
@@ -263,20 +255,12 @@ namespace UnmistakableAPKInstaller.Tools.Android
                 return false;
             }
 
-            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} install {path}";
+            var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} install \"{path}\"";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
-            if (!string.IsNullOrEmpty(data.error))
-            {
-                Log.Warning("Android platform tools: {0}", data.error);
-                outText(data.error);
-            }
-            else
-            {
-                outText(data.data);
-            }
+            var isSuccessful = !string.IsNullOrEmpty(data.data) && data.data.Contains("Success");
 
-            return !string.IsNullOrEmpty(data.data) && data.data.Contains("Success");
+            return IsSuccessfulOp(data, nameof(TryInstallAPKAsync), outText, () => isSuccessful);
         }
 
         /// <summary>
@@ -296,17 +280,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} logcat -G {sizeInMb}M";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
-            if (!string.IsNullOrEmpty(data.error))
-            {
-                Log.Warning("Android platform tools: {0}", data.error);
-                outText(data.error);
-            }
-            else
-            {
-                outText(data.data);
-            }
-
-            return string.IsNullOrEmpty(data.error);
+            return IsSuccessfulOp(data, nameof(TrySetLogBufferSizeAsync), outText);
         }
 
         /// <summary>
@@ -326,18 +300,14 @@ namespace UnmistakableAPKInstaller.Tools.Android
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} logcat -d";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
-            if (!string.IsNullOrEmpty(data.error))
+            var isSuccessfulOp = IsSuccessfulOp(data, nameof(TrySaveLogToFileAsync), outText);
+
+            if (isSuccessfulOp)
             {
-                Log.Warning("Android platform tools: {0}", data.error);
-                outText?.Invoke(data.error);
-            }
-            else
-            {
-                outText?.Invoke(data.data);
                 await File.WriteAllTextAsync(path, data.data);
             }
 
-            return string.IsNullOrEmpty(data.error);
+            return isSuccessfulOp;
         }
 
         /// <summary>
@@ -381,12 +351,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} tcpip {port}";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
-            if (!string.IsNullOrEmpty(data.error))
-            {
-                Log.Warning("Android platform tools: {0}", data.error);
-            }
-
-            return string.IsNullOrEmpty(data.error);
+            return IsSuccessfulOp(data, nameof(TryOpenPortAsync));
         }
 
         /// <summary>
@@ -406,12 +371,7 @@ namespace UnmistakableAPKInstaller.Tools.Android
             var args = $"{GetSpecialAdbSerialNumberArg(serialNumber)} shell setprop {propName} {propValue}";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
-            if (!string.IsNullOrEmpty(data.error))
-            {
-                Log.Warning("Android platform tools: {0}", data.error);
-            }
-
-            return string.IsNullOrEmpty(data.error);
+            return IsSuccessfulOp(data, nameof(SetTempPropAsync));
         }
 
         /// <summary>
@@ -432,12 +392,33 @@ namespace UnmistakableAPKInstaller.Tools.Android
             var args = $" {connectStr} {ipAddress}:{port}";
             var data = await CmdHelper.StartProcessAsync(AdbPath, args);
 
-            if (!string.IsNullOrEmpty(data.error))
-            {
-                Log.Warning("Android platform tools: {0}", data.error);
-            }
-
-            return string.IsNullOrEmpty(data.error);
+            return IsSuccessfulOp(data, nameof(TryUpdateConnectToDeviceAsync));
         }
+
+        private bool IsSuccessfulOp((string data, string error) data, string debugText = default
+            , Action<string>? outText = null
+            , params Func<bool>[] extraSuccessConditions)
+        {
+            var hasErrorText = !string.IsNullOrEmpty(data.error);
+            if (!hasErrorText & extraSuccessConditions.All(x => x()))
+            {
+                var dataStr = GetStringWithoutEmptyLines(data.data);
+                Log.Debug("Android platform tools ({0}){1}", debugText,
+                    string.IsNullOrEmpty(dataStr)? string.Empty : $": {dataStr}");
+                outText?.Invoke(data.data);
+                return true;
+            }
+            else
+            {
+                var dataStr = hasErrorText ? GetStringWithoutEmptyLines(data.error) 
+                    : GetStringWithoutEmptyLines(data.data);
+                Log.Warning("Android platform tools ({0}){1}", debugText,
+                    string.IsNullOrEmpty(dataStr) ? string.Empty : $": {dataStr}");
+                outText?.Invoke(dataStr);
+                return false;
+            }
+        }
+
+        private string GetStringWithoutEmptyLines(string str) => Regex.Replace(str, @"^\s+$[\r\n]*", string.Empty, RegexOptions.Multiline).TrimEnd();
     }
 }
